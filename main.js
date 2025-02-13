@@ -13,7 +13,7 @@ app.whenReady().then(() => {
       enableRemoteModule: false,
     }
   });
-  
+
   mainWindow.loadFile('index.html');
 
   app.on('window-all-closed', () => {
