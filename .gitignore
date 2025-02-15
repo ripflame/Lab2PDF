@@ -4,6 +4,7 @@ node_modules/
 # Electron build output
 dist/
 out/
+lab2pdf-win342-x64/
 
 # Logs
 logs/
