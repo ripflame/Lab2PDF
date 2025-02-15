@@ -1,0 +1,48 @@
+# Node.js dependencies
+node_modules/
+
+# Electron build output
+dist/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.dll
+*.class
+
+# Puppeteer cache
+.puppeteer/
+
+# PDF files
+*.pdf
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
