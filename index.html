@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Informe de Laboratorio de Clínica Veterinaria</title>
+</head>
+<body>
+  <h1>Hemograma</h1>
+  <form id="formularioInformeLaboratorio">
+    <label for="nombreMascota">Nombre:</label>
+    <input name="nombreMascota" type="text" id="nombreMascota" placeholder="Nombre" required><br>
+    <label for="especie">Especie:</label>
+    <input type="text" id="especie" placeholder="Especie" required><br>
+    <label for="raza">Raza:</label>
+    <input type="text" id="raza" placeholder="Raza" required><br>
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" placeholder="Edad" required><br>
+    <label>Sexo:</label>
+    <input type="radio" id="macho" name="sexo" value="macho" required>
+    <label for="macho">Macho</label>
+    <input type="radio" id="hembra" name="sexo" value="hembra" required>
+    <label for="hembra">Hembra</label><br>
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" required><br>
+    <label for="eritrocitos">Eritrocitos:</label>
+    <input type="number" id="eritrocitos" placeholder="Eritrocitos" required><br>
+    <label for="hemoglobina">Hemoglobina:</label>
+    <input type="number" id="hemoglobina" placeholder="Hemoglobina" required><br>
+    <label for="hematocrito">Hematocrito:</label>
+    <input type="number" id="hematocrito" placeholder="Hematocrito" required><br>
+    <label for="volumenGlobularMedio">Volumen Globular Medio:</label>
+    <input type="number" id="volumenGlobularMedio" placeholder="Volumen Globular Medio" required><br>
+    <label for="hemoglobinaPromedio">Hemoglobina Promedio por Eritrocito:</label>
+    <input type="number" id="hemoglobinaPromedio" placeholder="Hemoglobina Promedio por Eritrocito" required><br>
+    <label for="concentracionMediaHemoglobina">Concentración Media de Hemoglobina:</label>
+    <input type="number" id="concentracionMediaHemoglobina" placeholder="Concentración Media de Hemoglobina" required><br>
+    <label for="plaquetas">Plaquetas:</label>
+    <input type="number" id="plaquetas" placeholder="Plaquetas" required><br>
+    <label for="leucocitos">Leucocitos:</label>
+    <input type="number" id="leucocitos" placeholder="Leucocitos" required><br>
+    <label for="monocitos">Monocitos:</label>
+    <input type="number" id="monocitos" placeholder="Monocitos" required><br>
+    <label for="linfocitos">Linfocitos:</label>
+    <input type="number" id="linfocitos" placeholder="Linfocitos" required><br>
+    <label for="eosinofilos">Eosinófilos:</label>
+    <input type="number" id="eosinofilos" placeholder="Eosinófilos" required><br>
+    <label for="basofilos">Basófilos:</label>
+    <input type="number" id="basofilos" placeholder="Basófilos" required><br>
+    <label for="neutrofilosSegmentados">Neutrófilos Segmentados:</label>
+    <input type="number" id="neutrofilosSegmentados" placeholder="Neutrófilos Segmentados" required><br>
+    <label for="neutrofilosBanda">Neutrófilos en Banda:</label>
+    <input type="number" id="neutrofilosBanda" placeholder="Neutrófilos en Banda" required><br>
+    <button type="submit">Generar PDF</button>
+  </form>
+  <div id="resultadoPDF" style="display:none;">
+    <p>¡PDF generado! <a id="enlacePDF" href="#">Descárgalo aquí</a></p>
+  </div>
+
+  <script>
+    document.getElementById('fecha').valueAsDate = new Date();
+
+    document.getElementById('formularioInformeLaboratorio').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const datos = {
+        nombreMascota: document.getElementById('nombreMascota').value,
+        especie: document.getElementById('especie').value,
+        raza: document.getElementById('raza').value,
+        edad: document.getElementById('edad').value,
+        sexo: document.querySelector('input[name="sexo"]:checked').value,
+        fecha: document.getElementById('fecha').value,
+        eritrocitos: document.getElementById('eritrocitos').value,
+        hemoglobina: document.getElementById('hemoglobina').value,
+        hematocrito: document.getElementById('hematocrito').value,
+        volumenGlobularMedio: document.getElementById('volumenGlobularMedio').value,
+        hemoglobinaPromedio: document.getElementById('hemoglobinaPromedio').value,
+        concentracionMediaHemoglobina: document.getElementById('concentracionMediaHemoglobina').value,
+        plaquetas: document.getElementById('plaquetas').value,
+        leucocitos: document.getElementById('leucocitos').value,
+        monocitos: document.getElementById('monocitos').value,
+        linfocitos: document.getElementById('linfocitos').value,
+        eosinofilos: document.getElementById('eosinofilos').value,
+        basofilos: document.getElementById('basofilos').value,
+        neutrofilosSegmentados: document.getElementById('neutrofilosSegmentados').value,
+        neutrofilosBanda: document.getElementById('neutrofilosBanda').value,
+      };
+      window.electron.generarPDF(datos);
+    });
+
+    window.electron.onPDFGenerado((event, rutaPDF) => {
+      const enlacePDF = document.getElementById('enlacePDF');
+      enlacePDF.href = `file://${rutaPDF}`;
+      document.getElementById('resultadoPDF').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
