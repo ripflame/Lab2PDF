@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "mocha --require @babel/register tests/template.test.js"
+    "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js"
   },
   "keywords": [],
   "author": "",

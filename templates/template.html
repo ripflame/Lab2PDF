@@ -5,10 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hemograma completo</title>
   <style>
+    @page {
+      size: 8.5in 11in; /* Letter size */
+      margin: 0; /* Avoid default margins */
+    }
     body {
-      margin: 0;
+      width: 816px;
+      height: 1056px;
+      margin: 0 auto;
       padding: 0;
-      height: 100vh;
+      box-sizing: border-box;
       position: relative;
     }
     .top-graphic, .bottom-graphic {
@@ -24,7 +30,7 @@
   </style>
 </head>
 <body>
-  <img src="{{topImagePath}}" alt="Top Graphic" class="top-graphic">
-  <img src="{{bottomImagePath}}" alt="Bottom Graphic" class="bottom-graphic">
+  <img src="./img/top.svg" alt="Top Graphic" class="top-graphic">
+  <img src="./img/bottom.svg" alt="Bottom Graphic" class="bottom-graphic">
 </body>
 </html>

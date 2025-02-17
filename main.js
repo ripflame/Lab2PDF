@@ -31,11 +31,11 @@ app.whenReady().then(() => {
 ipcMain.on('generarPDF', async (event, formData) => {
   const pdfPath = path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`);
   const templatePath = path.join(__dirname, 'templates', 'template.html');
-  const topImagePath = path.join(__dirname, 'templates', 'img', 'top.png');
-  const bottomImagePath = path.join(__dirname, 'templates', 'img', 'bottom.png');
+  const topImagePath = path.join(__dirname, 'templates', 'img', 'top.svg');
+  const bottomImagePath = path.join(__dirname, 'templates', 'img', 'bottom.svg');
 
-  console.log('Top Image Path:', topImagePath);
-  console.log('Bottom Image Path:', bottomImagePath);
+  const topImageContent = fs.readFileSync(topImagePath, 'utf8');
+  const bottomImageContent = fs.readFileSync(bottomImagePath, 'utf8');
 
   try {
     // Load and read the HTML template
@@ -46,9 +46,9 @@ ipcMain.on('generarPDF', async (event, formData) => {
                              .replace('{{especie}}', formData.especie)
                              .replace('{{raza}}', formData.raza);
 
-    // Replace image paths with absolute paths
-    htmlContent = htmlContent.replace('{{topImagePath}}', `file://${topImagePath.replace(/\\/g, '/')}`)
-                             .replace('{{bottomImagePath}}', `file://${bottomImagePath.replace(/\\/g, '/')}`);
+    // Embed SVG images directly into the HTML
+    htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
+                 .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();

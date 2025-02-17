@@ -82,8 +82,8 @@ describe('PDF Generation', function() {
                              .replace('{{raza}}', formData.raza);
 
     // Embed SVG images directly into the HTML
-    htmlContent = htmlContent.replace('{{topImagePath}}', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
-                             .replace('{{bottomImagePath}}', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
+    htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
+                 .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -107,7 +107,17 @@ describe('PDF Generation', function() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Generate the PDF
-    await page.pdf({ path: pdfPath, format: 'letter' });
+    await page.pdf({ 
+      path: pdfPath, 
+      format: 'letter',
+      printBackground: true,
+      margin: {
+        top: '0in',
+        right: '0in',
+        bottom: '0in',
+        left: '0in'
+      }
+    });
 
     await browser.close();
 
