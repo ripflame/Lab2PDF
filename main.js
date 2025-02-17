@@ -3,6 +3,11 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
+// Add electron-reload
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+});
+
 let mainWindow;
 
 app.whenReady().then(() => {
@@ -25,7 +30,12 @@ app.whenReady().then(() => {
 
 ipcMain.on('generarPDF', async (event, formData) => {
   const pdfPath = path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`);
-  const templatePath = path.join(__dirname, 'template.html');
+  const templatePath = path.join(__dirname, 'templates', 'template.html');
+  const topImagePath = path.join(__dirname, 'templates', 'img', 'top.png');
+  const bottomImagePath = path.join(__dirname, 'templates', 'img', 'bottom.png');
+
+  console.log('Top Image Path:', topImagePath);
+  console.log('Bottom Image Path:', bottomImagePath);
 
   try {
     // Load and read the HTML template
@@ -36,11 +46,27 @@ ipcMain.on('generarPDF', async (event, formData) => {
                              .replace('{{especie}}', formData.especie)
                              .replace('{{raza}}', formData.raza);
 
+    // Replace image paths with absolute paths
+    htmlContent = htmlContent.replace('{{topImagePath}}', `file://${topImagePath.replace(/\\/g, '/')}`)
+                             .replace('{{bottomImagePath}}', `file://${bottomImagePath.replace(/\\/g, '/')}`);
+
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // Load the processed HTML content
     await page.setContent(htmlContent, { waitUntil: 'load' });
+
+    // Ensure images are fully loaded
+    await page.evaluate(async () => {
+      const images = Array.from(document.images);
+      await Promise.all(images.map(img => {
+        if (img.complete) return;
+        return new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      }));
+    });
 
     // Generate the PDF
     await page.pdf({ path: pdfPath, format: 'letter' });

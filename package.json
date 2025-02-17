@@ -4,14 +4,17 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require @babel/register tests/template.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^34.1.1"
+    "electron": "^34.1.1",
+    "electron-reload": "^2.0.0-alpha.1",
+    "mocha": "^10.2.0",
+    "@babel/register": "^7.21.0"
   },
   "dependencies": {
     "puppeteer": "^24.2.0"
