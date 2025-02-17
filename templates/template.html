@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hemograma completo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <style>
     @page {
       size: 8.5in 11in; /* Letter size */
@@ -16,10 +18,14 @@
       padding: 0;
       box-sizing: border-box;
       position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; /* Base size for rem units */
+      color: #222;
     }
     .top-graphic, .bottom-graphic {
       width: 100%;
       position: absolute;
+      z-index: -1; /* Ensure graphics are behind everything */
     }
     .top-graphic {
       top: 0;
@@ -27,10 +33,240 @@
     .bottom-graphic {
       bottom: 0;
     }
+    .header-title {
+      color: #FFF;
+      text-align: center;
+      text-shadow: 1px 1px 0px #FFD94B;
+      font-family: "Poller One";
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      margin-top: 0px;
+      margin-left: 190px;
+      padding-top: 20px;
+      text-transform: uppercase;
+    }
+    .pet-details {
+      display: flex;
+      flex-direction: column;
+      padding-top: 30px;
+      padding-left: 210px;
+    }
+    .pet-details_heading {
+      font-weight: 500;
+      margin: 0 0 5px 0;
+    }
+    .pet-details_wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 60px 0 0;
+    }
+    .pet-details_box {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+    }
+    .pet-details_label {
+      font-weight: 500;
+      min-width: 95px;
+    }
+    .pet-details_item {
+      display: flex;
+      margin-bottom: 0;
+    }
+    table {
+      width: auto;
+      border-collapse: collapse;
+      margin: 10px auto;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 0 5px;
+      text-align: center;
+    }
+    td:first-child {
+      text-align: left;
+    }
+    th {
+      background-color: #00B0F0;
+      color: white;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .semi-bold {
+      font-weight: 500;
+    }
+    .center {
+      text-align: center !important;
+    }
   </style>
 </head>
 <body>
-  <img src="./img/top.svg" alt="Top Graphic" class="top-graphic">
-  <img src="./img/bottom.svg" alt="Bottom Graphic" class="bottom-graphic">
+  <header>
+    <img src="./img/top.svg" alt="Top Graphic" class="top-graphic">
+    <h1 class="header-title">Resultados de laboratorio<br>Hemograma completo</h1>
+  </header>
+  <section class="pet-details">
+    <p class="pet-details_heading">{{requerido}}</p>
+    <div class="pet-details_wrapper">
+      <div class="pet-details_box">
+        <div class="pet-details_item">
+          <span class="pet-details_label">Fecha:</span>
+          <span class="pet-details_value">{{fecha}}</span>
+        </div>
+        <div class="pet-details_item">
+          <span class="pet-details_label">Nombre:</span>
+          <span class="pet-details_value">{{nombreMascota}}</span>
+        </div>
+        <div class="pet-details_item">
+          <span class="pet-details_label">Especie:</span>
+          <span class="pet-details_value">{{especie}}</span>
+        </div>
+        <div class="pet-details_item">
+          <span class="pet-details_label">Propietario:</span>
+          <span class="pet-details_value">{{nombrePropietario}}</span>
+        </div>
+      </div>
+      <div class="pet-details_box">
+        <div class="pet-details_item">
+          <div class="pet-details_label">Edad:</div>
+          <div class="pet-details_value">{{edad}}</div>
+        </div>
+        <div class="pet-details_item">
+          <div class="pet-details_label">Raza:</div>
+          <div class="pet-details_value">{{raza}}</div>
+        </div>
+        <div class="pet-details_item">
+          <div class="pet-details_label">Sexo:</div>
+          <div class="pet-details_value">{{sexo}}</div>
+        </div>
+        <div class="pet-details_item">
+          <div class="pet-details_label">Teléfono:</div>
+          <div class="pet-details_value">{{telefono}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <table>
+    <thead>
+      <tr>
+        <th>Prueba</th>
+        <th>Resultado</th>
+        <th>Valor de Referencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bold"><td class="center" colspan="3">HEMATOLOGÍA</td></tr>
+      <tr class="bold"><td class="center" colspan="3"><i>FÓRMULA ROJA</i></td></tr>
+      <tr>
+        <td>Eritrocitos</td>
+        <td class="semi-bold">{{eritrocitos}}</td>
+        <td>5'500,000 a 8'500,000 x mm³</td>
+      </tr>
+      <tr>
+        <td>Hemoglobina</td>
+        <td class="semi-bold">{{hemoglobina}}</td>
+        <td>12.0 a 18.0 g/dl</td>
+      </tr>
+      <tr>
+        <td>Hematocrito</td>
+        <td class="semi-bold">{{hematocrito}}</td>
+        <td>37.0 a 55.0 %</td>
+      </tr>
+      <tr>
+        <td>Volumen Globular Medio</td>
+        <td class="semi-bold">{{vgm}}</td>
+        <td>60.0 a 77.0 fl</td>
+      </tr>
+      <tr>
+        <td>Hemoglobina Promedio por Eritrocito</td>
+        <td class="semi-bold">{{hpe}}</td>
+        <td>19.5 a 24.5 pg</td>
+      </tr>
+      <tr>
+        <td>Concentración Media de Hemoglobina</td>
+        <td class="semi-bold">{{cmh}}</td>
+        <td>32.0 a 36.0 g/dl</td>
+      </tr>
+      <tr>
+        <td>Plaquetas</td>
+        <td class="semi-bold">{{plaquetas}}</td>
+        <td>200,000 a 500,000 x mm³</td>
+      </tr>
+      <tr class="bold"><td class="center" colspan="3"><i>FÓRMULA BLANCA</i></td></tr>
+      <tr>
+        <td>Leucocitos</td>
+        <td class="semi-bold">{{leucocitos}}</td>
+        <td>6,000 a 17,000 x mm³</td>
+      </tr>
+      <tr class="bold"><td class="center" colspan="3"><i>VALORES RELATIVOS</i></td></tr>
+      <tr>
+        <td>Monocitos</td>
+        <td class="semi-bold">{{monocitos_rel}}</td>
+        <td>3 a 10 %</td>
+      </tr>
+      <tr>
+        <td>Linfocitos</td>
+        <td class="semi-bold">{{linfocitos_rel}}</td>
+        <td>13 a 15 %</td>
+      </tr>
+      <tr>
+        <td>Eosinófilos</td>
+        <td class="semi-bold">{{eosinofilos_rel}}</td>
+        <td>2 a 10 %</td>
+      </tr>
+      <tr>
+        <td>Basófilos</td>
+        <td class="semi-bold">{{basofilos_rel}}</td>
+        <td>0 a 1 %</td>
+      </tr>
+      <tr>
+        <td>Neutrófilos Segmentados</td>
+        <td class="semi-bold">{{neutrofilos_segmentados_rel}}</td>
+        <td>60 a 77 %</td>
+      </tr>
+      <tr>
+        <td>Neutrófilos en Banda</td>
+        <td class="semi-bold">{{neutrofilos_banda_rel}}</td>
+        <td>0 a 3 %</td>
+      </tr>
+      <tr class="bold"><td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td></tr>
+      <tr>
+        <td>Monocitos</td>
+        <td class="semi-bold">{{monocitos_abs}}</td>
+        <td>150 a 1,350 x mm³</td>
+      </tr>
+      <tr>
+        <td>Linfocitos</td>
+        <td class="semi-bold">{{linfocitos_abs}}</td>
+        <td>1,000 a 5,000 x mm³</td>
+      </tr>
+      <tr>
+        <td>Eosinófilos</td>
+        <td class="semi-bold">{{eosinofilos_abs}}</td>
+        <td>100 a 1,000 x mm³</td>
+      </tr>
+      <tr>
+        <td>Basófilos</td>
+        <td class="semi-bold">{{basofilos_abs}}</td>
+        <td>0 a 100 x mm³</td>
+      </tr>
+      <tr>
+        <td>Neutrófilos Segmentados</td>
+        <td class="semi-bold">{{neutrofilos_segmentados_abs}}</td>
+        <td>3,000 a 11,500 x mm³</td>
+      </tr>
+      <tr>
+        <td>Neutrófilos en Banda</td>
+        <td class="semi-bold">{{neutrofilos_banda_abs}}</td>
+        <td>0 a 300 x mm³</td>
+      </tr>
+    </tbody>
+  </table>
+  <footer>
+    <img src="./img/bottom.svg" alt="Bottom Graphic" class="bottom-graphic">
+  </footer>
 </body>
 </html>

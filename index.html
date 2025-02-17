@@ -44,18 +44,30 @@
     <input type="number" id="plaquetas" placeholder="Plaquetas" required><br>
     <label for="leucocitos">Leucocitos:</label>
     <input type="number" id="leucocitos" placeholder="Leucocitos" required><br>
-    <label for="monocitos">Monocitos:</label>
-    <input type="number" id="monocitos" placeholder="Monocitos" required><br>
-    <label for="linfocitos">Linfocitos:</label>
-    <input type="number" id="linfocitos" placeholder="Linfocitos" required><br>
-    <label for="eosinofilos">Eosinófilos:</label>
-    <input type="number" id="eosinofilos" placeholder="Eosinófilos" required><br>
-    <label for="basofilos">Basófilos:</label>
-    <input type="number" id="basofilos" placeholder="Basófilos" required><br>
-    <label for="neutrofilosSegmentados">Neutrófilos Segmentados:</label>
-    <input type="number" id="neutrofilosSegmentados" placeholder="Neutrófilos Segmentados" required><br>
-    <label for="neutrofilosBanda">Neutrófilos en Banda:</label>
-    <input type="number" id="neutrofilosBanda" placeholder="Neutrófilos en Banda" required><br>
+    <label for="monocitos_rel">Monocitos (Relativo):</label>
+    <input type="number" id="monocitos_rel" placeholder="Monocitos (Relativo)" required><br>
+    <label for="linfocitos_rel">Linfocitos (Relativo):</label>
+    <input type="number" id="linfocitos_rel" placeholder="Linfocitos (Relativo)" required><br>
+    <label for="eosinofilos_rel">Eosinófilos (Relativo):</label>
+    <input type="number" id="eosinofilos_rel" placeholder="Eosinófilos (Relativo)" required><br>
+    <label for="basofilos_rel">Basófilos (Relativo):</label>
+    <input type="number" id="basofilos_rel" placeholder="Basófilos (Relativo)" required><br>
+    <label for="neutrofilos_segmentados_rel">Neutrófilos Segmentados (Relativo):</label>
+    <input type="number" id="neutrofilos_segmentados_rel" placeholder="Neutrófilos Segmentados (Relativo)" required><br>
+    <label for="neutrofilos_banda_rel">Neutrófilos en Banda (Relativo):</label>
+    <input type="number" id="neutrofilos_banda_rel" placeholder="Neutrófilos en Banda (Relativo)" required><br>
+    <label for="monocitos_abs">Monocitos (Absoluto):</label>
+    <input type="number" id="monocitos_abs" placeholder="Monocitos (Absoluto)" required><br>
+    <label for="linfocitos_abs">Linfocitos (Absoluto):</label>
+    <input type="number" id="linfocitos_abs" placeholder="Linfocitos (Absoluto)" required><br>
+    <label for="eosinofilos_abs">Eosinófilos (Absoluto):</label>
+    <input type="number" id="eosinofilos_abs" placeholder="Eosinófilos (Absoluto)" required><br>
+    <label for="basofilos_abs">Basófilos (Absoluto):</label>
+    <input type="number" id="basofilos_abs" placeholder="Basófilos (Absoluto)" required><br>
+    <label for="neutrofilos_segmentados_abs">Neutrófilos Segmentados (Absoluto):</label>
+    <input type="number" id="neutrofilos_segmentados_abs" placeholder="Neutrófilos Segmentados (Absoluto)" required><br>
+    <label for="neutrofilos_banda_abs">Neutrófilos en Banda (Absoluto):</label>
+    <input type="number" id="neutrofilos_banda_abs" placeholder="Neutrófilos en Banda (Absoluto)" required><br>
     <button type="submit">Generar PDF</button>
   </form>
   <div id="resultadoPDF" style="display:none;">
@@ -68,6 +80,9 @@
     document.getElementById('formularioInformeLaboratorio').addEventListener('submit', (e) => {
       e.preventDefault();
       const datos = {
+        requerido: document.getElementById('requerido').value,
+        nombrePropietario: document.getElementById('nombrePropietario').value,
+        telefono: document.getElementById('telefono').value,
         nombreMascota: document.getElementById('nombreMascota').value,
         especie: document.getElementById('especie').value,
         raza: document.getElementById('raza').value,
@@ -82,12 +97,18 @@
         concentracionMediaHemoglobina: document.getElementById('concentracionMediaHemoglobina').value,
         plaquetas: document.getElementById('plaquetas').value,
         leucocitos: document.getElementById('leucocitos').value,
-        monocitos: document.getElementById('monocitos').value,
-        linfocitos: document.getElementById('linfocitos').value,
-        eosinofilos: document.getElementById('eosinofilos').value,
-        basofilos: document.getElementById('basofilos').value,
-        neutrofilosSegmentados: document.getElementById('neutrofilosSegmentados').value,
-        neutrofilosBanda: document.getElementById('neutrofilosBanda').value,
+        monocitos_rel: document.getElementById('monocitos_rel').value,
+        linfocitos_rel: document.getElementById('linfocitos_rel').value,
+        eosinofilos_rel: document.getElementById('eosinofilos_rel').value,
+        basofilos_rel: document.getElementById('basofilos_rel').value,
+        neutrofilos_segmentados_rel: document.getElementById('neutrofilos_segmentados_rel').value,
+        neutrofilos_banda_rel: document.getElementById('neutrofilos_banda_rel').value,
+        monocitos_abs: document.getElementById('monocitos_abs').value,
+        linfocitos_abs: document.getElementById('linfocitos_abs').value,
+        eosinofilos_abs: document.getElementById('eosinofilos_abs').value,
+        basofilos_abs: document.getElementById('basofilos_abs').value,
+        neutrofilos_segmentados_abs: document.getElementById('neutrofilos_segmentados_abs').value,
+        neutrofilos_banda_abs: document.getElementById('neutrofilos_banda_abs').value,
       };
       window.electron.generarPDF(datos);
     });
