@@ -38,7 +38,7 @@ ipcMain.on('generarPDF', async (event, formData) => {
   const bottomImageContent = fs.readFileSync(bottomImagePath, 'utf8');
 
   function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
   }
 
   function formatPhoneNumber(phoneNumber) {
@@ -74,18 +74,18 @@ ipcMain.on('generarPDF', async (event, formData) => {
                              .replace('{{cmh}}', formatNumber(formData.concentracionMediaHemoglobina))
                              .replace('{{plaquetas}}', formatNumber(formData.plaquetas))
                              .replace('{{leucocitos}}', formatNumber(formData.leucocitos))
-                             .replace('{{monocitos_rel}}', formatNumber(formData.monocitos))
-                             .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos))
-                             .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos))
-                             .replace('{{basofilos_rel}}', formatNumber(formData.basofilos))
-                             .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilosSegmentados))
-                             .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilosBanda))
-                             .replace('{{monocitos_abs}}', formatNumber(formData.monocitos))
-                             .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos))
-                             .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos))
-                             .replace('{{basofilos_abs}}', formatNumber(formData.basofilos))
-                             .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilosSegmentados))
-                             .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilosBanda));
+                             .replace('{{monocitos_rel}}', formatNumber(formData.monocitos_rel))
+                             .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos_rel))
+                             .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos_rel))
+                             .replace('{{basofilos_rel}}', formatNumber(formData.basofilos_rel))
+                             .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilos_segmentados_rel))
+                             .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilos_banda_rel))
+                             .replace('{{monocitos_abs}}', formatNumber(formData.monocitos_abs))
+                             .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos_abs))
+                             .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos_abs))
+                             .replace('{{basofilos_abs}}', formatNumber(formData.basofilos_abs))
+                             .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
+                             .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
 
     // Embed SVG images directly into the HTML
     htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
@@ -109,8 +109,21 @@ ipcMain.on('generarPDF', async (event, formData) => {
       }));
     });
 
+    // Add a delay before generating the PDF
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     // Generate the PDF
-    await page.pdf({ path: pdfPath, format: 'letter' });
+    await page.pdf({ 
+      path: pdfPath, 
+      format: 'letter',
+      printBackground: true,
+      margin: {
+        top: '0in',
+        right: '0in',
+        bottom: '0in',
+        left: '0in'
+      }
+    });
 
     await browser.close();
 

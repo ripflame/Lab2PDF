@@ -102,6 +102,20 @@
       color: white;
     }
 
+    /* Maquilado section */
+    .maquilado-section {
+      padding: 0 58px;
+    }
+    .maquilado-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .maquilado-details {
+      flex: 1;
+    }
+
     /* Text styles */
     .bold {
       font-weight: bold;
@@ -276,6 +290,13 @@
       </tr>
     </tbody>
   </table>
+  <section class="maquilado-section">
+    <div class="maquilado-info">
+      <span class="maquilado-label">Maquilado por:</span>
+      <span class="maquilado-details">{{maquilado}}</span>
+      <!-- <span class="maquilado-details">LABORATORIO CLÍNICO DE LOS RÍOS Saquila con Chacamax s/n. Col. Ganadera, CP. 86981, EMILIANO ZAPATA, TABASCO</span> -->
+    </div>
+  </section>
   <footer>
     <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom">
   </footer>

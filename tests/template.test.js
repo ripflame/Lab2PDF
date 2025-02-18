@@ -42,8 +42,8 @@ describe('Template HTML Generation', () => {
       }));
     });
 
-    const topGraphic = await page.$('.top-graphic');
-    const bottomGraphic = await page.$('.bottom-graphic');
+    const topGraphic = await page.$('.graphic-top');
+    const bottomGraphic = await page.$('.graphic-bottom');
 
     assert.ok(topGraphic, 'Top graphic should be present');
     assert.ok(bottomGraphic, 'Bottom graphic should be present');
@@ -119,7 +119,6 @@ describe('PDF Generation', function() {
 
     function formatPhoneNumber(phoneNumber) {
       const formatted = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1)$2-$3');
-      console.log('Formatted Phone Number:', formatted); // Debugging line
       return formatted;
     }
 
