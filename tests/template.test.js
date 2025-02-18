@@ -73,22 +73,18 @@ describe('PDF Generation', function() {
       concentracionMediaHemoglobina: '32.7',
       plaquetas: '339000',
       leucocitos: '14400',
-      relativos: {
-        monocitos: '0',
-        linfocitos: '44',
-        eosinofilos: '18',
-        basofilos: '0',
-        neutrofilosSegmentados: '38',
-        neutrofilosBanda: '0'
-      },
-      absolutos: {
-        monocitos: '0',
-        linfocitos: '6336',
-        eosinofilos: '2592',
-        basofilos: '0',
-        neutrofilosSegmentados: '5472',
-        neutrofilosBanda: '0'
-      }
+      monocitos_rel: '0',
+      linfocitos_rel: '44',
+      eosinofilos_rel: '18',
+      basofilos_rel: '0',
+      neutrofilos_segmentados_rel: '38',
+      neutrofilos_banda_rel: '0',
+      monocitos_abs: '0',
+      linfocitos_abs: '6336',
+      eosinofilos_abs: '2592',
+      basofilos_abs: '0',
+      neutrofilos_segmentados_abs: '5472',
+      neutrofilos_banda_abs: '0'
     };
 
     const outputDir = path.join(__dirname, 'test_output');
