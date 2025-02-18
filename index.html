@@ -71,7 +71,8 @@
     <button type="submit">Generar PDF</button>
   </form>
   <div id="resultadoPDF" style="display:none;">
-    <p>¡PDF generado! <a id="enlacePDF" href="#">Descárgalo aquí</a></p>
+    <p>¡PDF generado!</p>
+    <button id="abrirUbicacionPDF">Abrir ubicación del archivo</button>
   </div>
 
   <script>
@@ -114,8 +115,9 @@
     });
 
     window.electron.onPDFGenerado((event, rutaPDF) => {
-      const enlacePDF = document.getElementById('enlacePDF');
-      enlacePDF.href = `file://${rutaPDF}`;
+      document.getElementById('abrirUbicacionPDF').addEventListener('click', () => {
+        window.electron.abrirUbicacion(rutaPDF);
+      });
       document.getElementById('resultadoPDF').style.display = 'block';
     });
   </script>
