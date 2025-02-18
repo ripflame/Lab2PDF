@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <style>
+    /* Page setup */
     @page {
       size: 8.5in 11in; /* Letter size */
       margin: 0; /* Avoid default margins */
@@ -22,17 +23,21 @@
       font-size: 16px; /* Base size for rem units */
       color: #222;
     }
-    .top-graphic, .bottom-graphic {
+
+    /* Graphics */
+    .graphic {
       width: 100%;
       position: absolute;
       z-index: -1; /* Ensure graphics are behind everything */
     }
-    .top-graphic {
+    .graphic-top {
       top: 0;
     }
-    .bottom-graphic {
+    .graphic-bottom {
       bottom: 0;
     }
+
+    /* Header */
     .header-title {
       color: #FFF;
       text-align: center;
@@ -47,51 +52,57 @@
       padding-top: 20px;
       text-transform: uppercase;
     }
-    .pet-details {
+
+    /* Details section */
+    .details {
       display: flex;
       flex-direction: column;
       padding-top: 30px;
       padding-left: 210px;
     }
-    .pet-details_heading {
+    .details-heading {
       font-weight: 500;
       margin: 0 0 5px 0;
     }
-    .pet-details_wrapper {
+    .details-wrapper {
       display: flex;
       justify-content: space-between;
       padding: 0 60px 0 0;
     }
-    .pet-details_box {
+    .details-box {
       display: flex;
       flex-direction: column;
       width: 50%;
     }
-    .pet-details_label {
+    .details-label {
       font-weight: 500;
       min-width: 95px;
     }
-    .pet-details_item {
+    .details-item {
       display: flex;
       margin-bottom: 0;
     }
-    table {
+
+    /* Table */
+    .results-table {
       width: auto;
       border-collapse: collapse;
       margin: 10px auto;
     }
-    th, td {
+    .results-table th, .results-table td {
       border: 1px solid #000;
       padding: 0 5px;
       text-align: center;
     }
-    td:first-child {
+    .results-table td:first-child {
       text-align: left;
     }
-    th {
+    .results-table th {
       background-color: #00B0F0;
       color: white;
     }
+
+    /* Text styles */
     .bold {
       font-weight: bold;
     }
@@ -105,51 +116,51 @@
 </head>
 <body>
   <header>
-    <img src="./img/top.svg" alt="Top Graphic" class="top-graphic">
+    <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top">
     <h1 class="header-title">Resultados de laboratorio<br>Hemograma completo</h1>
   </header>
-  <section class="pet-details">
-    <p class="pet-details_heading">{{requerido}}</p>
-    <div class="pet-details_wrapper">
-      <div class="pet-details_box">
-        <div class="pet-details_item">
-          <span class="pet-details_label">Fecha:</span>
-          <span class="pet-details_value">{{fecha}}</span>
+  <section class="details">
+    <p class="details-heading">{{requerido}}</p>
+    <div class="details-wrapper">
+      <div class="details-box">
+        <div class="details-item">
+          <span class="details-label">Fecha:</span>
+          <span class="details-value">{{fecha}}</span>
         </div>
-        <div class="pet-details_item">
-          <span class="pet-details_label">Nombre:</span>
-          <span class="pet-details_value">{{nombreMascota}}</span>
+        <div class="details-item">
+          <span class="details-label">Nombre:</span>
+          <span class="details-value">{{nombreMascota}}</span>
         </div>
-        <div class="pet-details_item">
-          <span class="pet-details_label">Especie:</span>
-          <span class="pet-details_value">{{especie}}</span>
+        <div class="details-item">
+          <span class="details-label">Especie:</span>
+          <span class="details-value">{{especie}}</span>
         </div>
-        <div class="pet-details_item">
-          <span class="pet-details_label">Propietario:</span>
-          <span class="pet-details_value">{{nombrePropietario}}</span>
+        <div class="details-item">
+          <span class="details-label">Propietario:</span>
+          <span class="details-value">{{nombrePropietario}}</span>
         </div>
       </div>
-      <div class="pet-details_box">
-        <div class="pet-details_item">
-          <div class="pet-details_label">Edad:</div>
-          <div class="pet-details_value">{{edad}}</div>
+      <div class="details-box">
+        <div class="details-item">
+          <div class="details-label">Edad:</div>
+          <div class="details-value">{{edad}}</div>
         </div>
-        <div class="pet-details_item">
-          <div class="pet-details_label">Raza:</div>
-          <div class="pet-details_value">{{raza}}</div>
+        <div class="details-item">
+          <div class="details-label">Raza:</div>
+          <div class="details-value">{{raza}}</div>
         </div>
-        <div class="pet-details_item">
-          <div class="pet-details_label">Sexo:</div>
-          <div class="pet-details_value">{{sexo}}</div>
+        <div class="details-item">
+          <div class="details-label">Sexo:</div>
+          <div class="details-value">{{sexo}}</div>
         </div>
-        <div class="pet-details_item">
-          <div class="pet-details_label">Teléfono:</div>
-          <div class="pet-details_value">{{telefono}}</div>
+        <div class="details-item">
+          <div class="details-label">Teléfono:</div>
+          <div class="details-value">{{telefono}}</div>
         </div>
       </div>
     </div>
   </section>
-  <table>
+  <table class="results-table">
     <thead>
       <tr>
         <th>Prueba</th>
@@ -266,7 +277,7 @@
     </tbody>
   </table>
   <footer>
-    <img src="./img/bottom.svg" alt="Bottom Graphic" class="bottom-graphic">
+    <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom">
   </footer>
 </body>
 </html>
