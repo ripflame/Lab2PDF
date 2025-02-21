@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { generatePDF } = require('./utils/pdfGenerator');
@@ -12,8 +12,10 @@ let mainWindow;
 
 app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -29,13 +31,19 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on('generarPDF', async (event, formData) => {
+  console.log('Datos recibidos para generar PDF:', formData); // Debugging line
   const pdfPath = path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
   try {
     await generatePDF(formData, pdfPath);
+    console.log('PDF generado en:', pdfPath); // Debugging line
     event.reply('onPDFGenerado', pdfPath);
   } catch (error) {
     console.error('Error generating PDF:', error);
     event.reply('onPDFGenerado', 'Error generating PDF');
   }
+});
+
+ipcMain.on('abrirUbicacion', (event, ruta) => {
+  shell.showItemInFolder(ruta);
 });
