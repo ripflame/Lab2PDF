@@ -31,12 +31,10 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on('generarPDF', async (event, formData) => {
-  console.log('Datos recibidos para generar PDF:', formData); // Debugging line
   const pdfPath = path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
   try {
     await generatePDF(formData, pdfPath);
-    console.log('PDF generado en:', pdfPath); // Debugging line
     event.reply('onPDFGenerado', pdfPath);
   } catch (error) {
     console.error('Error generating PDF:', error);
