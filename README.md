@@ -1,3 +1,28 @@
 # Lab2PDF
 
-Simple app to help transcribe lab results into a formatted PDF file. This application allows users to input lab results and generates a well-structured PDF document, making it easier to share and store lab data. The app ensures accuracy and consistency in the formatting of the lab results.
+This application allows you to generate PDF reports for laboratory results.
+
+## Features
+
+- Generate Hemogram reports
+- Generate Hemoparasites reports
+
+## Installation
+
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Run `npm start` to start the application.
+
+## Usage
+
+1. Use the sidebar to navigate between Hemogram and Hemoparasites reports.
+2. Fill out the form and click "Generar PDF" to generate the report.
+3. The generated PDF will be saved in your documents folder.
+
+## Development
+
+To start the application in development mode with live reload:
+
+```bash
+npm run dev
+```

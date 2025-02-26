@@ -13,6 +13,11 @@
 .form-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+.form-columns {
+  display: flex;
+  justify-content: center;
 }
 .form-column {
   flex: 1;
@@ -121,4 +126,41 @@
 }
 .details[open] .summary::before {
   transform: rotate(90deg);
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #333;
+  padding-top: 20px;
+}
+.sidebar h2 {
+  color: #fff;
+  text-align: center;
+}
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+.sidebar ul li {
+  padding: 10px;
+  text-align: center;
+}
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+.sidebar ul li a:hover {
+  background-color: #575757;
+}
+
+/* Content Styles */
+.content {
+  margin-left: 150px;
+  padding: 20px;
 }

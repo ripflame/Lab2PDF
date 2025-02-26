@@ -1,0 +1,101 @@
+<!-- Hemogram form content -->
+<h1 class="title">RESULTADOS DE LABORATORIO<br>HEMOGRAMA COMPLETO</h1>
+<form id="formularioInformeLaboratorio" class="form">
+    <div class="form-columns" style="display: flex;">
+        <div class="form-column">
+          <fieldset class="fieldset">
+            <legend class="legend">Información del Propietario</legend>
+            <label for="requerido" class="label">Requerido por:</label>
+            <input type="text" id="requerido" class="input-text" placeholder="Requerido por" value="Veterinaria CaNinna" required><br>
+            <label for="nombrePropietario" class="label">Propietario:</label>
+            <input type="text" id="nombrePropietario" class="input-text" placeholder="Propietario" required><br>
+            <label for="telefono" class="label">Teléfono:</label>
+            <input type="tel" id="telefono" class="input-tel" placeholder="Teléfono" required><br>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="legend">Información de la Mascota</legend>
+            <label for="nombreMascota" class="label">Nombre:</label>
+            <input name="nombreMascota" type="text" id="nombreMascota" class="input-text" placeholder="Nombre" required><br>
+            <label for="especie" class="label">Especie:</label>
+            <input type="text" id="especie" class="input-text" placeholder="Especie" required><br>
+            <label for="raza" class="label">Raza:</label>
+            <input type="text" id="raza" class="input-text" placeholder="Raza" required><br>
+            <label for="edad" class="label">Edad:</label>
+            <input type="number" id="edad" class="input-number" placeholder="Edad" step="0.01" required><br>
+            <label class="label">Sexo:</label>
+            <div class="radio-group">
+              <input type="radio" id="macho" name="sexo" value="macho" checked required>
+              <label for="macho" class="label">Macho</label>
+              <input type="radio" id="hembra" name="sexo" value="hembra" required>
+              <label for="hembra" class="label">Hembra</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-column">
+          <fieldset class="fieldset">
+            <legend class="legend">Resultados del Hemograma</legend>
+            <label for="fecha" class="label">Fecha:</label>
+            <input type="date" id="fecha" class="input-date" required><br>
+            <fieldset class="fieldset">
+              <legend class="legend">Fórmula Roja</legend>
+              <details class="details">
+                <summary class="summary">Valores</summary>
+                  <label for="eritrocitos" class="label">Eritrocitos:</label>
+                  <input type="number" id="eritrocitos" class="input-number" placeholder="Eritrocitos" step="0.01" required><br>
+                  <label for="hemoglobina" class="label">Hemoglobina:</label>
+                  <input type="number" id="hemoglobina" class="input-number" placeholder="Hemoglobina" step="0.01" required><br>
+                  <label for="hematocrito" class="label">Hematocrito:</label>
+                  <input type="number" id="hematocrito" class="input-number" placeholder="Hematocrito" step="0.01" required><br>
+                  <label for="volumenGlobularMedio" class="label">Volumen Globular Medio:</label>
+                  <input type="number" id="volumenGlobularMedio" class="input-number" placeholder="Volumen Globular Medio" step="0.01" required><br>
+                  <label for="hemoglobinaPromedio" class="label">Hemoglobina Promedio por Eritrocito:</label>
+                  <input type="number" id="hemoglobinaPromedio" class="input-number" placeholder="Hemoglobina Promedio por Eritrocito" step="0.01" required><br>
+                  <label for="concentracionMediaHemoglobina" class="label">Concentración Media de Hemoglobina:</label>
+                  <input type="number" id="concentracionMediaHemoglobina" class="input-number" placeholder="Concentración Media de Hemoglobina" step="0.01" required><br>
+                  <label for="plaquetas" class="label">Plaquetas:</label>
+                  <input type="number" id="plaquetas" class="input-number" placeholder="Plaquetas" step="0.01" required><br>
+              </details>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend">Fórmula Blanca</legend>
+              <details class="details">
+                <summary class="summary">Valores</summary>
+              <label for="leucocitos" class="label">Leucocitos:</label>
+              <input type="number" id="leucocitos" class="input-number" placeholder="Leucocitos" step="0.01" required><br>
+              <details class="details">
+                <summary class="summary">Valores relativos</summary>
+                <label for="monocitos_rel" class="label">Monocitos (Relativo):</label>
+                <input type="number" id="monocitos_rel" class="input-number" placeholder="Monocitos (Relativo)" step="0.01" required><br>
+                <label for="linfocitos_rel" class="label">Linfocitos (Relativo):</label>
+                <input type="number" id="linfocitos_rel" class="input-number" placeholder="Linfocitos (Relativo)" step="0.01" required><br>
+                <label for="eosinofilos_rel" class="label">Eosinófilos (Relativo):</label>
+                <input type="number" id="eosinofilos_rel" class="input-number" placeholder="Eosinófilos (Relativo)" step="0.01" required><br>
+                <label for="basofilos_rel" class="label">Basófilos (Relativo):</label>
+                <input type="number" id="basofilos_rel" class="input-number" placeholder="Basófilos (Relativo)" step="0.01" required><br>
+                <label for="neutrofilos_segmentados_rel" class="label">Neutrófilos Segmentados (Relativo):</label>
+                <input type="number" id="neutrofilos_segmentados_rel" class="input-number" placeholder="Neutrófilos Segmentados (Relativo)" step="0.01" required><br>
+                <label for="neutrofilos_banda_rel" class="label">Neutrófilos en Banda (Relativo):</label>
+                <input type="number" id="neutrofilos_banda_rel" class="input-number" placeholder="Neutrófilos en Banda (Relativo)" step="0.01" required><br>
+              </details>
+              <details class="details">
+                <summary class="summary">Valores absolutos</summary>
+                <label for="monocitos_abs" class="label">Monocitos (Absoluto):</label>
+                <input type="number" id="monocitos_abs" class="input-number" placeholder="Monocitos (Absoluto)" step="0.01" required><br>
+                <label for="linfocitos_abs" class="label">Linfocitos (Absoluto):</label>
+                <input type="number" id="linfocitos_abs" class="input-number" placeholder="Linfocitos (Absoluto)" step="0.01" required><br>
+                <label for="eosinofilos_abs" class="label">Eosinófilos (Absoluto):</label>
+                <input type="number" id="eosinofilos_abs" class="input-number" placeholder="Eosinófilos (Absoluto)" step="0.01" required><br>
+                <label for="basofilos_abs" class="label">Basófilos (Absoluto):</label>
+                <input type="number" id="basofilos_abs" class="input-number" placeholder="Basófilos (Absoluto)" step="0.01" required><br>
+                <label for="neutrofilos_segmentados_abs" class="label">Neutrófilos Segmentados (Absoluto):</label>
+                <input type="number" id="neutrofilos_segmentados_abs" class="input-number" placeholder="Neutrófilos Segmentados (Absoluto)" step="0.01" required><br>
+                <label for="neutrofilos_banda_abs" class="label">Neutrófilos en Banda (Absoluto):</label>
+                <input type="number" id="neutrofilos_banda_abs" class="input-number" placeholder="Neutrófilos en Banda (Absoluto)" step="0.01" required><br>
+              </details>
+              </details>
+            </fieldset>
+          </fieldset>
+        </div>
+      </div>
+  <button type="submit" class="button">Generar PDF</button>
+</form>

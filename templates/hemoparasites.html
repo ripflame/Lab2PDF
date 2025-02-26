@@ -1,0 +1,38 @@
+<h1 class="title">RESULTADOS DE LABORATORIO<br>HEMOPARÁSITOS</h1>
+<form id="formularioInformeHemoparasitos" class="form">
+  <fieldset class="fieldset">
+    <legend class="legend">Información del Propietario</legend>
+    <label for="requerido" class="label">Requerido por:</label>
+    <input type="text" id="requerido" class="input-text" placeholder="Requerido por" value="Veterinaria CaNinna" required><br>
+    <label for="nombrePropietario" class="label">Propietario:</label>
+    <input type="text" id="nombrePropietario" class="input-text" placeholder="Propietario" required><br>
+    <label for="telefono" class="label">Teléfono:</label>
+    <input type="tel" id="telefono" class="input-tel" placeholder="Teléfono" required><br>
+  </fieldset>
+  <fieldset class="fieldset">
+    <legend class="legend">Información de la Mascota</legend>
+    <label for="nombreMascota" class="label">Nombre:</label>
+    <input name="nombreMascota" type="text" id="nombreMascota" class="input-text" placeholder="Nombre" required><br>
+    <label for="especie" class="label">Especie:</label>
+    <input type="text" id="especie" class="input-text" placeholder="Especie" required><br>
+    <label for="raza" class="label">Raza:</label>
+    <input type="text" id="raza" class="input-text" placeholder="Raza" required><br>
+    <label for="edad" class="label">Edad:</label>
+    <input type="number" id="edad" class="input-number" placeholder="Edad" step="0.01" required><br>
+    <label class="label">Sexo:</label>
+    <div class="radio-group">
+      <input type="radio" id="macho" name="sexo" value="macho" checked required>
+      <label for="macho" class="label">Macho</label>
+      <input type="radio" id="hembra" name="sexo" value="hembra" required>
+      <label for="hembra" class="label">Hembra</label>
+    </div>
+  </fieldset>
+  <fieldset class="fieldset">
+    <legend class="legend">Resultados de Hemoparásitos</legend>
+    <label for="fecha" class="label">Fecha:</label>
+    <input type="date" id="fecha" class="input-date" required><br>
+    <label for="hemoparasites" class="label">Hemoparásitos:</label>
+    <textarea id="hemoparasites" class="input-text" placeholder="Descripción de Hemoparásitos" required></textarea><br>
+  </fieldset>
+  <button type="submit" class="button">Generar PDF</button>
+</form>
