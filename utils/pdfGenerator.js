@@ -11,7 +11,7 @@ function formatPhoneNumber(phoneNumber) {
 }
 
 async function generatePDF(formData, outputPath) {
-  const templatePath = path.join(__dirname, '../templates/template.html');
+  const templatePath = path.join(__dirname, '../templates/hemogramTemplate.html');
   const topImagePath = path.join(__dirname, '../templates/img/top.svg');
   const bottomImagePath = path.join(__dirname, '../templates/img/bottom.svg');
 

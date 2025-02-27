@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hemograma completo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    /* Page setup */
+    @page {
+      size: 8.5in 11in; /* Letter size */
+      margin: 0; /* Avoid default margins */
+    }
+    body {
+      width: 816px;
+      height: 1056px;
+      margin: 0 auto;
+      padding: 0;
+      box-sizing: border-box;
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; /* Base size for rem units */
+      color: #222;
+    }
+
+    /* Graphics */
+    .graphic {
+      width: 100%;
+      position: absolute;
+      z-index: -1; /* Ensure graphics are behind everything */
+    }
+    .graphic-top {
+      top: 0;
+    }
+    .graphic-bottom {
+      bottom: 0;
+    }
+
+    /* Header */
+    .header-title {
+      color: #FFF;
+      text-align: center;
+      text-shadow: 1px 1px 0px #FFD94B;
+      font-family: "Poller One";
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      margin-top: 0px;
+      margin-left: 190px;
+      padding-top: 20px;
+      text-transform: uppercase;
+    }
+
+    /* Details section */
+    .details {
+      display: flex;
+      flex-direction: column;
+      padding-top: 30px;
+      padding-left: 210px;
+    }
+    .details-heading {
+      font-weight: 500;
+      margin: 0 0 5px 0;
+    }
+    .details-wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 60px 0 0;
+    }
+    .details-box {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+    }
+    .details-label {
+      font-weight: 500;
+      min-width: 95px;
+    }
+    .details-item {
+      display: flex;
+      margin-bottom: 0;
+    }
+
+    /* Table */
+    .results-table {
+      width: auto;
+      border-collapse: collapse;
+      margin: 10px auto;
+    }
+    .results-table th, .results-table td {
+      border: 1px solid #000;
+      padding: 0 5px;
+      text-align: center;
+    }
+    .results-table td:first-child {
+      text-align: left;
+    }
+    .results-table th {
+      background-color: #00B0F0;
+      color: white;
+    }
+
+    /* Maquilado section */
+    .maquilado-section {
+      padding: 0 58px;
+    }
+    .maquilado-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .maquilado-details {
+      flex: 1;
+    }
+
+    /* Text styles */
+    .bold {
+      font-weight: bold;
+    }
+    .semi-bold {
+      font-weight: 500;
+    }
+    .center {
+      text-align: center !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top">
+    <h1 class="header-title">Certificado de prueba rapida<br>hemoparasitos</h1>
+  </header>
+  <section class="details">
+    <p class="details-heading">{{requerido}}</p>
+    <div class="details-wrapper">
+      <div class="details-box">
+        <div class="details-item">
+          <span class="details-label">Fecha:</span>
+          <span class="details-value">{{fecha}}</span>
+        </div>
+        <div class="details-item">
+          <span class="details-label">Nombre:</span>
+          <span class="details-value">{{nombreMascota}}</span>
+        </div>
+        <div class="details-item">
+          <span class="details-label">Especie:</span>
+          <span class="details-value">{{especie}}</span>
+        </div>
+        <div class="details-item">
+          <span class="details-label">Propietario:</span>
+          <span class="details-value">{{nombrePropietario}}</span>
+        </div>
+      </div>
+      <div class="details-box">
+        <div class="details-item">
+          <div class="details-label">Edad:</div>
+          <div class="details-value">{{edad}}</div>
+        </div>
+        <div class="details-item">
+          <div class="details-label">Raza:</div>
+          <div class="details-value">{{raza}}</div>
+        </div>
+        <div class="details-item">
+          <div class="details-label">Sexo:</div>
+          <div class="details-value">{{sexo}}</div>
+        </div>
+        <div class="details-item">
+          <div class="details-label">Teléfono:</div>
+          <div class="details-value">{{telefono}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="results">
+    <p class="center">Se determina en prueba mediante inmunoensayo cromatografico, que el paciente es:</p>
+    <div class="columns-wrapper">
+      <div class="column">
+        Gusano del Corazón:
+        <span class="bold">{{gusanoCorazon}}</span>
+        Ehrlichiosis:
+        <span class="bold">{{ehrlichiosis}}</span>
+        Lyme:
+        <span class="bold">{{lyme}}</span>
+        Anaplasmosis:
+        <span class="bold">{{anaplasmosis}}</span>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom">
+  </footer>
+</body>
+</html>
