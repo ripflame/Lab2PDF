@@ -100,6 +100,14 @@
   margin-top: 20px;
 }
 
+/* Thumbnail Styles */
+.testFotoThumbnail {
+  display:none;
+  max-width: 300px;
+  margin-top: 10px;
+  object-fit: contain;
+}
+
 /* Details and Summary */
 .details {
   margin-bottom: 10px;

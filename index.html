@@ -76,8 +76,22 @@
             document.getElementById('formularioInformeLaboratorio').addEventListener('submit', handleFormSubmit);
           } else if (formType === 'hemoparasites') {
             document.getElementById('formularioHemoparasitos').addEventListener('submit', handleHemoparasitesFormSubmit);
+            document.getElementById('testFoto').addEventListener('change', handleTestFotoChange);
           }
         });
+    }
+
+    function handleTestFotoChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('testFotoThumbnail');
+          img.src = e.target.result;
+          img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
     function handleHemoparasitesFormSubmit(e) {
@@ -106,6 +120,7 @@
         ehrlichiosis: document.querySelector('input[name="ehrlichiosis"]:checked').value,
         lyme: document.querySelector('input[name="lyme"]:checked').value,
         anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
+        mascotaFoto: document.getElementById('mascotaFotoThumbnail').src,
       };
       console.log(datos);
       // window.electron.generarPDF(datos); // TO DO: Call function to generate hemoparasites PDF from proper template
