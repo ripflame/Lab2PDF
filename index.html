@@ -9,13 +9,45 @@
   <div class="sidebar">
     <h2>☰ Menú</h2>
     <ul>
-      <li><a href="#" id="hemogramLink">Hemograma</a></li>
       <li><a href="#" id="hemoparasitesLink">Hemoparásitos</a></li>
+      <li><a href="#" id="hemogramLink">Hemograma</a></li>
     </ul>
   </div>
   <div class="content">
     <div id="formContainer" class="form-container">
-      <!-- Hemogram form will be loaded here -->
+      <form id="commonFormFields" class="form">
+        <fieldset class="fieldset form-columns">
+          <legend class="legend">Información General</legend>
+          <div class="form-column">
+            <label class="label" for="requerido">Requerido por:</label>
+            <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required>
+            <label class="label" for="fecha">Fecha:</label>
+            <input class="input-date" type="date" id="fecha" required>
+            <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
+            <input class="input-text" type="text" id="nombrePropietario" required>
+            <label class="label" for="telefono">Teléfono:</label>
+            <input class="input-tel" type="tel" id="telefono" required>
+          </div>
+          <div class="form-column">
+            <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
+            <input class="input-text" type="text" id="nombreMascota" required>
+            <label class="label" for="especie">Especie:</label>
+            <input class="input-text" type="text" id="especie" required>
+            <label class="label" for="raza">Raza:</label>
+            <input class="input-text" type="text" id="raza" required>
+            <label class="label" for="edad">Edad:</label>
+            <input class="input-number" type="number" id="edad" required>
+            <label class="label">Sexo:</label>
+            <div class="radio-group">
+              <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked>
+              <label class="label" for="sexoMacho">Macho</label>
+              <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required>
+              <label class="label" for="sexoHembra">Hembra</label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <div id="specificFormFields"></div>
     </div>
     <div id="resultadoPDF" class="result-pdf" style="display:none;">
       <p>¡PDF generado!</p>
@@ -36,12 +68,47 @@
       fetch(`Templates/${formType}.html`)
         .then(response => response.text())
         .then(html => {
-          document.getElementById('formContainer').innerHTML = html;
+          document.getElementById('specificFormFields').innerHTML = html;
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          document.getElementById('fecha').valueAsDate = today;
           if (formType === 'hemogram') {
-            document.getElementById('fecha').valueAsDate = new Date();
             document.getElementById('formularioInformeLaboratorio').addEventListener('submit', handleFormSubmit);
+          } else if (formType === 'hemoparasites') {
+            document.getElementById('formularioHemoparasitos').addEventListener('submit', handleHemoparasitesFormSubmit);
           }
         });
+    }
+
+    function handleHemoparasitesFormSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const invalidFields = form.querySelectorAll(':invalid');
+      
+      if (invalidFields.length > 0) {
+        const detailsElements = form.querySelectorAll('details');
+        detailsElements.forEach(details => details.open = true);
+        invalidFields[0].focus();
+        return;
+      }
+
+      const datos = {
+        requerido: document.getElementById('requerido').value,
+        nombrePropietario: document.getElementById('nombrePropietario').value,
+        telefono: document.getElementById('telefono').value,
+        nombreMascota: document.getElementById('nombreMascota').value,
+        especie: document.getElementById('especie').value,
+        raza: document.getElementById('raza').value,
+        edad: document.getElementById('edad').value,
+        sexo: document.querySelector('input[name="sexo"]:checked').value,
+        fecha: document.getElementById('fecha').value,
+        gusanoCorazon: document.querySelector('input[name="gusanoCorazon"]:checked').value,
+        ehrlichiosis: document.querySelector('input[name="ehrlichiosis"]:checked').value,
+        lyme: document.querySelector('input[name="lyme"]:checked').value,
+        anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
+      };
+      console.log(datos);
+      // window.electron.generarPDF(datos); // TO DO: Call function to generate hemoparasites PDF from proper template
     }
 
     function handleFormSubmit(e) {
@@ -97,7 +164,7 @@
       document.getElementById('resultadoPDF').style.display = 'block';
     });
 
-    loadForm('hemogram'); // Load hemogram form by default
+    loadForm('hemoparasites'); // Load hemogram form by default
   </script>
 </body>
 </html>

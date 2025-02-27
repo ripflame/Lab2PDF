@@ -47,6 +47,7 @@
   display: block;
   margin-top: 10px;
   font-weight: bold;
+  cursor: pointer;
 }
 .input-text,
 .input-tel,
@@ -141,6 +142,7 @@
 .sidebar h2 {
   color: #fff;
   text-align: center;
+  margin: 0;
 }
 .sidebar ul {
   list-style-type: none;
