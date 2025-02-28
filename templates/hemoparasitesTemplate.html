@@ -59,6 +59,7 @@
       flex-direction: column;
       padding-top: 30px;
       padding-left: 210px;
+      margin-bottom: 50px;
     }
     .details-heading {
       font-weight: 500;
@@ -83,23 +84,21 @@
       margin-bottom: 0;
     }
 
-    /* Table */
-    .results-table {
-      width: auto;
-      border-collapse: collapse;
-      margin: 10px auto;
+    /* Test results section */
+    .test-results {
+      margin-bottom: 50px;
     }
-    .results-table th, .results-table td {
-      border: 1px solid #000;
-      padding: 0 5px;
-      text-align: center;
+
+    /* Columns */
+    .columns-wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
     }
-    .results-table td:first-child {
-      text-align: left;
-    }
-    .results-table th {
-      background-color: #00B0F0;
-      color: white;
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     /* Maquilado section */
@@ -125,6 +124,25 @@
     }
     .center {
       text-align: center !important;
+    }
+    .is-positive { 
+      color: #FF0000; 
+    }
+    /* Grid styles */
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 10px;
+      font-size: 19px;
+    }
+    .test-result-image {
+      width: 350px;
+      height: 200px;
+      background-color: #222;
+    }
+    .test-description {
+      text-align: center;
+      margin-bottom: 40px;
     }
   </style>
 </head>
@@ -174,20 +192,30 @@
       </div>
     </div>
   </section>
-  <section class="results">
-    <p class="center">Se determina en prueba mediante inmunoensayo cromatografico, que el paciente es:</p>
+  <section class="test-results">
+    <p class="test-description">El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:</p>
     <div class="columns-wrapper">
       <div class="column">
-        Gusano del Corazón:
-        <span class="bold">{{gusanoCorazon}}</span>
-        Ehrlichiosis:
-        <span class="bold">{{ehrlichiosis}}</span>
-        Lyme:
-        <span class="bold">{{lyme}}</span>
-        Anaplasmosis:
-        <span class="bold">{{anaplasmosis}}</span>
+        <div class="test-grid">
+          <div class="test-name">Gusano del corazón:</div>
+          <div class="test-result"><span class="bold">{{gusanoCorazon}}</span></div>
+          <div class="test-name">Ehrlichiosis:</div>
+          <div class="test-result"><span class="bold">{{ehrlichiosis}}</span></div>
+          <div class="test-name">Lyme:</div>
+          <div class="test-result"><span class="bold">{{lyme}}</span></div>
+          <div class="test-name">Anaplasmosis:</div>
+          <div class="test-result"><span class="bold">{{anaplasmosis}}</span></div>
+        </div>
+      </div>
+      <div class="column">
+        <img src="./img/testHemo.png" alt="Test result" id="testResultImage" class="test-result-image">
       </div>
     </div>
+  </section>
+  <section class="report-validation">
+    <p class="center">Este certificado ha sido revisado y validado por:</p>
+    <p class="center">MVZ Laura Cabrera Borromeo (Cédula profesional: 11681000)</p>
+    <p class="center">Certificada por el <span class="bold">COMVEPET</span> con Núm. de miembro activo: 2020-016</p>
   </section>
   <footer>
     <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom">

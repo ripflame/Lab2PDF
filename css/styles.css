@@ -96,6 +96,7 @@
 
 /* Result PDF */
 .result-pdf {
+  display: none;
   text-align: center;
   margin-top: 20px;
 }
