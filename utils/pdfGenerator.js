@@ -56,10 +56,10 @@ async function generatePDF(formData, outputPath, formType) {
                              .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
                              .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
   } else if (formType === 'hemoparasites') {
-    htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon)
-                             .replace('{{ehrlichiosis}}', formData.ehrlichiosis)
-                             .replace('{{lyme}}', formData.lyme)
-                             .replace('{{anaplasmosis}}', formData.anaplasmosis)
+    htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
+                              .replace('{{ehrlichiosis}}', formData.ehrlichiosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
+                              .replace('{{lyme}}', formData.lyme==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
+                              .replace('{{anaplasmosis}}', formData.anaplasmosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                              .replace('{{testFoto}}', formData.testFoto);
   }
 
