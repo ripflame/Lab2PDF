@@ -121,6 +121,7 @@
         lyme: document.querySelector('input[name="lyme"]:checked').value,
         anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
         testFoto: document.getElementById('testFotoThumbnail').src,
+        testFotoPath: document.getElementById('testFoto').value,
       };
       window.electron.generarPDF(datos, 'hemoparasites');
     }

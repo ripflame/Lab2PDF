@@ -11,12 +11,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/register": "^7.21.0",
     "electron": "^34.1.1",
     "electron-reload": "^2.0.0-alpha.1",
-    "mocha": "^10.2.0",
-    "@babel/register": "^7.21.0"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
-    "puppeteer": "^24.2.0"
+    "puppeteer": "^24.2.0",
+    "sharp": "^0.33.5"
   }
 }

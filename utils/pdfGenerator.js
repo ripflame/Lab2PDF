@@ -1,6 +1,9 @@
 const puppeteer = require('puppeteer');
+const shapr = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
+const os = require('os');
 
 function formatNumber(number) {
   return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
@@ -14,6 +17,7 @@ async function generatePDF(formData, outputPath, formType) {
   const templatePath = path.join(__dirname, '../templates', `${formType}Template.html`);
   const topImagePath = path.join(__dirname, '../templates/img/top.svg');
   const bottomImagePath = path.join(__dirname, '../templates/img/bottom.svg');
+  const compressedImagePath = path.join(os.tmpdir(), `compressed-${Date.now()}.jpg`);
 
   const topImageContent = fs.readFileSync(topImagePath, 'utf8');
   const bottomImageContent = fs.readFileSync(bottomImagePath, 'utf8');
@@ -56,11 +60,13 @@ async function generatePDF(formData, outputPath, formType) {
                              .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
                              .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
   } else if (formType === 'hemoparasites') {
+    const compressedBase64 = await compressBase64Image(formData.testFoto);
     htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                               .replace('{{ehrlichiosis}}', formData.ehrlichiosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                               .replace('{{lyme}}', formData.lyme==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                               .replace('{{anaplasmosis}}', formData.anaplasmosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
-                             .replace('{{testFoto}}', formData.testFoto);
+                             .replace('{{testFoto}}', compressedBase64);
+                            // .replace('{{testFoto}}', `data:image/jpeg;base64,${Buffer.from(fs.readFileSync(compressedImagePath)).toString('base64')}`);
   }
 
   htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
@@ -97,6 +103,38 @@ async function generatePDF(formData, outputPath, formType) {
   });
 
   await browser.close();
+}
+
+async function compressBase64Image(base64String, quality = 70) {
+  // Extract Base64 data (removing metadata prefix)
+  const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
+  const imageBuffer = Buffer.from(base64Data, "base64");
+
+  // Use sharp to get metadata (detects format automatically)
+  const metadata = await sharp(imageBuffer).metadata();
+
+  // Convert to the detected format
+  let processedImage = sharp(imageBuffer).resize({ width: 350 });
+
+  switch (metadata.format) {
+      case 'jpeg':
+          processedImage = processedImage.jpeg({ quality });
+          break;
+      case 'png':
+          processedImage = processedImage.png({ compressionLevel: 9 });
+          break;
+      case 'webp':
+          processedImage = processedImage.webp({ quality });
+          break;
+      default:
+          throw new Error(`Unsupported image format: ${metadata.format}`);
+  }
+
+  // Convert processed image to Base64
+  const compressedBuffer = await processedImage.toBuffer();
+  const compressedBase64 = `data:image/${metadata.format};base64,${compressedBuffer.toString("base64")}`;
+
+  return compressedBase64;
 }
 
 module.exports = { generatePDF };
