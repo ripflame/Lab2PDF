@@ -122,6 +122,7 @@
         anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
         mascotaFoto: document.getElementById('testFoto').src,
       };
+      window.electron.generarPDF(datos, 'hemoparasites');
     }
 
     function handleFormSubmit(e) {
@@ -167,7 +168,7 @@
         neutrofilos_segmentados_abs: document.getElementById('neutrofilos_segmentados_abs').value,
         neutrofilos_banda_abs: document.getElementById('neutrofilos_banda_abs').value,
       };
-      window.electron.generarPDF(datos);
+      window.electron.generarPDF(datos, 'hemogram');
     }
 
     window.electron.onPDFGenerado((event, rutaPDF) => {

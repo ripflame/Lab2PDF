@@ -47,7 +47,7 @@ describe('PDF Generation', function() {
 
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
-    await generatePDF(formData, pdfPath);
+    await generatePDF(formData, pdfPath, 'hemogram');
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), 'PDF file was not created');

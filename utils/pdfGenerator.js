@@ -10,8 +10,8 @@ function formatPhoneNumber(phoneNumber) {
   return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1)$2-$3');
 }
 
-async function generatePDF(formData, outputPath) {
-  const templatePath = path.join(__dirname, '../templates/hemogramTemplate.html');
+async function generatePDF(formData, outputPath, formType) {
+  const templatePath = path.join(__dirname, '../templates', `${formType}Template.html`);
   const topImagePath = path.join(__dirname, '../templates/img/top.svg');
   const bottomImagePath = path.join(__dirname, '../templates/img/bottom.svg');
 
@@ -32,27 +32,36 @@ async function generatePDF(formData, outputPath) {
                            .replace('{{nombrePropietario}}', formData.nombrePropietario)
                            .replace('{{edad}}', formattedAge)
                            .replace('{{sexo}}', formData.sexo)
-                           .replace('{{telefono}}', formatPhoneNumber(formData.telefono))
-                           .replace('{{eritrocitos}}', formatNumber(formData.eritrocitos))
-                           .replace('{{hemoglobina}}', formatNumber(formData.hemoglobina))
-                           .replace('{{hematocrito}}', formatNumber(formData.hematocrito))
-                           .replace('{{vgm}}', formatNumber(formData.volumenGlobularMedio))
-                           .replace('{{hpe}}', formatNumber(formData.hemoglobinaPromedio))
-                           .replace('{{cmh}}', formatNumber(formData.concentracionMediaHemoglobina))
-                           .replace('{{plaquetas}}', formatNumber(formData.plaquetas))
-                           .replace('{{leucocitos}}', formatNumber(formData.leucocitos))
-                           .replace('{{monocitos_rel}}', formatNumber(formData.monocitos_rel))
-                           .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos_rel))
-                           .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos_rel))
-                           .replace('{{basofilos_rel}}', formatNumber(formData.basofilos_rel))
-                           .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilos_segmentados_rel))
-                           .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilos_banda_rel))
-                           .replace('{{monocitos_abs}}', formatNumber(formData.monocitos_abs))
-                           .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos_abs))
-                           .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos_abs))
-                           .replace('{{basofilos_abs}}', formatNumber(formData.basofilos_abs))
-                           .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
-                           .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
+                           .replace('{{telefono}}', formatPhoneNumber(formData.telefono));
+
+  if (formType === 'hemogram') {
+    htmlContent = htmlContent.replace('{{eritrocitos}}', formatNumber(formData.eritrocitos))
+                             .replace('{{hemoglobina}}', formatNumber(formData.hemoglobina))
+                             .replace('{{hematocrito}}', formatNumber(formData.hematocrito))
+                             .replace('{{vgm}}', formatNumber(formData.volumenGlobularMedio))
+                             .replace('{{hpe}}', formatNumber(formData.hemoglobinaPromedio))
+                             .replace('{{cmh}}', formatNumber(formData.concentracionMediaHemoglobina))
+                             .replace('{{plaquetas}}', formatNumber(formData.plaquetas))
+                             .replace('{{leucocitos}}', formatNumber(formData.leucocitos))
+                             .replace('{{monocitos_rel}}', formatNumber(formData.monocitos_rel))
+                             .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos_rel))
+                             .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos_rel))
+                             .replace('{{basofilos_rel}}', formatNumber(formData.basofilos_rel))
+                             .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilos_segmentados_rel))
+                             .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilos_banda_rel))
+                             .replace('{{monocitos_abs}}', formatNumber(formData.monocitos_abs))
+                             .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos_abs))
+                             .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos_abs))
+                             .replace('{{basofilos_abs}}', formatNumber(formData.basofilos_abs))
+                             .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
+                             .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
+  } else if (formType === 'hemoparasites') {
+    htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon)
+                             .replace('{{ehrlichiosis}}', formData.ehrlichiosis)
+                             .replace('{{lyme}}', formData.lyme)
+                             .replace('{{anaplasmosis}}', formData.anaplasmosis)
+                             .replace('{{mascotaFoto}}', formData.mascotaFoto);
+  }
 
   htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
                            .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
