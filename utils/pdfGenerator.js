@@ -60,7 +60,7 @@ async function generatePDF(formData, outputPath, formType) {
                              .replace('{{ehrlichiosis}}', formData.ehrlichiosis)
                              .replace('{{lyme}}', formData.lyme)
                              .replace('{{anaplasmosis}}', formData.anaplasmosis)
-                             .replace('{{mascotaFoto}}', formData.mascotaFoto);
+                             .replace('{{testFoto}}', formData.testFoto);
   }
 
   htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)

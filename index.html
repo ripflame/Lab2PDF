@@ -120,7 +120,7 @@
         ehrlichiosis: document.querySelector('input[name="ehrlichiosis"]:checked').value,
         lyme: document.querySelector('input[name="lyme"]:checked').value,
         anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
-        mascotaFoto: document.getElementById('testFoto').src,
+        testFoto: document.getElementById('testFotoThumbnail').src,
       };
       window.electron.generarPDF(datos, 'hemoparasites');
     }

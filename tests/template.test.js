@@ -52,4 +52,35 @@ describe('PDF Generation', function() {
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), 'PDF file was not created');
   });
+
+  it('should generate a PDF file for hemoparasites', async function() {
+    const formData = {
+      requerido: 'Veterinaria CaNinna',
+      nombrePropietario: 'Juan Pérez',
+      telefono: '1234567890',
+      nombreMascota: 'Fido',
+      especie: 'Perro',
+      raza: 'Labrador',
+      edad: '5',
+      sexo: 'macho',
+      fecha: '2023-10-01',
+      gusanoCorazon: 'Negativo',
+      ehrlichiosis: 'Positivo',
+      lyme: 'Negativo',
+      anaplasmosis: 'Negativo',
+      testFoto: 'data:image/png;base64,...' // Add a valid base64 image string
+    };
+
+    const outputDir = path.join(__dirname, 'test_output');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
+    }
+
+    const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeHemoparasitos.pdf`);
+
+    await generatePDF(formData, pdfPath, 'hemoparasites');
+
+    // Check if the PDF file was created
+    assert(fs.existsSync(pdfPath), 'PDF file was not created');
+  });
 });
