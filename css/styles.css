@@ -104,7 +104,7 @@
 /* Thumbnail Styles */
 .testFotoThumbnail {
   display:none;
-  max-width: 300px;
+  max-width: 350px;
   margin-top: 10px;
   object-fit: contain;
 }
