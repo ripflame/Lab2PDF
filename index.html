@@ -137,6 +137,10 @@
         return;
       }
 
+      const button = document.getElementById('generarPDFButton');
+      button.disabled = true;
+      button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
       const datos = {
         requerido: document.getElementById('requerido').value,
         nombrePropietario: document.getElementById('nombrePropietario').value,
