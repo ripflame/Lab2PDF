@@ -68,7 +68,7 @@
           today.setHours(0, 0, 0, 0);
           document.getElementById('fecha').valueAsDate = today;
           if (formType === 'hemogram') {
-            document.getElementById('formularioInformeLaboratorio').addEventListener('submit', handleFormSubmit);
+            document.getElementById('formularioInformeLaboratorio').addEventListener('submit', handleHemogramFormSubmit);
           } else if (formType === 'hemoparasites') {
             document.getElementById('formularioHemoparasitos').addEventListener('submit', handleHemoparasitesFormSubmit);
             document.getElementById('testFoto').addEventListener('change', handleTestFotoChange);
@@ -101,6 +101,10 @@
         return;
       }
 
+      const button = document.getElementById('generarPDFButton');
+      button.disabled = true;
+      button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
       const datos = {
         requerido: document.getElementById('requerido').value,
         nombrePropietario: document.getElementById('nombrePropietario').value,
@@ -121,7 +125,7 @@
       window.electron.generarPDF(datos, 'hemoparasites');
     }
 
-    function handleFormSubmit(e) {
+    function handleHemogramFormSubmit(e) {
       e.preventDefault();
       const form = e.target;
       const invalidFields = form.querySelectorAll(':invalid');
@@ -168,13 +172,16 @@
     }
 
     window.electron.onPDFGenerado((event, rutaPDF) => {
+      const button = document.getElementById('generarPDFButton');
+      button.disabled = false;
+      button.innerHTML = 'Generar PDF';
       document.getElementById('abrirUbicacionPDF').addEventListener('click', () => {
         window.electron.abrirUbicacion(rutaPDF);
       });
       document.getElementById('resultadoPDF').style.display = 'block';
     });
 
-    loadForm('hemoparasites'); // Load hemogram form by default
+    loadForm('hemoparasites'); // Load hemoparasites form by default
   </script>
 </body>
 </html>
