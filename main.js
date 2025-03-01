@@ -1,7 +1,6 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const fs = require('fs');
-const { generatePDF } = require('./utils/pdfGenerator');
+const { setupIpcHandlers } = require('./ipcHandlers');
 
 // Add electron-reload
 require('electron-reload')(__dirname, {
@@ -28,20 +27,6 @@ app.whenReady().then(() => {
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
   });
-});
 
-ipcMain.on('generarPDF', async (event, formData, formType) => {
-  const pdfPath = path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`);
-
-  try {
-    await generatePDF(formData, pdfPath, formType);
-    event.reply('onPDFGenerado', pdfPath);
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    event.reply('onPDFGenerado', 'Error generating PDF');
-  }
-});
-
-ipcMain.on('abrirUbicacion', (event, ruta) => {
-  shell.showItemInFolder(ruta);
+  setupIpcHandlers(mainWindow);
 });

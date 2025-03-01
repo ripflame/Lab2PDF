@@ -7,6 +7,11 @@ const { generatePDF } = require('../utils/pdfGenerator');
 describe('PDF Generation', function() {
   this.timeout(10000); // Increase timeout for PDF generation
 
+  const outputDir = path.join(__dirname, 'test_output');
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
+  }
+
   it('should generate a PDF file', async function() {
     const formData = {
       requerido: 'Veterinaria CaNinna',
@@ -40,11 +45,6 @@ describe('PDF Generation', function() {
       neutrofilos_banda_abs: '0'
     };
 
-    const outputDir = path.join(__dirname, 'test_output');
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
-
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
     await generatePDF(formData, pdfPath, 'hemogram');
@@ -70,11 +70,6 @@ describe('PDF Generation', function() {
       anaplasmosis: 'Negativo',
       testFoto: 'data:image/png;base64,...' // Add a valid base64 image string
     };
-
-    const outputDir = path.join(__dirname, 'test_output');
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
 
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeHemoparasitos.pdf`);
 

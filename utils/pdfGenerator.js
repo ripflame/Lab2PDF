@@ -1,10 +1,10 @@
 const puppeteer = require('puppeteer');
-const shapr = require('sharp');
+const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const sharp = require('sharp');
 const os = require('os');
 
+// Utility functions
 function formatNumber(number) {
   return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
 }
@@ -13,6 +13,39 @@ function formatPhoneNumber(phoneNumber) {
   return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1)$2-$3');
 }
 
+async function compressBase64Image(base64String, quality = 70) {
+  // Extract Base64 data (removing metadata prefix)
+  const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
+  const imageBuffer = Buffer.from(base64Data, "base64");
+
+  // Use sharp to get metadata (detects format automatically)
+  const metadata = await sharp(imageBuffer).metadata();
+
+  // Convert to the detected format
+  let processedImage = sharp(imageBuffer).resize({ width: 350 });
+
+  switch (metadata.format) {
+      case 'jpeg':
+          processedImage = processedImage.jpeg({ quality });
+          break;
+      case 'png':
+          processedImage = processedImage.png({ compressionLevel: 9 });
+          break;
+      case 'webp':
+          processedImage = processedImage.webp({ quality });
+          break;
+      default:
+          throw new Error(`Unsupported image format: ${metadata.format}`);
+  }
+
+  // Convert processed image to Base64
+  const compressedBuffer = await processedImage.toBuffer();
+  const compressedBase64 = `data:image/${metadata.format};base64,${compressedBuffer.toString("base64")}`;
+
+  return compressedBase64;
+}
+
+// Main function to generate PDF
 async function generatePDF(formData, outputPath, formType) {
   const templatePath = path.join(__dirname, '../templates', `${formType}Template.html`);
   const topImagePath = path.join(__dirname, '../templates/img/top.svg');
@@ -103,38 +136,6 @@ async function generatePDF(formData, outputPath, formType) {
   });
 
   await browser.close();
-}
-
-async function compressBase64Image(base64String, quality = 70) {
-  // Extract Base64 data (removing metadata prefix)
-  const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
-  const imageBuffer = Buffer.from(base64Data, "base64");
-
-  // Use sharp to get metadata (detects format automatically)
-  const metadata = await sharp(imageBuffer).metadata();
-
-  // Convert to the detected format
-  let processedImage = sharp(imageBuffer).resize({ width: 350 });
-
-  switch (metadata.format) {
-      case 'jpeg':
-          processedImage = processedImage.jpeg({ quality });
-          break;
-      case 'png':
-          processedImage = processedImage.png({ compressionLevel: 9 });
-          break;
-      case 'webp':
-          processedImage = processedImage.webp({ quality });
-          break;
-      default:
-          throw new Error(`Unsupported image format: ${metadata.format}`);
-  }
-
-  // Convert processed image to Base64
-  const compressedBuffer = await processedImage.toBuffer();
-  const compressedBase64 = `data:image/${metadata.format};base64,${compressedBuffer.toString("base64")}`;
-
-  return compressedBase64;
 }
 
 module.exports = { generatePDF };
