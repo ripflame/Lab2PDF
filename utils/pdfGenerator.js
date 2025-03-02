@@ -99,7 +99,6 @@ async function generatePDF(formData, outputPath, formType) {
                               .replace('{{lyme}}', formData.lyme==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                               .replace('{{anaplasmosis}}', formData.anaplasmosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
                              .replace('{{testFoto}}', compressedBase64);
-                            // .replace('{{testFoto}}', `data:image/jpeg;base64,${Buffer.from(fs.readFileSync(compressedImagePath)).toString('base64')}`);
   }
 
   htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
