@@ -67,27 +67,27 @@ app.whenReady().then(() => {
 
   const menu = Menu.buildFromTemplate([
     {
-      label: 'File',
+      label: 'Archivo',
       submenu: [
         { role: 'quit' }
       ]
     },
     {
-      label: 'Help',
+      label: 'Ayuda',
       submenu: [
         {
-          label: 'About',
+          label: 'Acerca de',
           click: () => {
             dialog.showMessageBox({
               type: 'info',
-              title: 'About',
-              message: 'Lab2PDF\nVersion 1.0.0\nDeveloped by Ripflame',
+              title: 'Acerca de',
+              message: 'Lab2PDF\nVersion 1.0.5\nDesarrollada por Ripflame',
               buttons: ['OK']
             });
           }
         },
         {
-          label: 'Check for Updates',
+          label: 'Actualizar',
           click: () => {
             autoUpdater.checkForUpdates();
           }
