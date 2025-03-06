@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog, Menu } = require('electron');
 const path = require('path');
 const { setupIpcHandlers } = require('./ipcHandlers');
 const { autoUpdater } = require('electron-updater');
@@ -45,7 +45,6 @@ app.whenReady().then(() => {
   });
 
   autoUpdater.on('update-downloaded', (info) => {
-    const { dialog } = require('electron');
     dialog.showMessageBox({
       type: 'info',
       title: 'Actualización descargada',
@@ -65,6 +64,39 @@ app.whenReady().then(() => {
 
   // Check for updates and notify
   autoUpdater.checkForUpdates();
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'File',
+      submenu: [
+        { role: 'quit' }
+      ]
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About',
+          click: () => {
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'About',
+              message: 'Lab2PDF\nVersion 1.0.0\nDeveloped by Ripflame',
+              buttons: ['OK']
+            });
+          }
+        },
+        {
+          label: 'Check for Updates',
+          click: () => {
+            autoUpdater.checkForUpdates();
+          }
+        }
+      ]
+    }
+  ]);
+
+  Menu.setApplicationMenu(menu);
 
   mainWindow.loadFile('index.html');
 
