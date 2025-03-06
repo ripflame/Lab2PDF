@@ -55,6 +55,7 @@ app.whenReady().then(() => {
     console.error('Auto-updater error:', error);
   });
 
+  autoUpdater.checkForUpdates();
   mainWindow.loadFile('index.html');
 
   app.on('window-all-closed', () => {
