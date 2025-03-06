@@ -26,9 +26,17 @@ app.whenReady().then(() => {
   });
 
   // Listen for update events
+  autoUpdater.on('checking-for-update', () => {
+    console.log('Checking for update...');
+  });
+
   autoUpdater.on('update-available', (info) => {
     console.log('Update available:', info.version);
     // If you want to show a notification or something minimal, you can do it here.
+  });
+
+  autoUpdater.on('update-not-available', (info) => {
+    console.log('Update not available:', info.version);
   });
 
   autoUpdater.on('update-downloaded', (info) => {
@@ -55,7 +63,9 @@ app.whenReady().then(() => {
     console.error('Auto-updater error:', error);
   });
 
-  autoUpdater.checkForUpdates();
+  // Check for updates and notify
+  autoUpdater.checkForUpdatesAndNotify();
+
   mainWindow.loadFile('index.html');
 
   app.on('window-all-closed', () => {
