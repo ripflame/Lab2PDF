@@ -32,7 +32,12 @@ app.whenReady().then(() => {
 
   autoUpdater.on('update-available', (info) => {
     console.log('Update available:', info.version);
-    // If you want to show a notification or something minimal, you can do it here.
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Actualización disponible',
+      message: 'Se detectó una nueva versión. Descargando...',
+      buttons: ['Aceptar']
+    });
   });
 
   autoUpdater.on('update-not-available', (info) => {
@@ -40,19 +45,14 @@ app.whenReady().then(() => {
   });
 
   autoUpdater.on('update-downloaded', (info) => {
-    console.log('Update downloaded:', info.version);
-    // For minimal interaction, just install immediately:
-    // autoUpdater.quitAndInstall();
-
-    // Or prompt the user:
     const { dialog } = require('electron');
     dialog.showMessageBox({
       type: 'info',
-      title: 'Update Ready',
-      message: 'A new version is downloaded. Restart now?',
-      buttons: ['Yes', 'Later']
+      title: 'Actualización descargada',
+      message: 'La actualización se descargó correctamente. ¿Desea instalarla ahora?',
+      buttons: ['Si', 'Luego']
     }).then((result) => {
-      if (result.response === 0) { // 'Yes'
+      if (result.response === 0) { // 'Si'
         autoUpdater.quitAndInstall();
       }
     });
@@ -64,7 +64,7 @@ app.whenReady().then(() => {
   });
 
   // Check for updates and notify
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdates();
 
   mainWindow.loadFile('index.html');
 
