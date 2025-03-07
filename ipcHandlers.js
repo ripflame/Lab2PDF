@@ -4,15 +4,14 @@ const { generatePDF } = require('./utils/pdfGenerator');
 
 function setupIpcHandlers(mainWindow) {
   ipcMain.on('generarPDF', async (event, formData, formType) => {
-    const {filePath, canceled} = await dialog.showSaveDialog(mainWindow, {
+    const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
       defaultPath: path.join(app.getPath('documents'), `${formData.nombreMascota}_InformeLaboratorio.pdf`),
       filters: [{ name: 'PDF', extensions: ['pdf'] }],
     });
     if (canceled || !filePath) {
-      event.reply('onPDFGenerado', 'PDF generation canceled');
+      event.reply('onPDFGenerado', null);
       return;
     }
-    console.log('pdfPath:',filePath);
 
     try {
       await generatePDF(formData, filePath, formType);

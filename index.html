@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Informe de Laboratorio</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="renderer.js"></script>
 </head>
+
 <body class="body">
   <div class="sidebar">
     <h2>☰ Menú</h2>
@@ -14,39 +17,43 @@
   </div>
   <div class="content">
     <div id="formContainer" class="form-container">
-      <form id="commonFormFields" class="form">
-        <fieldset class="fieldset form-columns">
-          <legend class="legend">Información General</legend>
-          <div class="form-column">
-            <label class="label" for="requerido">Requerido por:</label>
-            <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required>
-            <label class="label" for="fecha">Fecha:</label>
-            <input class="input-date" type="date" id="fecha" required>
-            <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
-            <input class="input-text" type="text" id="nombrePropietario" required>
-            <label class="label" for="telefono">Teléfono:</label>
-            <input class="input-tel" type="tel" id="telefono" required>
-          </div>
-          <div class="form-column">
-            <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
-            <input class="input-text" type="text" id="nombreMascota" required>
-            <label class="label" for="especie">Especie:</label>
-            <input class="input-text" type="text" id="especie" required>
-            <label class="label" for="raza">Raza:</label>
-            <input class="input-text" type="text" id="raza" required>
-            <label class="label" for="edad">Edad:</label>
-            <input class="input-number" type="number" id="edad" required>
-            <label class="label">Sexo:</label>
-            <div class="radio-group">
-              <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked>
-              <label class="label" for="sexoMacho">Macho</label>
-              <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required>
-              <label class="label" for="sexoHembra">Hembra</label>
+      <form id="commonFormFields">
+        <div class="form">
+          <fieldset class="fieldset form-columns">
+            <legend class="legend">Información General</legend>
+            <div class="form-column">
+              <label class="label" for="requerido">Requerido por:</label>
+              <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required>
+              <label class="label" for="fecha">Fecha:</label>
+              <input class="input-date" type="date" id="fecha" required>
+              <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
+              <input class="input-text" type="text" id="nombrePropietario" required>
+              <label class="label" for="telefono">Teléfono:</label>
+              <input class="input-tel" type="tel" id="telefono" required>
             </div>
-          </div>
-        </fieldset>
+            <div class="form-column">
+              <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
+              <input class="input-text" type="text" id="nombreMascota" required>
+              <label class="label" for="especie">Especie:</label>
+              <input class="input-text" type="text" id="especie" required>
+              <label class="label" for="raza">Raza:</label>
+              <input class="input-text" type="text" id="raza" required>
+              <label class="label" for="edad">Edad:</label>
+              <input class="input-number" type="number" id="edad" required>
+              <label class="label">Sexo:</label>
+              <div class="radio-group">
+                <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked>
+                <label class="label" for="sexoMacho">Macho</label>
+                <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required>
+                <label class="label" for="sexoHembra">Hembra</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div id="specificFormFields"></div>
       </form>
-      <div id="specificFormFields"></div>
+      <!-- New Generar PDF button placed here -->
+      <button type="button" id="generarPDFButton" class="button">Generar PDF</button>
     </div>
     <div id="resultadoPDF" class="result-pdf">
       <p>¡PDF generado!</p>
@@ -54,138 +61,6 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('hemoparasitesLink').addEventListener('click', () => {
-      loadForm('hemoparasites');
-    });
-
-    function loadForm(formType) {
-      fetch(`templates/${formType}.html`)
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('specificFormFields').innerHTML = html;
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          document.getElementById('fecha').valueAsDate = today;
-          if (formType === 'hemogram') {
-            document.getElementById('formularioInformeLaboratorio').addEventListener('submit', handleHemogramFormSubmit);
-          } else if (formType === 'hemoparasites') {
-            document.getElementById('formularioHemoparasitos').addEventListener('submit', handleHemoparasitesFormSubmit);
-            document.getElementById('testFoto').addEventListener('change', handleTestFotoChange);
-          }
-        });
-    }
-
-    function handleTestFotoChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.getElementById('testFotoThumbnail');
-          img.src = e.target.result;
-          img.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function handleHemoparasitesFormSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const invalidFields = form.querySelectorAll(':invalid');
-
-      if (invalidFields.length > 0) {
-        const detailsElements = form.querySelectorAll('details');
-        detailsElements.forEach(details => details.open = true);
-        invalidFields[0].focus();
-        return;
-      }
-
-      const button = document.getElementById('generarPDFButton');
-      button.disabled = true;
-      button.innerHTML = '<span class="spinner"></span> Generando PDF...';
-
-      const datos = {
-        requerido: document.getElementById('requerido').value,
-        nombrePropietario: document.getElementById('nombrePropietario').value,
-        telefono: document.getElementById('telefono').value,
-        nombreMascota: document.getElementById('nombreMascota').value,
-        especie: document.getElementById('especie').value,
-        raza: document.getElementById('raza').value,
-        edad: document.getElementById('edad').value,
-        sexo: document.querySelector('input[name="sexo"]:checked').value,
-        fecha: document.getElementById('fecha').value,
-        gusanoCorazon: document.querySelector('input[name="gusanoCorazon"]:checked').value,
-        ehrlichiosis: document.querySelector('input[name="ehrlichiosis"]:checked').value,
-        lyme: document.querySelector('input[name="lyme"]:checked').value,
-        anaplasmosis: document.querySelector('input[name="anaplasmosis"]:checked').value,
-        testFoto: document.getElementById('testFotoThumbnail').src,
-        testFotoPath: document.getElementById('testFoto').value,
-      };
-      window.electron.generarPDF(datos, 'hemoparasites');
-    }
-
-    function handleHemogramFormSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const invalidFields = form.querySelectorAll(':invalid');
-
-      if (invalidFields.length > 0) {
-        const detailsElements = form.querySelectorAll('details');
-        detailsElements.forEach(details => details.open = true);
-        invalidFields[0].focus();
-        return;
-      }
-
-      const button = document.getElementById('generarPDFButton');
-      button.disabled = true;
-      button.innerHTML = '<span class="spinner"></span> Generando PDF...';
-
-      const datos = {
-        requerido: document.getElementById('requerido').value,
-        nombrePropietario: document.getElementById('nombrePropietario').value,
-        telefono: document.getElementById('telefono').value,
-        nombreMascota: document.getElementById('nombreMascota').value,
-        especie: document.getElementById('especie').value,
-        raza: document.getElementById('raza').value,
-        edad: document.getElementById('edad').value,
-        sexo: document.querySelector('input[name="sexo"]:checked').value,
-        fecha: document.getElementById('fecha').value,
-        eritrocitos: document.getElementById('eritrocitos').value,
-        hemoglobina: document.getElementById('hemoglobina').value,
-        hematocrito: document.getElementById('hematocrito').value,
-        volumenGlobularMedio: document.getElementById('volumenGlobularMedio').value,
-        hemoglobinaPromedio: document.getElementById('hemoglobinaPromedio').value,
-        concentracionMediaHemoglobina: document.getElementById('concentracionMediaHemoglobina').value,
-        plaquetas: document.getElementById('plaquetas').value,
-        leucocitos: document.getElementById('leucocitos').value,
-        monocitos_rel: document.getElementById('monocitos_rel').value,
-        linfocitos_rel: document.getElementById('linfocitos_rel').value,
-        eosinofilos_rel: document.getElementById('eosinofilos_rel').value,
-        basofilos_rel: document.getElementById('basofilos_rel').value,
-        neutrofilos_segmentados_rel: document.getElementById('neutrofilos_segmentados_rel').value,
-        neutrofilos_banda_rel: document.getElementById('neutrofilos_banda_rel').value,
-        monocitos_abs: document.getElementById('monocitos_abs').value,
-        linfocitos_abs: document.getElementById('linfocitos_abs').value,
-        eosinofilos_abs: document.getElementById('eosinofilos_abs').value,
-        basofilos_abs: document.getElementById('basofilos_abs').value,
-        neutrofilos_segmentados_abs: document.getElementById('neutrofilos_segmentados_abs').value,
-        neutrofilos_banda_abs: document.getElementById('neutrofilos_banda_abs').value,
-      };
-      window.electron.generarPDF(datos, 'hemogram');
-    }
-
-    window.electron.onPDFGenerado((event, rutaPDF) => {
-      const button = document.getElementById('generarPDFButton');
-      button.disabled = false;
-      button.innerHTML = 'Generar PDF';
-      document.getElementById('abrirUbicacionPDF').addEventListener('click', () => {
-        window.electron.abrirUbicacion(rutaPDF);
-      });
-      document.getElementById('resultadoPDF').style.display = 'block';
-    });
-
-    loadForm('hemoparasites'); // Load hemoparasites form by default
-  </script>
 </body>
+
 </html>

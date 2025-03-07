@@ -1,7 +1,8 @@
-const { app, BrowserWindow, dialog, Menu } = require('electron');
+const { app, BrowserWindow, dialog, Menu, globalShortcut } = require('electron');
 const path = require('path');
 const { setupIpcHandlers } = require('./ipcHandlers');
 const { autoUpdater } = require('electron-updater');
+const packageJson = require('./package.json'); // Add this line to import package.json
 
 // main.js (or wherever you're using electron-reload)
 if (process.env.NODE_ENV === 'development') {
@@ -13,6 +14,11 @@ if (process.env.NODE_ENV === 'development') {
 let mainWindow;
 
 app.whenReady().then(() => {
+  globalShortcut.register("Ctrl+Shift+I", ()=> {
+    if (mainWindow) {
+      mainWindow.webContents.openDevTools();
+    }
+  })
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
@@ -22,6 +28,7 @@ app.whenReady().then(() => {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       enableRemoteModule: false,
+      nodeIntegration: false,
     }
   });
 
@@ -81,7 +88,7 @@ app.whenReady().then(() => {
             dialog.showMessageBox({
               type: 'info',
               title: 'Acerca de',
-              message: 'Lab2PDF\nVersion 1.0.5\nDesarrollada por Ripflame',
+              message: `Lab2PDF\nVersion ${packageJson.version}\nDesarrollada por Ripflame`, // Use dynamic version
               buttons: ['OK']
             });
           }
