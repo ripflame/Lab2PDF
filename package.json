@@ -3,7 +3,7 @@
   "version": "1.0.6",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
     "dist": "electron-builder"
   },
@@ -42,14 +42,15 @@
   "description": "",
   "devDependencies": {
     "@babel/register": "^7.21.0",
+    "cross-env": "^7.0.3",
     "electron": "^34.1.1",
+    "electron-builder": "^23.6.0",
     "electron-reload": "^2.0.0-alpha.1",
-    "mocha": "^10.2.0",
-    "electron-builder": "^23.6.0"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
+    "electron-updater": "^5.3.0",
     "puppeteer": "^24.2.0",
-    "sharp": "^0.33.5",
-    "electron-updater": "^5.3.0"
+    "sharp": "^0.33.5"
   }
 }
