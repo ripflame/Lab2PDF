@@ -1,16 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Attach event listeners after the DOM is loaded
-  document.getElementById("hemoparasitesLink").addEventListener("click", () => loadForm("hemoparasites"));
-  document.getElementById("generarPDFButton").addEventListener("click", handleHemoparasitesFormSubmit);
+  document
+    .getElementById("hemoparasitesLink")
+    .addEventListener("click", () => loadForm("hemoparasites"));
+  document
+    .getElementById("generarPDFButton")
+    .addEventListener("click", handleHemoparasitesFormSubmit);
 
   // Load default form
   loadForm("hemoparasites");
+  //Make sidebar toggable
+  document.querySelector(".sidebar h2").addEventListener("click", () => {
+    document.querySelector(".sidebar").classList.toggle("open");
+  });
 });
 
 function loadForm(formType) {
   fetch(`templates/${formType}.html`)
-    .then(response => response.text())
-    .then(html => {
+    .then((response) => response.text())
+    .then((html) => {
       document.getElementById("specificFormFields").innerHTML = html;
 
       // Set today's date by default
@@ -19,17 +27,19 @@ function loadForm(formType) {
       document.getElementById("fecha").valueAsDate = today;
 
       if (formType === "hemoparasites") {
-        document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
+        document
+          .getElementById("testFoto")
+          .addEventListener("change", handleTestFotoChange);
       }
     })
-    .catch(error => console.error("Error loading form:", error));
+    .catch((error) => console.error("Error loading form:", error));
 }
 
 function handleTestFotoChange(event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const img = document.getElementById("testFotoThumbnail");
       img.src = e.target.result;
       img.style.display = "block";
@@ -39,7 +49,9 @@ function handleTestFotoChange(event) {
 }
 
 function handleHemoparasitesFormSubmit() {
-  const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemoparasitos input");
+  const inputs = document.querySelectorAll(
+    "#commonFormFields input, #formularioHemoparasitos input",
+  );
 
   // Validate all inputs
   for (const input of inputs) {
@@ -66,10 +78,13 @@ function handleHemoparasitesFormSubmit() {
     sexo: document.querySelector("input[name='sexo']:checked").value,
     fecha: document.getElementById("fecha").value,
     // Specific Form Fields start here
-    gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked").value,
-    ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked").value,
+    gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked")
+      .value,
+    ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked")
+      .value,
     lyme: document.querySelector("input[name='lyme']:checked").value,
-    anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked").value,
+    anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked")
+      .value,
     testFoto: document.getElementById("testFotoThumbnail").src,
     testFotoPath: document.getElementById("testFoto").value,
   };
@@ -92,8 +107,4 @@ window.electron.onPDFGenerado((event, rutaPDF) => {
   document.getElementById("abrirUbicacionPDF").addEventListener("click", () => {
     window.electron.abrirUbicacion(rutaPDF);
   });
-});
-
-document.querySelector(".sidebar h2").addEventListener("click", () => {
-  document.querySelector(".sidebar").classList.toggle("open");
 });

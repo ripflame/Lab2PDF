@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Informe de Laboratorio</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" />
   <script src="renderer.js"></script>
 </head>
 
@@ -23,28 +23,28 @@
             <legend class="legend">Información General</legend>
             <div class="form-column">
               <label class="label" for="requerido">Requerido por:</label>
-              <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required>
+              <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required />
               <label class="label" for="fecha">Fecha:</label>
-              <input class="input-date" type="date" id="fecha" required>
+              <input class="input-date" type="date" id="fecha" required />
               <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
-              <input class="input-text" type="text" id="nombrePropietario" required>
+              <input class="input-text" type="text" id="nombrePropietario" required />
               <label class="label" for="telefono">Teléfono:</label>
-              <input class="input-tel" type="tel" id="telefono" required>
+              <input class="input-tel" type="tel" id="telefono" required />
             </div>
             <div class="form-column">
               <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
-              <input class="input-text" type="text" id="nombreMascota" required>
+              <input class="input-text" type="text" id="nombreMascota" required />
               <label class="label" for="especie">Especie:</label>
-              <input class="input-text" type="text" id="especie" required>
+              <input class="input-text" type="text" id="especie" required />
               <label class="label" for="raza">Raza:</label>
-              <input class="input-text" type="text" id="raza" required>
+              <input class="input-text" type="text" id="raza" required />
               <label class="label" for="edad">Edad:</label>
-              <input class="input-number" type="number" id="edad" required>
+              <input class="input-number" type="number" id="edad" required />
               <label class="label">Sexo:</label>
               <div class="radio-group">
-                <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked>
+                <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked />
                 <label class="label" for="sexoMacho">Macho</label>
-                <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required>
+                <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required />
                 <label class="label" for="sexoHembra">Hembra</label>
               </div>
             </div>
@@ -53,14 +53,17 @@
         <div id="specificFormFields"></div>
       </form>
       <!-- New Generar PDF button placed here -->
-      <button type="button" id="generarPDFButton" class="button">Generar PDF</button>
+      <button type="button" id="generarPDFButton" class="button">
+        Generar PDF
+      </button>
     </div>
     <div id="resultadoPDF" class="result-pdf">
       <p>¡PDF generado!</p>
-      <button id="abrirUbicacionPDF" class="button button-open-pdf">Abrir ubicación del archivo</button>
+      <button id="abrirUbicacionPDF" class="button button-open-pdf">
+        Abrir ubicación del archivo
+      </button>
     </div>
   </div>
-
 </body>
 
 </html>
