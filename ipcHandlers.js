@@ -2,6 +2,7 @@ const { ipcMain, shell, app, dialog } = require("electron");
 const path = require("path");
 const { generatePDF } = require("./utils/pdfGenerator");
 const fs = require("fs"); // Add this line to import fs module
+const { app } = require("electron");
 
 // Function to log errors
 function logError(error) {

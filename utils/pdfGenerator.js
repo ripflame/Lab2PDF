@@ -3,6 +3,7 @@ const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
+const { app } = require("electron");
 
 // Utility functions
 function formatNumber(number) {
