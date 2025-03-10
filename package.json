@@ -1,12 +1,13 @@
 {
   "name": "lab2pdf",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build": "electron-builder --mac --win --linux"
   },
   "build": {
     "appId": "com.ripflame.lab2pdf",
@@ -19,14 +20,27 @@
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "dist/",
+      "main.js",
+      "package.json",
+      "assets/",
+      "node_modules/",
+      "templates/"
+    ],
     "extraResources": [
       {
         "from": "build/vc_redist.x64.exe",
         "to": "vc_redist.x64.exe"
+      },
+      {
+        "from": "src/",
+        "to": "src/"
       }
     ],
     "mac": {
-      "icon": "assets/icon.icns"
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.productivity"
     },
     "win": {
       "icon": "assets/icon.ico",
@@ -36,8 +50,29 @@
           "arch": [
             "x64"
           ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "fileAssociations": [
+        {
+          "ext": "pdf",
+          "name": "PDF Document",
+          "role": "Viewer"
         }
       ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "category": "Utility"
     },
     "nsis": {
       "include": "build/installer.nsh"
