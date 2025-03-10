@@ -1,9 +1,10 @@
 {
   "name": "lab2pdf",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "start": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
     "dist": "electron-builder"
   },
@@ -20,36 +21,51 @@
     },
     "extraResources": [
       {
-        "from": "assets",
-        "to": "assets"
+        "from": "build/vc_redist.x64.exe",
+        "to": "vc_redist.x64.exe"
       }
     ],
     "mac": {
       "icon": "assets/icon.icns"
     },
     "win": {
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "include": "build/installer.nsh"
     },
     "asar": true,
     "asarUnpack": [
       "**/node_modules/sharp/**/*",
+      "**/node_modules/sharp/vendor/**/*",
+      "**/node_modules/sharp/lib/**/*",
       "**/node_modules/@img/**/*"
     ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A tool to convert lab reports to PDF format.",
   "devDependencies": {
     "@babel/register": "^7.21.0",
+    "cross-env": "^7.0.3",
     "electron": "^34.1.1",
+    "electron-builder": "^23.6.0",
+    "electron-rebuild": "^3.2.9",
     "electron-reload": "^2.0.0-alpha.1",
-    "mocha": "^10.2.0",
-    "electron-builder": "^23.6.0"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
-    "puppeteer": "^24.2.0",
-    "sharp": "^0.33.5",
-    "electron-updater": "^5.3.0"
+    "electron-updater": "^5.3.0",
+    "puppeteer": "^24.4.0",
+    "sharp": "^0.33.5"
   }
 }
