@@ -4,7 +4,8 @@
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "start": "cross-env NODE_ENV=development electron .",
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
     "dist": "electron-builder",
     "build": "electron-builder --mac --win --linux"
