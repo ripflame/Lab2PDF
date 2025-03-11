@@ -1,16 +1,9 @@
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { app } = require('electron');
-
-let chromePath;
-if (process.env.NODE_ENV === 'development') {
-  chromePath = require('puppeteer').executablePath(); // Use locally installed Chromium
-} else {
-  chromePath = path.join(__dirname, '..', 'chrome-win', 'chrome.exe'); // Use bundled Chromium
-}
 
 // Function to log errors to a file
 function logErrorToFile(error) {
@@ -126,7 +119,6 @@ async function generatePDF(formData, outputPath, formType) {
                              .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
     const browser = await puppeteer.launch({
-      executablePath: chromePath,
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
