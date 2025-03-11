@@ -35,7 +35,9 @@ function loadForm(formType) {
           .addEventListener("change", handleTestFotoChange);
       }
     })
-    .catch((error) => console.error("Error loading form:", error));
+    .catch((error) => {
+      console.error("Error loading form:", error);
+    });
 }
 
 function handleTestFotoChange(event) {
@@ -52,47 +54,51 @@ function handleTestFotoChange(event) {
 }
 
 function handleHemoparasitesFormSubmit() {
-  const inputs = document.querySelectorAll(
-    "#commonFormFields input, #formularioHemoparasitos input",
-  );
+  try {
+    const inputs = document.querySelectorAll(
+      "#commonFormFields input, #formularioHemoparasitos input",
+    );
 
-  // Validate all inputs
-  for (const input of inputs) {
-    if (!input.checkValidity()) {
-      input.reportValidity();
-      input.focus();
-      return;
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
     }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked")
+        .value,
+      ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked")
+        .value,
+      lyme: document.querySelector("input[name='lyme']:checked").value,
+      anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked")
+        .value,
+      testFoto: document.getElementById("testFotoThumbnail").src,
+      testFotoPath: document.getElementById("testFoto").value,
+    };
+
+    window.electron.generarPDF(datos, "hemoparasites");
+  } catch (error) {
+    console.error("Error handling form submission:", error);
   }
-
-  const button = document.getElementById("generarPDFButton");
-  button.disabled = true;
-  button.innerHTML = '<span class="spinner"></span> Generando PDF...';
-
-  const datos = {
-    // Generic Form Fields start here
-    requerido: document.getElementById("requerido").value,
-    nombrePropietario: document.getElementById("nombrePropietario").value,
-    telefono: document.getElementById("telefono").value,
-    nombreMascota: document.getElementById("nombreMascota").value,
-    especie: document.getElementById("especie").value,
-    raza: document.getElementById("raza").value,
-    edad: document.getElementById("edad").value,
-    sexo: document.querySelector("input[name='sexo']:checked").value,
-    fecha: document.getElementById("fecha").value,
-    // Specific Form Fields start here
-    gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked")
-      .value,
-    ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked")
-      .value,
-    lyme: document.querySelector("input[name='lyme']:checked").value,
-    anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked")
-      .value,
-    testFoto: document.getElementById("testFotoThumbnail").src,
-    testFotoPath: document.getElementById("testFoto").value,
-  };
-
-  window.electron.generarPDF(datos, "hemoparasites");
 }
 
 // Handle PDF Generation Response

@@ -4,7 +4,7 @@ This application allows you to generate PDF reports for laboratory results.
 
 ## Features
 
-- Generate Hemogram reports
+- ~~Generate Hemogram reports~~
 - Generate Hemoparasites reports
 - **Auto-update**: The application automatically updates itself in the background.
 
