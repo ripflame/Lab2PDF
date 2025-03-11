@@ -1,6 +1,6 @@
 {
   "name": "lab2pdf",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -21,12 +21,15 @@
       "output": "dist"
     },
     "files": [
+      "**/*",
       "dist/",
       "main.js",
       "package.json",
       "assets/",
       "node_modules/",
-      "templates/"
+      "templates/",
+      "ipcHandlers.js",
+      "pdfGenerator.js"
     ],
     "extraResources": [
       {
@@ -34,8 +37,8 @@
         "to": "vc_redist.x64.exe"
       },
       {
-        "from": "src/",
-        "to": "src/"
+        "from": "chrome-win",
+        "to": "chrome-win"
       }
     ],
     "mac": {
@@ -99,7 +102,7 @@
   },
   "dependencies": {
     "electron-updater": "^5.3.0",
-    "puppeteer": "^24.4.0",
+    "puppeteer-core": "^24.4.0",
     "sharp": "^0.33.5"
   }
 }
