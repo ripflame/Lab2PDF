@@ -96,6 +96,8 @@ async function compressBase64Image(base64String, quality = 70) {
 
 // Main function to generate PDF
 async function generatePDF(formData, outputPath, formType) {
+  let browser; // Declare browser outside the try block
+
   try {
     const templatePath = path.join(__dirname, '../templates', `${formType}Template.html`);
     const topImagePath = path.join(__dirname, '../templates/img/top.svg');
@@ -159,55 +161,51 @@ async function generatePDF(formData, outputPath, formType) {
     htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
       .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
+    const chromePath = getChromePath();
+    console.log('Using browser at:', chromePath);
 
-    try {
-      const chromePath = getChromePath();
-      console.log('Using browser at:', chromePath);
+    browser = await puppeteer.launch({
+      executablePath: chromePath, // Use the pre-installed browser
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
 
-      const browser = await puppeteer.launch({
-        executablePath: chromePath, // Use the pre-installed browser
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+    const page = await browser.newPage();
 
-      const page = await browser.newPage();
+    await page.setContent(htmlContent, { waitUntil: 'load' });
 
-      await page.setContent(htmlContent, { waitUntil: 'load' });
+    await page.evaluate(async () => {
+      const images = Array.from(document.images);
+      await Promise.all(images.map(img => {
+        if (img.complete) return;
+        return new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      }));
+    });
 
-      await page.evaluate(async () => {
-        const images = Array.from(document.images);
-        await Promise.all(images.map(img => {
-          if (img.complete) return;
-          return new Promise((resolve, reject) => {
-            img.onload = resolve;
-            img.onerror = reject;
-          });
-        }));
-      });
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      await page.pdf({
-        path: outputPath,
-        format: 'letter',
-        printBackground: true,
-        margin: {
-          top: '0in',
-          right: '0in',
-          bottom: '0in',
-          left: '0in'
-        }
-      });
-    } catch (error) {
-      logErrorToFile(new Error(`Error generating PDF content: ${error.message}`));
-      throw error;
-    } finally {
-      await browser.close();
-    }
+    await page.pdf({
+      path: outputPath,
+      format: 'letter',
+      printBackground: true,
+      margin: {
+        top: '0in',
+        right: '0in',
+        bottom: '0in',
+        left: '0in'
+      }
+    });
   } catch (error) {
     console.error('Error generating PDF:', error);
     logErrorToFile(new Error(`Error in generatePDF function: ${error.message}`)); // Log error to file
     throw error;
+  } finally {
+    if (browser) { // Check if browser is defined before closing
+      await browser.close();
+    }
   }
 }
 
