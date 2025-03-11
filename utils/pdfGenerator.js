@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
@@ -13,6 +13,47 @@ function logErrorToFile(error) {
 }
 
 // Utility functions
+// Function to get the path to the installed Chrome/Chromium browser
+function getChromePath() {
+  const platform = process.platform;
+
+  if (platform === 'win32') {
+    // Common Chrome installation paths on Windows
+    const chromePaths = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', // 64-bit default
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe', // 32-bit default
+      'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe', // Edge 64-bit
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' // Edge 32-bit
+    ];
+
+    // Check each path
+    for (const chromePath of chromePaths) {
+      if (fs.existsSync(chromePath)) {
+        return chromePath;
+      }
+    }
+
+    throw new Error('Neither Chrome nor Edge is installed. Please install one of them.');
+  } else if (platform === 'darwin') {
+    // Common Chrome installation paths on macOS
+    const chromePaths = [
+      '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Chrome
+      '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' // Edge
+    ];
+
+    // Check each path
+    for (const chromePath of chromePaths) {
+      if (fs.existsSync(chromePath)) {
+        return chromePath;
+      }
+    }
+
+    throw new Error('Neither Chrome nor Edge is installed. Please install one of them.');
+  } else {
+    throw new Error('Unsupported platform');
+  }
+}
+
 function formatNumber(number) {
   return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
 }
@@ -33,17 +74,17 @@ async function compressBase64Image(base64String, quality = 70) {
   let processedImage = sharp(imageBuffer).resize({ width: 350 });
 
   switch (metadata.format) {
-      case 'jpeg':
-          processedImage = processedImage.jpeg({ quality });
-          break;
-      case 'png':
-          processedImage = processedImage.png({ compressionLevel: 9 });
-          break;
-      case 'webp':
-          processedImage = processedImage.webp({ quality });
-          break;
-      default:
-          throw new Error(`Unsupported image format: ${metadata.format}`);
+    case 'jpeg':
+      processedImage = processedImage.jpeg({ quality });
+      break;
+    case 'png':
+      processedImage = processedImage.png({ compressionLevel: 9 });
+      break;
+    case 'webp':
+      processedImage = processedImage.webp({ quality });
+      break;
+    default:
+      throw new Error(`Unsupported image format: ${metadata.format}`);
   }
 
   // Convert processed image to Base64
@@ -71,44 +112,44 @@ async function generatePDF(formData, outputPath, formType) {
     const formattedAge = formData.edad === '1' ? '1 año' : `${formData.edad} años`;
 
     htmlContent = htmlContent.replace('{{requerido}}', formData.requerido)
-                             .replace('{{fecha}}', formattedDate)
-                             .replace('{{nombreMascota}}', formData.nombreMascota)
-                             .replace('{{especie}}', formData.especie)
-                             .replace('{{raza}}', formData.raza)
-                             .replace('{{nombrePropietario}}', formData.nombrePropietario)
-                             .replace('{{edad}}', formattedAge)
-                             .replace('{{sexo}}', formData.sexo)
-                             .replace('{{telefono}}', formatPhoneNumber(formData.telefono));
+      .replace('{{fecha}}', formattedDate)
+      .replace('{{nombreMascota}}', formData.nombreMascota)
+      .replace('{{especie}}', formData.especie)
+      .replace('{{raza}}', formData.raza)
+      .replace('{{nombrePropietario}}', formData.nombrePropietario)
+      .replace('{{edad}}', formattedAge)
+      .replace('{{sexo}}', formData.sexo)
+      .replace('{{telefono}}', formatPhoneNumber(formData.telefono));
 
     if (formType === 'hemogram') {
       htmlContent = htmlContent.replace('{{eritrocitos}}', formatNumber(formData.eritrocitos))
-                               .replace('{{hemoglobina}}', formatNumber(formData.hemoglobina))
-                               .replace('{{hematocrito}}', formatNumber(formData.hematocrito))
-                               .replace('{{vgm}}', formatNumber(formData.volumenGlobularMedio))
-                               .replace('{{hpe}}', formatNumber(formData.hemoglobinaPromedio))
-                               .replace('{{cmh}}', formatNumber(formData.concentracionMediaHemoglobina))
-                               .replace('{{plaquetas}}', formatNumber(formData.plaquetas))
-                               .replace('{{leucocitos}}', formatNumber(formData.leucocitos))
-                               .replace('{{monocitos_rel}}', formatNumber(formData.monocitos_rel))
-                               .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos_rel))
-                               .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos_rel))
-                               .replace('{{basofilos_rel}}', formatNumber(formData.basofilos_rel))
-                               .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilos_segmentados_rel))
-                               .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilos_banda_rel))
-                               .replace('{{monocitos_abs}}', formatNumber(formData.monocitos_abs))
-                               .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos_abs))
-                               .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos_abs))
-                               .replace('{{basofilos_abs}}', formatNumber(formData.basofilos_abs))
-                               .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
-                               .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
+        .replace('{{hemoglobina}}', formatNumber(formData.hemoglobina))
+        .replace('{{hematocrito}}', formatNumber(formData.hematocrito))
+        .replace('{{vgm}}', formatNumber(formData.volumenGlobularMedio))
+        .replace('{{hpe}}', formatNumber(formData.hemoglobinaPromedio))
+        .replace('{{cmh}}', formatNumber(formData.concentracionMediaHemoglobina))
+        .replace('{{plaquetas}}', formatNumber(formData.plaquetas))
+        .replace('{{leucocitos}}', formatNumber(formData.leucocitos))
+        .replace('{{monocitos_rel}}', formatNumber(formData.monocitos_rel))
+        .replace('{{linfocitos_rel}}', formatNumber(formData.linfocitos_rel))
+        .replace('{{eosinofilos_rel}}', formatNumber(formData.eosinofilos_rel))
+        .replace('{{basofilos_rel}}', formatNumber(formData.basofilos_rel))
+        .replace('{{neutrofilos_segmentados_rel}}', formatNumber(formData.neutrofilos_segmentados_rel))
+        .replace('{{neutrofilos_banda_rel}}', formatNumber(formData.neutrofilos_banda_rel))
+        .replace('{{monocitos_abs}}', formatNumber(formData.monocitos_abs))
+        .replace('{{linfocitos_abs}}', formatNumber(formData.linfocitos_abs))
+        .replace('{{eosinofilos_abs}}', formatNumber(formData.eosinofilos_abs))
+        .replace('{{basofilos_abs}}', formatNumber(formData.basofilos_abs))
+        .replace('{{neutrofilos_segmentados_abs}}', formatNumber(formData.neutrofilos_segmentados_abs))
+        .replace('{{neutrofilos_banda_abs}}', formatNumber(formData.neutrofilos_banda_abs));
     } else if (formType === 'hemoparasites') {
       try {
         const compressedBase64 = await compressBase64Image(formData.testFoto);
-        htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
-                                  .replace('{{ehrlichiosis}}', formData.ehrlichiosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
-                                  .replace('{{lyme}}', formData.lyme==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
-                                  .replace('{{anaplasmosis}}', formData.anaplasmosis==='Positivo'?'<span class="bold is-positive">Positivo</span>':'<span class="bold">Negativo</span>')
-                                  .replace('{{testFoto}}', compressedBase64);
+        htmlContent = htmlContent.replace('{{gusanoCorazon}}', formData.gusanoCorazon === 'Positivo' ? '<span class="bold is-positive">Positivo</span>' : '<span class="bold">Negativo</span>')
+          .replace('{{ehrlichiosis}}', formData.ehrlichiosis === 'Positivo' ? '<span class="bold is-positive">Positivo</span>' : '<span class="bold">Negativo</span>')
+          .replace('{{lyme}}', formData.lyme === 'Positivo' ? '<span class="bold is-positive">Positivo</span>' : '<span class="bold">Negativo</span>')
+          .replace('{{anaplasmosis}}', formData.anaplasmosis === 'Positivo' ? '<span class="bold is-positive">Positivo</span>' : '<span class="bold">Negativo</span>')
+          .replace('{{testFoto}}', compressedBase64);
       } catch (error) {
         logErrorToFile(new Error(`Error compressing image: ${error.message}`));
         throw error;
@@ -116,15 +157,21 @@ async function generatePDF(formData, outputPath, formType) {
     }
 
     htmlContent = htmlContent.replace('./img/top.svg', `data:image/svg+xml;base64,${Buffer.from(topImageContent).toString('base64')}`)
-                             .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
+      .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
 
     try {
+      const chromePath = getChromePath();
+      console.log('Using browser at:', chromePath);
+
+      const browser = await puppeteer.launch({
+        executablePath: chromePath, // Use the pre-installed browser
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
+
+      const page = await browser.newPage();
+
       await page.setContent(htmlContent, { waitUntil: 'load' });
 
       await page.evaluate(async () => {
@@ -140,8 +187,8 @@ async function generatePDF(formData, outputPath, formType) {
 
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      await page.pdf({ 
-        path: outputPath, 
+      await page.pdf({
+        path: outputPath,
         format: 'letter',
         printBackground: true,
         margin: {
