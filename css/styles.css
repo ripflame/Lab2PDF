@@ -29,6 +29,13 @@
   margin: 10px;
 }
 
+.spacer {
+  height: 1px;
+  width: 650px;
+  margin: 0 auto;
+  background-color: #ccc;
+}
+
 /* Form Styles */
 .form {
   min-width: 800px;

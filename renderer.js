@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hemogramLink")
     .addEventListener("click", () => loadForm("hemogram"));
-  document
-    .getElementById("generarPDFButton")
-    .addEventListener("click", handleHemoparasitesFormSubmit);
+  // document
+  //   .getElementById("generarPDFButton")
+  //   .addEventListener("click", handleHemoparasitesFormSubmit);
 
   // Load default form
   loadForm("hemoparasites");
@@ -33,11 +33,26 @@ function loadForm(formType) {
         document
           .getElementById("testFoto")
           .addEventListener("change", handleTestFotoChange);
+      } else if (formType === "hemogram") {
+
       }
+      updateFormSubmitHandler(formType);
     })
     .catch((error) => {
       console.error("Error loading form:", error);
     });
+}
+
+function updateFormSubmitHandler(formType) {
+  const button = document.getElementById("generarPDFButton");
+  button.removeEventListener("click", handleHemoparasitesFormSubmit);
+  button.removeEventListener("click", handleHemogramFormSubmit);
+
+  if (formType === "hemoparasites") {
+    button.addEventListener("click", handleHemoparasitesFormSubmit);
+  } else if (formType === "hemogram") {
+    button.addEventListener("click", handleHemogramFormSubmit);
+  }
 }
 
 function handleTestFotoChange(event) {
@@ -87,23 +102,32 @@ function handleHemogramFormSubmit() {
       eritrocitos: document.getElementById("eritrocitos").value,
       hemoglobina: document.getElementById("hemoglobina").value,
       hematocrito: document.getElementById("hematocrito").value,
-      volumenGlobularMedio: document.getElementById("volumenGlobularMedio").value,
+      volumenGlobularMedio: document.getElementById("volumenGlobularMedio")
+        .value,
       hemoglobinaPromedio: document.getElementById("hemoglobinaPromedio").value,
-      concentracionMediaHemoglobina: document.getElementById("concentracionMediaHemoglobina").value,
+      concentracionMediaHemoglobina: document.getElementById(
+        "concentracionMediaHemoglobina",
+      ).value,
       plaquetas: document.getElementById("plaquetas").value,
       leucocitos: document.getElementById("leucocitos").value,
       monocitos_rel: document.getElementById("monocitos_rel").value,
       linfocitos_rel: document.getElementById("linfocitos_rel").value,
       eosinofilos_rel: document.getElementById("eosinofilos_rel").value,
       basofilos_rel: document.getElementById("basofilos_rel").value,
-      neutrofilos_segmentados_rel: document.getElementById("neutrofilos_segmentados_rel").value,
-      neutrofilos_banda_rel: document.getElementById("neutrofilos_banda_rel").value,
+      neutrofilos_segmentados_rel: document.getElementById(
+        "neutrofilos_segmentados_rel",
+      ).value,
+      neutrofilos_banda_rel: document.getElementById("neutrofilos_banda_rel")
+        .value,
       monocitos_abs: document.getElementById("monocitos_abs").value,
       linfocitos_abs: document.getElementById("linfocitos_abs").value,
       eosinofilos_abs: document.getElementById("eosinofilos_abs").value,
       basofilos_abs: document.getElementById("basofilos_abs").value,
-      neutrofilos_segmentados_abs: document.getElementById("neutrofilos_segmentados_abs").value,
-      noutrofilos_banda_abs: document.getElementById("noutrofilos_banda_abs").value,
+      neutrofilos_segmentados_abs: document.getElementById(
+        "neutrofilos_segmentados_abs",
+      ).value,
+      neutrofilos_banda_abs: document.getElementById("neutrofilos_banda_abs")
+        .value,
     };
 
     window.electron.generarPDF(datos, "hemogram");
@@ -143,10 +167,14 @@ function handleHemoparasitesFormSubmit() {
       sexo: document.querySelector("input[name='sexo']:checked").value,
       fecha: document.getElementById("fecha").value,
       // Specific Form Fields start here
-      gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked").value,
-      ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked").value,
+      gusanoCorazon: document.querySelector(
+        "input[name='gusanoCorazon']:checked",
+      ).value,
+      ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked")
+        .value,
       lyme: document.querySelector("input[name='lyme']:checked").value,
-      anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked").value,
+      anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked")
+        .value,
       testFoto: document.getElementById("testFotoThumbnail").src,
       testFotoPath: document.getElementById("testFoto").value,
     };
