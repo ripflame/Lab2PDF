@@ -6,9 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hemogramLink")
     .addEventListener("click", () => loadForm("hemogram"));
-  // document
-  //   .getElementById("generarPDFButton")
-  //   .addEventListener("click", handleHemoparasitesFormSubmit);
 
   // Load default form
   loadForm("hemoparasites");
