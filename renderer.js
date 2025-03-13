@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hemogramLink")
     .addEventListener("click", () => loadForm("hemogram"));
+  document
+    .getElementById("distemperLink")
+    .addEventListener("click", () => loadForm("distemper"));
 
   // Load default form
   loadForm("hemoparasites");
@@ -37,10 +40,26 @@ function loadForm(formType) {
           .addEventListener("change", handleTestFotoChange);
         // Show only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], false);
-        toggleVisibility( ["felinoOption", "equinoOption", "bovinoOption"], true,);
+        toggleVisibility(
+          ["felinoOption", "equinoOption", "bovinoOption"],
+          true,
+        );
       } else if (formType === "hemogram") {
         // Show all species options
-        toggleVisibility( ["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], false,);
+        toggleVisibility(
+          ["caninoOption", "felinoOption", "equinoOption", "bovinoOption"],
+          false,
+        );
+      } else if (formType === "distemper") {
+        document
+          .getElementById("testFoto")
+          .addEventListener("change", handleTestFotoChange);
+        //Sho only "caninoOption" and hide the others
+        toggleVisibility(["caninoOption"], false);
+        toggleVisibility(
+          ["felinoOption", "equinoOption", "bovinoOption"],
+          true,
+        );
       }
       updateFormSubmitHandler(formType);
     })
@@ -53,11 +72,14 @@ function updateFormSubmitHandler(formType) {
   const button = document.getElementById("generarPDFButton");
   button.removeEventListener("click", handleHemoparasitesFormSubmit);
   button.removeEventListener("click", handleHemogramFormSubmit);
+  button.removeEventListener("click", handleDistemperFormSubmit);
 
   if (formType === "hemoparasites") {
     button.addEventListener("click", handleHemoparasitesFormSubmit);
   } else if (formType === "hemogram") {
     button.addEventListener("click", handleHemogramFormSubmit);
+  } else if (formType === "distemper") {
+    button.addEventListener("click", handleDistemperFormSubmit);
   }
 }
 
@@ -188,6 +210,51 @@ function handleHemoparasitesFormSubmit() {
     window.electron.generarPDF(datos, "hemoparasites");
   } catch (error) {
     console.error("Error handling hemoparasites form submission:", error);
+  }
+}
+
+function handleDistemperFormSubmit() {
+  try {
+    const inputs = document.querySelectorAll(
+      "#commonFormFields input, #formularioDistemper input",
+    );
+
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      distemper: document.querySelector("input[name='distemper']:checked")
+        .value,
+      adenovirus: document.querySelector("input[name='adenovirus']:checked")
+        .value,
+      testFoto: document.getElementById("testFotoThumbnail").src,
+      testFotoPath: document.getElementById("testFoto").value,
+    };
+
+    window.electron.generarPDF(datos, "distemper");
+  } catch (error) {
+    console.error("Error handling distemper form submission:", error);
   }
 }
 

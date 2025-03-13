@@ -12,7 +12,7 @@ describe("PDF Generation", function () {
     fs.mkdirSync(outputDir);
   }
 
-  it("should generate a PDF file", async function () {
+  it("should generate a PDF file for hemogram", async function () {
     const formData = {
       requerido: "Veterinaria CaNinna",
       nombrePropietario: "Juan Pérez",
@@ -21,7 +21,7 @@ describe("PDF Generation", function () {
       especie: "Canino",
       raza: "Labrador",
       edad: "5",
-      sexo: "macho",
+      sexo: "Macho",
       fecha: "2023-10-01",
       eritrocitos: "7240000",
       hemoglobina: "17.8",
@@ -57,7 +57,7 @@ describe("PDF Generation", function () {
   });
 
   it("should generate a PDF file for hemoparasites", async function () {
-    const imgPath = path.join(__dirname, "test_assets", "test1.jpg");
+    const imgPath = path.join(__dirname, "test_assets", "hemoparasitos.jpg");
     const imgBuffer = fs.readFileSync(imgPath);
     const base64Img = `data:image/jpeg;base64,${imgBuffer.toString("base64")}`;
 
@@ -69,7 +69,7 @@ describe("PDF Generation", function () {
       especie: "Canino",
       raza: "Labrador",
       edad: "5",
-      sexo: "macho",
+      sexo: "Macho",
       fecha: "2023-10-01",
       gusanoCorazon: "Negativo",
       ehrlichiosis: "Positivo",
@@ -84,6 +84,37 @@ describe("PDF Generation", function () {
     );
 
     await generatePDF(formData, pdfPath, "hemoparasites");
+
+    // Check if the PDF file was created
+    assert(fs.existsSync(pdfPath), "PDF file was not created");
+  });
+
+  it("should generate a PDF file for distemper/adenovirus", async function () {
+    const imgPath = path.join(__dirname, "test_assets", "distemper.png");
+    const imgBuffer = fs.readFileSync(imgPath);
+    const base64Img = `data:image/jpeg;base64,${imgBuffer.toString("base64")}`;
+
+    const formData = {
+      requerido: "Veterinaria CaNinna",
+      nombrePropietario: "Juan Pérez",
+      telefono: "1234567890",
+      nombreMascota: "Bolita",
+      especie: "Canino",
+      raza: "French",
+      edad: "19",
+      sexo: "Macho",
+      fecha: "2023-10-01",
+      distemper: "Negativo",
+      adenovirus: "Positivo",
+      testFoto: base64Img,
+    };
+
+    const pdfPath = path.join(
+      outputDir,
+      `${formData.nombreMascota}_InformeDistemperAdenovirus.pdf`,
+    );
+
+    await generatePDF(formData, pdfPath, "distemper");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");
