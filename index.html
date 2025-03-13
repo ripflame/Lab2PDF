@@ -36,11 +36,17 @@
               <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
               <input class="input-text" type="text" id="nombreMascota" required />
               <label class="label" for="especie">Especie:</label>
-              <input class="input-text" type="text" id="especie" required />
+              <!-- <input class="input-text" type="text" id="especie" required /> -->
+              <select class="form-select" name="especie" id="especie" required>
+                  <option id="caninoOption" value="canino">🐶 Canino</option>
+                  <option id="felinoOption" value="felino">🐱 Felino</option>
+                  <option id="equinoOption" value="equino">🐴 Equino</option>
+                  <option id="bovinoOption" value="bovino">🐮 Bovino</option>
+                </select>
               <label class="label" for="raza">Raza:</label>
               <input class="input-text" type="text" id="raza" required />
               <label class="label" for="edad">Edad:</label>
-              <input class="input-number" type="number" id="edad" required />
+              <input class="input-number" type="text" id="edad" placeholder="Ej: 2 años o 4 meses" required />
               <label class="label">Sexo:</label>
               <div class="radio-group">
                 <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked />

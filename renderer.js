@@ -9,11 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load default form
   loadForm("hemoparasites");
-  //Make sidebar toggable
-  document.querySelector(".sidebar h2").addEventListener("click", () => {
-    document.querySelector(".sidebar").classList.toggle("open");
-  });
 });
+
+function toggleVisibility(ids, shouldHide) {
+  ids.forEach((id) => {
+    const elment = document.getElementById(id);
+    if (elment) {
+      elment.classList.toggle("hidden", shouldHide);
+    }
+  });
+}
 
 function loadForm(formType) {
   fetch(`templates/${formType}.html`)
@@ -30,8 +35,12 @@ function loadForm(formType) {
         document
           .getElementById("testFoto")
           .addEventListener("change", handleTestFotoChange);
+        // Show only "caninoOption" and hide the others
+        toggleVisibility(["caninoOption"], false);
+        toggleVisibility( ["felinoOption", "equinoOption", "bovinoOption"], true,);
       } else if (formType === "hemogram") {
-
+        // Show all species options
+        toggleVisibility( ["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], false,);
       }
       updateFormSubmitHandler(formType);
     })
