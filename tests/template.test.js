@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const fs = require("fs");
 const path = require("path");
 const assert = require("assert");
@@ -18,7 +18,7 @@ describe("PDF Generation", function () {
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Fido",
-      especie: "Perro",
+      especie: "Canino",
       raza: "Labrador",
       edad: "5",
       sexo: "macho",
@@ -66,7 +66,7 @@ describe("PDF Generation", function () {
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Fido",
-      especie: "Perro",
+      especie: "Canino",
       raza: "Labrador",
       edad: "5",
       sexo: "macho",

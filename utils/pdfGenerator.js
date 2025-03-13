@@ -169,7 +169,6 @@ async function generatePDF(formData, outputPath, formType) {
       .replace('./img/bottom.svg', `data:image/svg+xml;base64,${Buffer.from(bottomImageContent).toString('base64')}`);
 
     const chromePath = getChromePath();
-    console.log('Using browser at:', chromePath);
 
     browser = await puppeteer.launch({
       executablePath: chromePath, // Use the pre-installed browser
