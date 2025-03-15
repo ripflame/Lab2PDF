@@ -98,13 +98,6 @@ async function compressBase64Image(base64String, quality = 70) {
   return compressedBase64;
 }
 
-// Function to log errors
-function logError(error) {
-  const logPath = path.join(app.getPath("userData"), "error.log");
-  const errorMessage = `${new Date().toISOString()} - ${error}\n`;
-  fs.appendFileSync(logPath, errorMessage);
-}
-
 // Main function to generate PDF
 async function generatePDF(formData, outputPath, formType) {
   let browser; // Declare browser outside the try block
