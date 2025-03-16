@@ -6,7 +6,8 @@ const os = require("os");
 const { app } = require("electron");
 
 /**
- * Configuration options
+ * Application configuration
+ * Contains paths, browser configurations, image processing settings and PDF output options
  */
 const CONFIG = {
   templateDir: path.join(__dirname, "../templates"),
@@ -36,7 +37,8 @@ const CONFIG = {
 };
 
 /**
- * Logger for application errors
+ * Application error logger
+ * Records error details to file with timestamps for debugging
  */
 class Logger {
   static logError(error) {
@@ -47,7 +49,8 @@ class Logger {
 }
 
 /**
- * Utility functions for data formatting
+ * Data formatting utilities for displaying values in templates
+ * Handles formatting of numbers, phone numbers, dates and age displays
  */
 class Formatters {
   static number(number) {
@@ -71,9 +74,14 @@ class Formatters {
 }
 
 /**
- * Handles image operations
+ * Image processing utilities
+ * Handles compression, format conversion and loading of image assets
  */
 class ImageProcessor {
+  /**
+   * Compresses and resizes a Base64 encoded image
+   * Preserves the original format while optimizing file size
+   */
   static async compressBase64Image(
     base64String,
     quality = CONFIG.imageCompression.defaultQuality,
@@ -83,10 +91,10 @@ class ImageProcessor {
       const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
       const imageBuffer = Buffer.from(base64Data, "base64");
 
-      // Use sharp to get metadata (detects format automatically)
+      // Get image metadata to determine format
       const metadata = await sharp(imageBuffer).metadata();
 
-      // Convert to the detected format
+      // Resize image and apply format-specific compression
       let processedImage = sharp(imageBuffer).resize({
         width: CONFIG.imageCompression.width,
       });
@@ -105,7 +113,7 @@ class ImageProcessor {
           throw new Error(`Unsupported image format: ${metadata.format}`);
       }
 
-      // Convert processed image to Base64
+      // Convert back to Base64
       const compressedBuffer = await processedImage.toBuffer();
       const compressedBase64 = `data:image/${metadata.format};base64,${compressedBuffer.toString("base64")}`;
 
@@ -116,6 +124,9 @@ class ImageProcessor {
     }
   }
 
+  /**
+   * Loads an SVG image file and returns it as a Base64 encoded data URL
+   */
   static loadImageAsBase64(imagePath) {
     try {
       const imageContent = fs.readFileSync(imagePath, "utf8");
@@ -130,9 +141,13 @@ class ImageProcessor {
 }
 
 /**
- * Browser management for PDF generation
+ * Handles headless browser operations for PDF rendering
+ * Manages browser instances, page configuration and rendering wait states
  */
 class BrowserManager {
+  /**
+   * Locates Chrome or Edge executable based on the current platform
+   */
   static getChromePath() {
     const platform = process.platform;
     const paths = CONFIG.chromePaths[platform];
@@ -152,6 +167,9 @@ class BrowserManager {
     );
   }
 
+  /**
+   * Creates and configures a new headless browser instance
+   */
   static async createBrowser() {
     try {
       const chromePath = this.getChromePath();
@@ -166,6 +184,9 @@ class BrowserManager {
     }
   }
 
+  /**
+   * Ensures all images in the page are fully loaded before PDF generation
+   */
   static async waitForImagesLoad(page) {
     try {
       await page.evaluate(async () => {
@@ -181,7 +202,7 @@ class BrowserManager {
         );
       });
 
-      // Add a small delay to ensure rendering is complete
+      // Additional delay for complete rendering
       await new Promise((resolve) => setTimeout(resolve, 1000));
     } catch (error) {
       Logger.logError(new Error(`Images loading error: ${error.message}`));
@@ -191,9 +212,14 @@ class BrowserManager {
 }
 
 /**
- * Template processors for different form types
+ * Template processing for different veterinary form types
+ * Handles data insertion, formatting and template-specific logic
  */
 class TemplateProcessor {
+  /**
+   * Processes common template elements shared across all form types
+   * Inserts patient and owner information
+   */
   static async processBaseTemplate(htmlContent, formData) {
     try {
       return htmlContent
@@ -226,6 +252,10 @@ class TemplateProcessor {
     }
   }
 
+  /**
+   * Processes hemogram-specific template data
+   * Inserts and formats blood test values
+   */
   static processHemogramTemplate(htmlContent, formData) {
     try {
       const f = Formatters.number;
@@ -267,12 +297,18 @@ class TemplateProcessor {
     }
   }
 
+  /**
+   * Processes templates that include test results with photo evidence
+   * Handles hemoparasites and distemper test types
+   */
   static async processTestWithPhotoTemplate(htmlContent, formData, testType) {
     try {
+      // Compress and process the test photo
       const compressedBase64 = await ImageProcessor.compressBase64Image(
         formData.testFoto,
       );
 
+      // Apply test-specific template logic
       if (testType === "hemoparasites") {
         return htmlContent
           .replace(
@@ -305,6 +341,9 @@ class TemplateProcessor {
     }
   }
 
+  /**
+   * Formats test results with appropriate styling based on result value
+   */
   static formatTestResult(result) {
     return result === "Positivo"
       ? '<span class="bold is-positive">Positivo</span>'
@@ -313,49 +352,62 @@ class TemplateProcessor {
 }
 
 /**
- * Main PDF generator class
+ * Main PDF generation functionality
+ * Coordinates template selection, processing and rendering
  */
 class PDFGenerator {
+  /**
+   * Generates a PDF from veterinary form data
+   *
+   * @param {Object} formData - The data to be inserted into the template
+   * @param {string} outputPath - Path where the PDF will be saved
+   * @param {string} formType - Type of form (hemogram, hemoparasites, distemper)
+   * @returns {string} - Path to the generated PDF file
+   */
   static async generatePDF(formData, outputPath, formType) {
     let browser;
 
     try {
-      // Load template
+      // Select and load appropriate template
       const templatePath = path.join(
         CONFIG.templateDir,
         `${formType}Template.html`,
       );
       let htmlContent = fs.readFileSync(templatePath, "utf8");
 
-      // Process base template (common for all form types)
+      // Process common template elements
       htmlContent = await TemplateProcessor.processBaseTemplate(
         htmlContent,
         formData,
       );
 
-      // Process form-specific content
-      if (formType === "hemogram") {
-        htmlContent = TemplateProcessor.processHemogramTemplate(
-          htmlContent,
-          formData,
-        );
-      } else if (formType === "hemoparasites") {
-        htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-          htmlContent,
-          formData,
-          "hemoparasites",
-        );
-      } else if (formType === "distemper") {
-        htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-          htmlContent,
-          formData,
-          "distemper",
-        );
-      } else {
-        throw new Error(`Unknown form type: ${formType}`);
+      // Apply form-specific processing
+      switch (formType) {
+        case "hemogram":
+          htmlContent = TemplateProcessor.processHemogramTemplate(
+            htmlContent,
+            formData,
+          );
+          break;
+        case "hemoparasites":
+          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
+            htmlContent,
+            formData,
+            "hemoparasites",
+          );
+          break;
+        case "distemper":
+          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
+            htmlContent,
+            formData,
+            "distemper",
+          );
+          break;
+        default:
+          throw new Error(`Unknown form type: ${formType}`);
       }
 
-      // Create browser and generate PDF
+      // Render HTML to PDF
       browser = await BrowserManager.createBrowser();
       const page = await browser.newPage();
       await page.setContent(htmlContent, { waitUntil: "load" });
@@ -367,6 +419,7 @@ class PDFGenerator {
       Logger.logError(new Error(`PDF generation error: ${error.message}`));
       throw error;
     } finally {
+      // Ensure browser is closed even if an error occurs
       if (browser) {
         await browser.close().catch((err) => {
           Logger.logError(new Error(`Browser close error: ${err.message}`));
