@@ -12,7 +12,12 @@ const { app } = require("electron");
 const CONFIG = {
   templateDir: path.join(__dirname, "../templates"),
   imageDir: path.join(__dirname, "../templates/img"),
-  logPath: path.join(app.getPath("userData"), "error.log"),
+  // Use a getter to lazily evaluate the log path when it's accessed
+  get logPath() {
+    return typeof app !== "undefined" && app !== null
+      ? path.join(app.getPath("userData"), "error.log")
+      : path.join(os.tmpdir(), "app-error.log");
+  },
   chromePaths: {
     win32: [
       "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
@@ -54,9 +59,7 @@ class Logger {
  */
 class Formatters {
   static number(number) {
-    return number
-      ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      : "";
+    return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "";
   }
 
   static phoneNumber(phoneNumber) {
@@ -82,10 +85,7 @@ class ImageProcessor {
    * Compresses and resizes a Base64 encoded image
    * Preserves the original format while optimizing file size
    */
-  static async compressBase64Image(
-    base64String,
-    quality = CONFIG.imageCompression.defaultQuality,
-  ) {
+  static async compressBase64Image(base64String, quality = CONFIG.imageCompression.defaultQuality) {
     try {
       // Extract Base64 data (removing metadata prefix)
       const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
@@ -132,9 +132,7 @@ class ImageProcessor {
       const imageContent = fs.readFileSync(imagePath, "utf8");
       return `data:image/svg+xml;base64,${Buffer.from(imageContent).toString("base64")}`;
     } catch (error) {
-      Logger.logError(
-        new Error(`Failed to load image ${imagePath}: ${error.message}`),
-      );
+      Logger.logError(new Error(`Failed to load image ${imagePath}: ${error.message}`));
       throw error;
     }
   }
@@ -162,9 +160,7 @@ class BrowserManager {
       }
     }
 
-    throw new Error(
-      "Chrome or Edge browser not found. Please install one of them.",
-    );
+    throw new Error("Chrome or Edge browser not found. Please install one of them.");
   }
 
   /**
@@ -234,20 +230,14 @@ class TemplateProcessor {
         .replace("{{telefono}}", Formatters.phoneNumber(formData.telefono))
         .replace(
           "./img/top.svg",
-          ImageProcessor.loadImageAsBase64(
-            path.join(CONFIG.imageDir, "top.svg"),
-          ),
+          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, "top.svg")),
         )
         .replace(
           "./img/bottom.svg",
-          ImageProcessor.loadImageAsBase64(
-            path.join(CONFIG.imageDir, "bottom.svg"),
-          ),
+          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, "bottom.svg")),
         );
     } catch (error) {
-      Logger.logError(
-        new Error(`Base template processing error: ${error.message}`),
-      );
+      Logger.logError(new Error(`Base template processing error: ${error.message}`));
       throw error;
     }
   }
@@ -272,27 +262,53 @@ class TemplateProcessor {
         .replace("{{linfocitos_rel}}", f(formData.linfocitos_rel))
         .replace("{{eosinofilos_rel}}", f(formData.eosinofilos_rel))
         .replace("{{basofilos_rel}}", f(formData.basofilos_rel))
-        .replace(
-          "{{neutrofilos_segmentados_rel}}",
-          f(formData.neutrofilos_segmentados_rel),
-        )
+        .replace("{{neutrofilos_segmentados_rel}}", f(formData.neutrofilos_segmentados_rel))
         .replace("{{neutrofilos_banda_rel}}", f(formData.neutrofilos_banda_rel))
         .replace("{{monocitos_abs}}", f(formData.monocitos_abs))
         .replace("{{linfocitos_abs}}", f(formData.linfocitos_abs))
         .replace("{{eosinofilos_abs}}", f(formData.eosinofilos_abs))
         .replace("{{basofilos_abs}}", f(formData.basofilos_abs))
-        .replace(
-          "{{neutrofilos_segmentados_abs}}",
-          f(formData.neutrofilos_segmentados_abs),
-        )
-        .replace(
-          "{{neutrofilos_banda_abs}}",
-          f(formData.neutrofilos_banda_abs),
-        );
+        .replace("{{neutrofilos_segmentados_abs}}", f(formData.neutrofilos_segmentados_abs))
+        .replace("{{neutrofilos_banda_abs}}", f(formData.neutrofilos_banda_abs));
     } catch (error) {
-      Logger.logError(
-        new Error(`Hemogram template processing error: ${error.message}`),
-      );
+      Logger.logError(new Error(`Hemogram template processing error: ${error.message}`));
+      throw error;
+    }
+  }
+
+  /**
+   * Processes hemogram-palenque-specific template data
+   * Inserts and formats blood test values
+   */
+  static processHemogram_PalenqueTemplate(htmlContent, formData) {
+    try {
+      const f = Formatters.number;
+      return htmlContent
+        .replace("{{leucocitos}}", f(formData.eritrocitos))
+        .replace("{{linfocitos_abs}}", f(formData.hemoglobina))
+        .replace("{{monocitos_abs}}", f(formData.hematocrito))
+        .replace("{{granulocitos_abs}}", f(formData.volumenGlobularMedio))
+        .replace("{{eosinofilos_abs}}", f(formData.hemoglobinaPromedio))
+        .replace("{{linfocitos_rel}}", f(formData.concentracionMediaHemoglobina))
+        .replace("{{monocitos_rel}}", f(formData.plaquetas))
+        .replace("{{granulocitos_rel}}", f(formData.leucocitos))
+        .replace("{{eosinofilos_rel}}", f(formData.monocitos_rel))
+        .replace("{{rbc}}", f(formData.linfocitos_rel))
+        .replace("{{hgb}}", f(formData.eosinofilos_rel))
+        .replace("{{hct}}", f(formData.basofilos_rel))
+        .replace("{{mcv}}", f(formData.neutrofilos_segmentados_rel))
+        .replace("{{mch}}", f(formData.neutrofilos_banda_rel))
+        .replace("{{mchc}}", f(formData.monocitos_abs))
+        .replace("{{rdw_cv}}", f(formData.linfocitos_abs))
+        .replace("{{rdw_sd}}", f(formData.eosinofilos_abs))
+        .replace("{{plt}}", f(formData.basofilos_abs))
+        .replace("{{pct}}", f(formData.neutrofilos_segmentados_abs))
+        .replace("{{mpv}}", f(formData.neutrofilos_banda_abs))
+        .replace("{{pdw}}", f(formData.neutrofilos_banda_abs))
+        .replace("{{p_lcr}}", f(formData.neutrofilos_banda_abs))
+        .replace("{{p_lcc}}", f(formData.neutrofilos_banda_abs));
+    } catch (error) {
+      Logger.logError(new Error(`Hemogram-palenque template processing error: ${error.message}`));
       throw error;
     }
   }
@@ -304,26 +320,15 @@ class TemplateProcessor {
   static async processTestWithPhotoTemplate(htmlContent, formData, testType) {
     try {
       // Compress and process the test photo
-      const compressedBase64 = await ImageProcessor.compressBase64Image(
-        formData.testFoto,
-      );
+      const compressedBase64 = await ImageProcessor.compressBase64Image(formData.testFoto);
 
       // Apply test-specific template logic
       if (testType === "hemoparasites") {
         return htmlContent
-          .replace(
-            "{{gusanoCorazon}}",
-            this.formatTestResult(formData.gusanoCorazon),
-          )
-          .replace(
-            "{{ehrlichiosis}}",
-            this.formatTestResult(formData.ehrlichiosis),
-          )
+          .replace("{{gusanoCorazon}}", this.formatTestResult(formData.gusanoCorazon))
+          .replace("{{ehrlichiosis}}", this.formatTestResult(formData.ehrlichiosis))
           .replace("{{lyme}}", this.formatTestResult(formData.lyme))
-          .replace(
-            "{{anaplasmosis}}",
-            this.formatTestResult(formData.anaplasmosis),
-          )
+          .replace("{{anaplasmosis}}", this.formatTestResult(formData.anaplasmosis))
           .replace("{{testFoto}}", compressedBase64);
       } else if (testType === "distemper") {
         return htmlContent
@@ -334,9 +339,7 @@ class TemplateProcessor {
 
       throw new Error(`Unknown test type: ${testType}`);
     } catch (error) {
-      Logger.logError(
-        new Error(`Test template processing error: ${error.message}`),
-      );
+      Logger.logError(new Error(`Test template processing error: ${error.message}`));
       throw error;
     }
   }
@@ -369,25 +372,19 @@ class PDFGenerator {
 
     try {
       // Select and load appropriate template
-      const templatePath = path.join(
-        CONFIG.templateDir,
-        `${formType}Template.html`,
-      );
+      const templatePath = path.join(CONFIG.templateDir, `${formType}Template.html`);
       let htmlContent = fs.readFileSync(templatePath, "utf8");
 
       // Process common template elements
-      htmlContent = await TemplateProcessor.processBaseTemplate(
-        htmlContent,
-        formData,
-      );
+      htmlContent = await TemplateProcessor.processBaseTemplate(htmlContent, formData);
 
       // Apply form-specific processing
       switch (formType) {
         case "hemogram":
-          htmlContent = TemplateProcessor.processHemogramTemplate(
-            htmlContent,
-            formData,
-          );
+          htmlContent = TemplateProcessor.processHemogramTemplate(htmlContent, formData);
+          break;
+        case "hemogram-palenque":
+          htmlContent = TemplateProcessor.processHemogram_PalenqueTemplate(htmlContent, formData);
           break;
         case "hemoparasites":
           htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
