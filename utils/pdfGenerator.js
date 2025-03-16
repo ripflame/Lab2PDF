@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer-core");
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
-const os = require("os");
+// const os = require("os");
 const { app } = require("electron");
 
 /**
@@ -229,7 +229,7 @@ class TemplateProcessor {
         .replace("{{especie}}", formData.especie)
         .replace("{{raza}}", formData.raza)
         .replace("{{nombrePropietario}}", formData.nombrePropietario)
-        .replace("{{edad}}", Formatters.age(formData.edad))
+        .replace("{{edad}}", formData.edad)
         .replace("{{sexo}}", formData.sexo)
         .replace("{{telefono}}", Formatters.phoneNumber(formData.telefono))
         .replace(
