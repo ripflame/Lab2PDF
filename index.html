@@ -1,73 +1,124 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Informe de Laboratorio</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="renderer.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Informe de Laboratorio</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <script src="renderer.js"></script>
-</head>
-
-<body class="body">
-  <div class="sidebar">
-    <h2>☰ Menú</h2>
-    <ul>
-      <li><a href="#" id="hemoparasitesLink">Hemoparásitos</a></li>
-      <li><a href="#" id="hemogramLink">Hemograma</a></li>
-        <li><a href="#" id="distemperLink">Distemper<br>Adenovirus</a></li>
-    </ul>
-  </div>
-  <div class="content">
-    <div id="formContainer" class="form-container">
-      <form id="commonFormFields">
-        <div class="form">
-          <fieldset class="fieldset form-columns">
-            <legend class="legend">Información General</legend>
-            <div class="form-column">
-              <label class="label" for="requerido">Requerido por:</label>
-              <input class="input-text" type="text" id="requerido" value="Veterinaria CaNinna" required />
-              <label class="label" for="fecha">Fecha:</label>
-              <input class="input-date" type="date" id="fecha" required />
-              <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
-              <input class="input-text" type="text" id="nombrePropietario" required />
-              <label class="label" for="telefono">Teléfono:</label>
-              <input class="input-tel" type="tel" id="telefono" required />
-            </div>
-            <div class="form-column">
-              <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
-              <input class="input-text" type="text" id="nombreMascota" required />
-              <label class="label" for="especie">Especie:</label>
-              <select class="form-select" name="especie" id="especie" required>
-                  <option id="caninoOption" value="Canino">🐶 Canino</option>
-                  <option id="felinoOption" value="Felino" disabled>🐱 Felino</option>
-                  <option id="equinoOption" value="Equino" disabled>🐴 Equino</option>
-                  <option id="bovinoOption" value="Bovino" disabled>🐮 Bovino</option>
-                </select>
-              <label class="label" for="raza">Raza:</label>
-              <input class="input-text" type="text" id="raza" required />
-              <label class="label" for="edad">Edad:</label>
-              <input class="input-number" type="text" id="edad" placeholder="Ej: 2 años o 4 meses" required />
-              <label class="label">Sexo:</label>
-              <div class="radio-group">
-                <input type="radio" id="sexoMacho" name="sexo" value="Macho" checked />
-                <label class="label" for="sexoMacho">Macho</label>
-                <input type="radio" id="sexoHembra" name="sexo" value="Hembra" required />
-                <label class="label" for="sexoHembra">Hembra</label>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-        <div id="specificFormFields"></div>
-      </form>
-      <div id="resultadoPDF" class="result-pdf">
-        <button id="abrirUbicacionPDF" class="button button-open-pdf"> PDF Generado - Abrir ubicación del archivo </button>
-      </div>
-      <!-- New Generar PDF button placed here -->
-      <button type="button" id="generarPDFButton" class="button">
-        Generar PDF
-      </button>
+  <body class="body">
+    <div class="sidebar">
+      <h2>☰ Menú</h2>
+      <ul>
+        <li><a href="#" id="hemoparasitesLink">Hemoparásitos</a></li>
+        <li><a href="#" id="hemogramLink">Hemograma</a></li>
+        <li>
+          <a href="#" id="distemperLink">Distemper<br />Adenovirus</a>
+        </li>
+      </ul>
     </div>
-  </div>
-</body>
-
+    <div class="content">
+      <div id="formContainer" class="form-container">
+        <form id="commonFormFields">
+          <div class="form">
+            <fieldset class="fieldset form-columns">
+              <legend class="legend">Información General</legend>
+              <div class="form-column">
+                <label class="label" for="requerido">Requerido por:</label>
+                <input
+                  class="input-text"
+                  type="text"
+                  id="requerido"
+                  value="Veterinaria CaNinna"
+                  required
+                />
+                <label class="label" for="fecha">Fecha:</label>
+                <input class="input-date" type="date" id="fecha" required />
+                <label class="label" for="nombrePropietario"
+                  >Nombre del Propietario:</label
+                >
+                <input
+                  class="input-text"
+                  type="text"
+                  id="nombrePropietario"
+                  required
+                />
+                <label class="label" for="telefono">Teléfono:</label>
+                <input class="input-tel" type="tel" id="telefono" required />
+              </div>
+              <div class="form-column">
+                <label class="label" for="nombreMascota"
+                  >Nombre de la Mascota:</label
+                >
+                <input
+                  class="input-text"
+                  type="text"
+                  id="nombreMascota"
+                  required
+                />
+                <label class="label" for="especie">Especie:</label>
+                <select
+                  class="form-select"
+                  name="especie"
+                  id="especie"
+                  required
+                >
+                  <option id="caninoOption" value="Canino">🐶 Canino</option>
+                  <option id="felinoOption" value="Felino" disabled>
+                    🐱 Felino
+                  </option>
+                  <option id="equinoOption" value="Equino" disabled>
+                    🐴 Equino
+                  </option>
+                  <option id="bovinoOption" value="Bovino" disabled>
+                    🐮 Bovino
+                  </option>
+                </select>
+                <label class="label" for="raza">Raza:</label>
+                <input class="input-text" type="text" id="raza" required />
+                <label class="label" for="edad">Edad:</label>
+                <input
+                  class="input-number"
+                  type="text"
+                  id="edad"
+                  placeholder="Ej: 2 años o 4 meses"
+                  required
+                />
+                <label class="label">Sexo:</label>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="sexoMacho"
+                    name="sexo"
+                    value="Macho"
+                    checked
+                  />
+                  <label class="label" for="sexoMacho">Macho</label>
+                  <input
+                    type="radio"
+                    id="sexoHembra"
+                    name="sexo"
+                    value="Hembra"
+                    required
+                  />
+                  <label class="label" for="sexoHembra">Hembra</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div id="specificFormFields"></div>
+        </form>
+        <div id="resultadoPDF" class="result-pdf">
+          <button id="abrirUbicacionPDF" class="button button-open-pdf">
+            PDF Generado - Abrir ubicación del archivo
+          </button>
+        </div>
+        <!-- New Generar PDF button placed here -->
+        <button type="button" id="generarPDFButton" class="button">
+          Generar PDF
+        </button>
+      </div>
+    </div>
+  </body>
 </html>

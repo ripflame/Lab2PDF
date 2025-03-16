@@ -4,8 +4,9 @@ This application allows you to generate PDF reports for laboratory results.
 
 ## Features
 
-- ~~Generate Hemogram reports~~
+- Generate Hemogram reports
 - Generate Hemoparasites reports
+- Generate Distemper/Adenovirus reports
 - **Auto-update**: The application automatically updates itself in the background.
 
 ## Installation
@@ -25,7 +26,7 @@ This application allows you to generate PDF reports for laboratory results.
 
 ## Usage
 
-1. Use the sidebar to navigate between Hemogram and Hemoparasites reports.
+1. Use the sidebar to navigate between Hemogram, Hemoparasites, and Distemper/Adenovirus reports.
 2. Fill out the form and click "Generar PDF" to generate the report.
 3. The generated PDF will be saved in your documents folder.
 
