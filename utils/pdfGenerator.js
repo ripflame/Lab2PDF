@@ -10,14 +10,14 @@ const { app } = require("electron");
  * Contains paths, browser configurations, image processing settings and PDF output options
  */
 const CONFIG = {
-  templateDir: path.join(__dirname, "../templates"),
-  imageDir: path.join(__dirname, "../templates/img"),
   // Use a getter to lazily evaluate the log path when it's accessed
   get logPath() {
     return typeof app !== "undefined" && app !== null
       ? path.join(app.getPath("userData"), "error.log")
       : path.join(os.tmpdir(), "app-error.log");
   },
+  templateDir: path.join(__dirname, "../templates"),
+  imageDir: path.join(__dirname, "../templates/img"),
   chromePaths: {
     win32: [
       "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
