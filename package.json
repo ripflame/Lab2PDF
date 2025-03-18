@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
     "dist": "electron-builder",
-    "build": "electron-builder --mac --win --linux"
+    "build-mac": "electron-builder --mac",
+    "build-win": "electron-builder --win"
   },
   "build": {
     "appId": "com.ripflame.lab2pdf",
