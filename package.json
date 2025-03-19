@@ -7,9 +7,14 @@
     "start": "electron .",
     "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
-    "dist": "electron-builder",
+    "prebuild-mac": "npm uninstall sharp && npm install sharp --platform=darwin && electron-builder install-app-deps",
     "build-mac": "electron-builder --mac",
-    "build-win": "electron-builder --win"
+    "prebuild-win": "npm uninstall sharp && npm install sharp --platform=win32 && electron-builder install-app-deps",
+    "build-win": "electron-builder --win",
+    "prestart": "npm run ensure-platform",
+    "predev": "npm run ensure-platform",
+    "pretest": "npm run ensure-platform",
+    "ensure-platform": "node scripts/ensure-platform.js"
   },
   "build": {
     "appId": "com.ripflame.lab2pdf",
