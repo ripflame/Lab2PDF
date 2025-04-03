@@ -15,7 +15,8 @@
     "predev": "npm run ensure-platform",
     "pretest": "npm run ensure-platform",
     "ensure-platform": "node scripts/ensure-platform.js",
-    "release:mac": "node macos-release.js"
+    "release:mac": "node macos-release.js",
+    "release:win": "electron-builder --win --publish always"
   },
   "build": {
     "appId": "com.ripflame.lab2pdf",
