@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", () => loadForm("hemoparasites"));
   document.getElementById("hemogramLink").addEventListener("click", () => loadForm("hemogram"));
   document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
+  document.getElementById("sucursalWrapper").addEventListener("change", () => loadForm("hemogramPalenque"));
 
   // Load default form
   loadForm("hemoparasites");
@@ -46,6 +47,8 @@ function loadForm(formType) {
         toggleVisibility(["caninoOption"], false);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
         toggleVisibility(["sucursalWrapper"], true);
+      } else if (formType === "hemogramPalenque") {
+        //TODO ADD FORM HERE
       }
       updateFormSubmitHandler(formType);
     })
