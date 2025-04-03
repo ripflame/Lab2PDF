@@ -35,14 +35,17 @@ function loadForm(formType) {
         // Show only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], false);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
+        toggleVisibility(["sucursalWrapper"], true);
       } else if (formType === "hemogram") {
         // Show all species options
         toggleVisibility(["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], false);
+        toggleVisibility(["sucursalWrapper"], false);
       } else if (formType === "distemper") {
         document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
         //Sho only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], false);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
+        toggleVisibility(["sucursalWrapper"], true);
       }
       updateFormSubmitHandler(formType);
     })

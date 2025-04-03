@@ -39,6 +39,13 @@
                 <input class="input-text" type="text" id="nombrePropietario" required />
                 <label class="label" for="telefono">Teléfono:</label>
                 <input class="input-tel" type="tel" id="telefono" required />
+                <div id="sucursalWrapper" class="hidden">
+                  <label for="sucursal" class="label">Sucursal</label>
+                  <select name="sucursal" id="sucursalSelect" class="form-select">
+                    <option value="Palenque" id="palenqueOption">Palenque</option>
+                    <option value="Zapata" id="zapataOption">Zapata</option>
+                  </select>
+                </div>
               </div>
               <div class="form-column">
                 <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
