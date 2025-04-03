@@ -3,12 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hemoparasitesLink")
     .addEventListener("click", () => loadForm("hemoparasites"));
-  document
-    .getElementById("hemogramLink")
-    .addEventListener("click", () => loadForm("hemogram"));
-  document
-    .getElementById("distemperLink")
-    .addEventListener("click", () => loadForm("distemper"));
+  document.getElementById("hemogramLink").addEventListener("click", () => loadForm("hemogram"));
+  document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
 
   // Load default form
   loadForm("hemoparasites");
@@ -35,31 +31,18 @@ function loadForm(formType) {
       document.getElementById("fecha").valueAsDate = today;
 
       if (formType === "hemoparasites") {
-        document
-          .getElementById("testFoto")
-          .addEventListener("change", handleTestFotoChange);
+        document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
         // Show only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], false);
-        toggleVisibility(
-          ["felinoOption", "equinoOption", "bovinoOption"],
-          true,
-        );
+        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
       } else if (formType === "hemogram") {
         // Show all species options
-        toggleVisibility(
-          ["caninoOption", "felinoOption", "equinoOption", "bovinoOption"],
-          false,
-        );
+        toggleVisibility(["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], false);
       } else if (formType === "distemper") {
-        document
-          .getElementById("testFoto")
-          .addEventListener("change", handleTestFotoChange);
+        document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
         //Sho only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], false);
-        toggleVisibility(
-          ["felinoOption", "equinoOption", "bovinoOption"],
-          true,
-        );
+        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
       }
       updateFormSubmitHandler(formType);
     })
@@ -98,9 +81,7 @@ function handleTestFotoChange(event) {
 
 function handleHemogramFormSubmit() {
   try {
-    const inputs = document.querySelectorAll(
-      "#commonFormFields input, #formularioHemograma input",
-    );
+    const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemograma input");
 
     // Validate all inputs
     for (const input of inputs) {
@@ -130,32 +111,23 @@ function handleHemogramFormSubmit() {
       eritrocitos: document.getElementById("eritrocitos").value,
       hemoglobina: document.getElementById("hemoglobina").value,
       hematocrito: document.getElementById("hematocrito").value,
-      volumenGlobularMedio: document.getElementById("volumenGlobularMedio")
-        .value,
+      volumenGlobularMedio: document.getElementById("volumenGlobularMedio").value,
       hemoglobinaPromedio: document.getElementById("hemoglobinaPromedio").value,
-      concentracionMediaHemoglobina: document.getElementById(
-        "concentracionMediaHemoglobina",
-      ).value,
+      concentracionMediaHemoglobina: document.getElementById("concentracionMediaHemoglobina").value,
       plaquetas: document.getElementById("plaquetas").value,
       leucocitos: document.getElementById("leucocitos").value,
       monocitos_rel: document.getElementById("monocitos_rel").value,
       linfocitos_rel: document.getElementById("linfocitos_rel").value,
       eosinofilos_rel: document.getElementById("eosinofilos_rel").value,
       basofilos_rel: document.getElementById("basofilos_rel").value,
-      neutrofilos_segmentados_rel: document.getElementById(
-        "neutrofilos_segmentados_rel",
-      ).value,
-      neutrofilos_banda_rel: document.getElementById("neutrofilos_banda_rel")
-        .value,
+      neutrofilos_segmentados_rel: document.getElementById("neutrofilos_segmentados_rel").value,
+      neutrofilos_banda_rel: document.getElementById("neutrofilos_banda_rel").value,
       monocitos_abs: document.getElementById("monocitos_abs").value,
       linfocitos_abs: document.getElementById("linfocitos_abs").value,
       eosinofilos_abs: document.getElementById("eosinofilos_abs").value,
       basofilos_abs: document.getElementById("basofilos_abs").value,
-      neutrofilos_segmentados_abs: document.getElementById(
-        "neutrofilos_segmentados_abs",
-      ).value,
-      neutrofilos_banda_abs: document.getElementById("neutrofilos_banda_abs")
-        .value,
+      neutrofilos_segmentados_abs: document.getElementById("neutrofilos_segmentados_abs").value,
+      neutrofilos_banda_abs: document.getElementById("neutrofilos_banda_abs").value,
     };
 
     window.electron.generarPDF(datos, "hemogram");
@@ -195,14 +167,10 @@ function handleHemoparasitesFormSubmit() {
       sexo: document.querySelector("input[name='sexo']:checked").value,
       fecha: document.getElementById("fecha").value,
       // Specific Form Fields start here
-      gusanoCorazon: document.querySelector(
-        "input[name='gusanoCorazon']:checked",
-      ).value,
-      ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked")
-        .value,
+      gusanoCorazon: document.querySelector("input[name='gusanoCorazon']:checked").value,
+      ehrlichiosis: document.querySelector("input[name='ehrlichiosis']:checked").value,
       lyme: document.querySelector("input[name='lyme']:checked").value,
-      anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked")
-        .value,
+      anaplasmosis: document.querySelector("input[name='anaplasmosis']:checked").value,
       testFoto: document.getElementById("testFotoThumbnail").src,
       testFotoPath: document.getElementById("testFoto").value,
     };
@@ -215,9 +183,7 @@ function handleHemoparasitesFormSubmit() {
 
 function handleDistemperFormSubmit() {
   try {
-    const inputs = document.querySelectorAll(
-      "#commonFormFields input, #formularioDistemper input",
-    );
+    const inputs = document.querySelectorAll("#commonFormFields input, #formularioDistemper input");
 
     // Validate all inputs
     for (const input of inputs) {
@@ -244,10 +210,8 @@ function handleDistemperFormSubmit() {
       sexo: document.querySelector("input[name='sexo']:checked").value,
       fecha: document.getElementById("fecha").value,
       // Specific Form Fields start here
-      distemper: document.querySelector("input[name='distemper']:checked")
-        .value,
-      adenovirus: document.querySelector("input[name='adenovirus']:checked")
-        .value,
+      distemper: document.querySelector("input[name='distemper']:checked").value,
+      adenovirus: document.querySelector("input[name='adenovirus']:checked").value,
       testFoto: document.getElementById("testFotoThumbnail").src,
       testFotoPath: document.getElementById("testFoto").value,
     };
