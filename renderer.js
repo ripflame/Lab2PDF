@@ -1,26 +1,60 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Attach event listeners after the DOM is loaded
+  // Handling side bar clikcs
   document
     .getElementById("hemoparasitesLink")
     .addEventListener("click", () => loadForm("hemoparasites"));
-  document.getElementById("hemogramLink").addEventListener("click", () => loadForm("hemogram"));
+  document.getElementById("hemogramLink").addEventListener("click", () => {
+    const optionSelected = document.getElementById("sucursalSelect").value;
+    loadHemogramVariant(optionSelected);
+  });
   document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
-  document.getElementById("sucursalWrapper").addEventListener("change", () => loadForm("hemogramPalenque"));
-
+  //Handling on change events
+  document.getElementById("sucursalSelect").addEventListener("change", (event) => {
+    loadHemogramVariant(event.target.value);
+  });
+  document.getElementById("specificFormFields").addEventListener("change", (event) => {
+    if (
+      event.target.id === "testFoto" &&
+      (currentFormType === "hemoparasites" || currentFormType === "distemper")
+    ) {
+      handleTestFotoChange(event);
+    }
+  });
+  document.getElementById("abrirUbicacionPDF").addEventListener("click", (event) => {
+    console.log("this:", this);
+    const pdfPath = event.currentTarget.getAttribute("data-pdf-path");
+    if (pdfPath) {
+      window.electron.abrirUbicacion(pdfPath);
+    }
+  });
   // Load default form
   loadForm("hemoparasites");
 });
 
-function toggleVisibility(ids, shouldHide) {
+// Global variables
+let currentFormType = "hemoparasites";
+let currentFormSubmitHandler = null;
+
+function loadHemogramVariant(formVariant) {
+  if (formVariant === "Zapata") {
+    loadForm("hemogram");
+  } else if (formVariant === "Palenque") {
+    loadForm("hemogram_palenque");
+  }
+}
+
+function toggleVisibility(ids, shouldShow) {
   ids.forEach((id) => {
     const elment = document.getElementById(id);
     if (elment) {
-      elment.classList.toggle("hidden", shouldHide);
+      elment.classList.toggle("hidden", !shouldShow);
     }
   });
 }
 
 function loadForm(formType) {
+  currentFormType = formType;
   fetch(`templates/${formType}.html`)
     .then((response) => response.text())
     .then((html) => {
@@ -31,24 +65,21 @@ function loadForm(formType) {
       today.setHours(0, 0, 0, 0);
       document.getElementById("fecha").valueAsDate = today;
 
+      // Toggle visibility for species selector
       if (formType === "hemoparasites") {
-        document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
         // Show only "caninoOption" and hide the others
-        toggleVisibility(["caninoOption"], false);
-        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
-        toggleVisibility(["sucursalWrapper"], true);
-      } else if (formType === "hemogram") {
-        // Show all species options
-        toggleVisibility(["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], false);
+        toggleVisibility(["caninoOption"], true);
+        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
         toggleVisibility(["sucursalWrapper"], false);
-      } else if (formType === "distemper") {
-        document.getElementById("testFoto").addEventListener("change", handleTestFotoChange);
-        //Sho only "caninoOption" and hide the others
-        toggleVisibility(["caninoOption"], false);
-        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], true);
+      } else if (formType === "hemogram" || formType === "hemogram_palenque") {
+        // Show all species options
+        toggleVisibility(["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], true);
         toggleVisibility(["sucursalWrapper"], true);
-      } else if (formType === "hemogramPalenque") {
-        //TODO ADD FORM HERE
+      } else if (formType === "distemper") {
+        //Show only "caninoOption" and hide the others
+        toggleVisibility(["caninoOption"], true);
+        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
+        toggleVisibility(["sucursalWrapper"], false);
       }
       updateFormSubmitHandler(formType);
     })
@@ -59,29 +90,98 @@ function loadForm(formType) {
 
 function updateFormSubmitHandler(formType) {
   const button = document.getElementById("generarPDFButton");
-  button.removeEventListener("click", handleHemoparasitesFormSubmit);
-  button.removeEventListener("click", handleHemogramFormSubmit);
-  button.removeEventListener("click", handleDistemperFormSubmit);
 
-  if (formType === "hemoparasites") {
-    button.addEventListener("click", handleHemoparasitesFormSubmit);
-  } else if (formType === "hemogram") {
-    button.addEventListener("click", handleHemogramFormSubmit);
-  } else if (formType === "distemper") {
-    button.addEventListener("click", handleDistemperFormSubmit);
+  const formHandlers = {
+    hemoparasites: handleHemoparasitesFormSubmit,
+    hemogram: handleHemogramFormSubmit,
+    hemogram_palenque: handleHemogramPalenqueFormSubmit,
+    distemper: handleDistemperFormSubmit,
+  };
+
+  const handler =
+    formHandlers[formType] ||
+    function() {
+      console.warn(`No handler defined for form type: ${formType}`);
+    };
+
+  if (currentFormSubmitHandler) {
+    button.removeEventListener("click", currentFormSubmitHandler);
   }
+
+  button.addEventListener("click", handler);
+  currentFormSubmitHandler = handler;
 }
 
 function handleTestFotoChange(event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e) {
       const img = document.getElementById("testFotoThumbnail");
       img.src = e.target.result;
       img.style.display = "block";
     };
     reader.readAsDataURL(file);
+  }
+}
+
+function handleHemogramPalenqueFormSubmit() {
+  try {
+    const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemograma input");
+
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      rbc: document.getElementById("rbc").value,
+      hgb: document.getElementById("hgb").value,
+      hct: document.getElementById("hct").value,
+      mcv: document.getElementById("mcv").value,
+      mch: document.getElementById("mch").value,
+      mchc: document.getElementById("mchc").value,
+      rdw_cv: document.getElementById("rdw_cv").value,
+      rdw_sd: document.getElementById("rdw_sd").value,
+      plt: document.getElementById("plt").value,
+      pct: document.getElementById("pct").value,
+      mpv: document.getElementById("mpv").value,
+      pdw: document.getElementById("pdw").value,
+      p_lcr: document.getElementById("p_lcr").value,
+      p_lcc: document.getElementById("p_lcc").value,
+      wbc: document.getElementById("wbc").value,
+      monocitos_rel: document.getElementById("monocitos_rel").value,
+      granulocitos_rel: document.getElementById("granulocitos_rel").value,
+      linfocitos_rel: document.getElementById("linfocitos_rel").value,
+      eosinofilos_rel: document.getElementById("eosinofilos_rel").value,
+      monocitos_abs: document.getElementById("monocitos_abs").value,
+      granulocitos_abs: document.getElementById("granulocitos_abs").value,
+      linfocitos_abs: document.getElementById("linfocitos_abs").value,
+      eosinofilos_abs: document.getElementById("eosinofilos_abs").value,
+    };
+
+    window.electron.generarPDF(datos, "hemogram_palenque");
+  } catch (error) {
+    console.error("Error handling hemogram form submission:", error);
   }
 }
 
@@ -240,7 +340,5 @@ window.electron.onPDFGenerado((event, rutaPDF) => {
   }
 
   document.getElementById("resultadoPDF").style.display = "block";
-  document.getElementById("abrirUbicacionPDF").addEventListener("click", () => {
-    window.electron.abrirUbicacion(rutaPDF);
-  });
+  document.getElementById("abrirUbicacionPDF").setAttribute("data-pdf-path", rutaPDF);
 });

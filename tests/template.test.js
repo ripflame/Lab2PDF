@@ -45,10 +45,7 @@ describe("PDF Generation", function () {
       neutrofilos_banda_abs: "0",
     };
 
-    const pdfPath = path.join(
-      outputDir,
-      `${formData.nombreMascota}_InformeLaboratorio.pdf`,
-    );
+    const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
     await generatePDF(formData, pdfPath, "hemogram");
 
@@ -78,10 +75,7 @@ describe("PDF Generation", function () {
       testFoto: base64Img,
     };
 
-    const pdfPath = path.join(
-      outputDir,
-      `${formData.nombreMascota}_InformeHemoparasitos.pdf`,
-    );
+    const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeHemoparasitos.pdf`);
 
     await generatePDF(formData, pdfPath, "hemoparasites");
 
@@ -115,6 +109,53 @@ describe("PDF Generation", function () {
     );
 
     await generatePDF(formData, pdfPath, "distemper");
+
+    // Check if the PDF file was created
+    assert(fs.existsSync(pdfPath), "PDF file was not created");
+  });
+
+  it("should generate a PDF file for hemogram palenque", async function () {
+    const formData = {
+      requerido: "Veterinaria CaNinna",
+      nombrePropietario: "Juan Pérez",
+      telefono: "1234567890",
+      nombreMascota: "Fido",
+      especie: "Canino",
+      raza: "Labrador",
+      edad: "5",
+      sexo: "Macho",
+      fecha: "2023-10-01",
+      rbc: "7240000",
+      hgb: "17.8",
+      hct: "54.5",
+      mcv: "75.2",
+      mch: "24.6",
+      mchc: "32.7",
+      rdw_cv: "0.00",
+      rdw_sd: "0.00",
+      plt: "339000",
+      pct: "0.00",
+      mpv: "0.00",
+      pdw: "0.00",
+      p_lcr: "0.00",
+      p_lcc: "0.00",
+      leucocitos: "14400",
+      monocitos_rel: "0",
+      granulocitos_rel: "0",
+      linfocitos_rel: "44",
+      eosinofilos_rel: "18",
+      monocitos_abs: "0",
+      granulocitos_abs: "0",
+      linfocitos_abs: "6336",
+      eosinofilos_abs: "2592",
+    };
+
+    const pdfPath = path.join(
+      outputDir,
+      `${formData.nombreMascota}_InformeLaboratorioPalenque.pdf`,
+    );
+
+    await generatePDF(formData, pdfPath, "hemogram_palenque");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");

@@ -284,29 +284,29 @@ class TemplateProcessor {
     try {
       const f = Formatters.number;
       return htmlContent
-        .replace("{{leucocitos}}", f(formData.eritrocitos))
-        .replace("{{linfocitos_abs}}", f(formData.hemoglobina))
-        .replace("{{monocitos_abs}}", f(formData.hematocrito))
-        .replace("{{granulocitos_abs}}", f(formData.volumenGlobularMedio))
-        .replace("{{eosinofilos_abs}}", f(formData.hemoglobinaPromedio))
-        .replace("{{linfocitos_rel}}", f(formData.concentracionMediaHemoglobina))
-        .replace("{{monocitos_rel}}", f(formData.plaquetas))
-        .replace("{{granulocitos_rel}}", f(formData.leucocitos))
-        .replace("{{eosinofilos_rel}}", f(formData.monocitos_rel))
-        .replace("{{rbc}}", f(formData.linfocitos_rel))
-        .replace("{{hgb}}", f(formData.eosinofilos_rel))
-        .replace("{{hct}}", f(formData.basofilos_rel))
-        .replace("{{mcv}}", f(formData.neutrofilos_segmentados_rel))
-        .replace("{{mch}}", f(formData.neutrofilos_banda_rel))
-        .replace("{{mchc}}", f(formData.monocitos_abs))
-        .replace("{{rdw_cv}}", f(formData.linfocitos_abs))
-        .replace("{{rdw_sd}}", f(formData.eosinofilos_abs))
-        .replace("{{plt}}", f(formData.basofilos_abs))
-        .replace("{{pct}}", f(formData.neutrofilos_segmentados_abs))
-        .replace("{{mpv}}", f(formData.neutrofilos_banda_abs))
-        .replace("{{pdw}}", f(formData.neutrofilos_banda_abs))
-        .replace("{{p_lcr}}", f(formData.neutrofilos_banda_abs))
-        .replace("{{p_lcc}}", f(formData.neutrofilos_banda_abs));
+        .replace("{{wbc}}", f(formData.wbc))
+        .replace("{{linfocitos_abs}}", f(formData.linfocitos_abs))
+        .replace("{{monocitos_abs}}", f(formData.monocitos_abs))
+        .replace("{{granulocitos_abs}}", f(formData.granulocitos_abs))
+        .replace("{{eosinofilos_abs}}", f(formData.eosinofilos_abs))
+        .replace("{{linfocitos_rel}}", f(formData.linfocitos_rel))
+        .replace("{{monocitos_rel}}", f(formData.monocitos_rel))
+        .replace("{{granulocitos_rel}}", f(formData.granulocitos_rel))
+        .replace("{{eosinofilos_rel}}", f(formData.eosinofilos_rel))
+        .replace("{{rbc}}", f(formData.rbc))
+        .replace("{{hgb}}", f(formData.hgb))
+        .replace("{{hct}}", f(formData.hct))
+        .replace("{{mcv}}", f(formData.mcv))
+        .replace("{{mch}}", f(formData.mch))
+        .replace("{{mchc}}", f(formData.mchc))
+        .replace("{{rdw_cv}}", f(formData.rdw_cv))
+        .replace("{{rdw_sd}}", f(formData.rdw_sd))
+        .replace("{{plt}}", f(formData.plt))
+        .replace("{{pct}}", f(formData.pct))
+        .replace("{{mpv}}", f(formData.mpv))
+        .replace("{{pdw}}", f(formData.pdw))
+        .replace("{{p_lcr}}", f(formData.p_lcr))
+        .replace("{{p_lcc}}", f(formData.p_lcc))
     } catch (error) {
       Logger.logError(new Error(`Hemogram-palenque template processing error: ${error.message}`));
       throw error;
@@ -383,7 +383,7 @@ class PDFGenerator {
         case "hemogram":
           htmlContent = TemplateProcessor.processHemogramTemplate(htmlContent, formData);
           break;
-        case "hemogram-palenque":
+        case "hemogram_palenque":
           htmlContent = TemplateProcessor.processHemogram_PalenqueTemplate(htmlContent, formData);
           break;
         case "hemoparasites":
