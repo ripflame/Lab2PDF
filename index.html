@@ -40,10 +40,13 @@
                 <label class="label" for="telefono">Teléfono:</label>
                 <input class="input-tel" type="tel" id="telefono" required />
                 <div id="sucursalWrapper" class="hidden">
-                  <label for="sucursal" class="label">Sucursal</label>
+                  <label for="sucursal" class="label">Proveedor</label>
                   <select name="sucursal" id="sucursalSelect" class="form-select">
-                    <option value="Zapata" id="zapataOption">Zapata</option>
-                    <option value="Palenque" id="palenqueOption">Palenque</option>
+                    <option value="Zapata" id="zapataOption">
+                      Laboratorio Clínico de los Ríos
+                    </option>
+                    <option value="Palenque" id="palenqueOption">Zoovet</option>
+                    <option value="Caninna" id="caninnaOption" disabled>CaNinna</option>
                   </select>
                 </div>
               </div>
@@ -79,13 +82,19 @@
           </div>
           <div id="specificFormFields"></div>
         </form>
-        <div id="resultadoPDF" class="result-pdf">
-          <button id="abrirUbicacionPDF" class="button button-open-pdf">
-            PDF Generado - Abrir ubicación del archivo
-          </button>
+        <div class="form-columns">
+          <div class="form-column">
+            <!-- New Generar PDF button placed here -->
+            <button type="button" id="generarPDFButton" class="button">Generar PDF</button>
+          </div>
+          <div class="form-column">
+            <div id="resultadoPDF" class="result-pdf hidden">
+              <button id="abrirUbicacionPDF" class="button button-open-pdf">
+                PDF Generado - Abrir ubicación del archivo
+              </button>
+            </div>
+          </div>
         </div>
-        <!-- New Generar PDF button placed here -->
-        <button type="button" id="generarPDFButton" class="button">Generar PDF</button>
       </div>
     </div>
   </body>

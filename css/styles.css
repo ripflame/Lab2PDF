@@ -75,7 +75,9 @@
 
 .label {
   display: block;
+  min-height: 35px;
   margin-top: 10px;
+  align-content: center;
   font-weight: bold;
   font-size: small;
   cursor: pointer;
@@ -142,7 +144,6 @@
 
 /* Result PDF */
 .result-pdf {
-  display: none;
   text-align: center;
   margin-top: 20px;
 }

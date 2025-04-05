@@ -1,3 +1,7 @@
+// Global variables
+let currentFormType = "hemoparasites";
+let currentFormSubmitHandler = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   // Attach event listeners after the DOM is loaded
   // Handling side bar clikcs
@@ -22,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   document.getElementById("abrirUbicacionPDF").addEventListener("click", (event) => {
-    console.log("this:", this);
     const pdfPath = event.currentTarget.getAttribute("data-pdf-path");
     if (pdfPath) {
       window.electron.abrirUbicacion(pdfPath);
@@ -31,10 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load default form
   loadForm("hemoparasites");
 });
-
-// Global variables
-let currentFormType = "hemoparasites";
-let currentFormSubmitHandler = null;
 
 function loadHemogramVariant(formVariant) {
   if (formVariant === "Zapata") {
@@ -127,6 +126,7 @@ function handleTestFotoChange(event) {
 
 function handleHemogramPalenqueFormSubmit() {
   try {
+    toggleVisibility(["resultadoPDF"], false);
     const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemograma input");
 
     // Validate all inputs
@@ -187,6 +187,7 @@ function handleHemogramPalenqueFormSubmit() {
 
 function handleHemogramFormSubmit() {
   try {
+    toggleVisibility(["resultadoPDF"], false);
     const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemograma input");
 
     // Validate all inputs
@@ -244,6 +245,7 @@ function handleHemogramFormSubmit() {
 
 function handleHemoparasitesFormSubmit() {
   try {
+    toggleVisibility(["resultadoPDF"], false);
     const inputs = document.querySelectorAll(
       "#commonFormFields input, #formularioHemoparasitos input",
     );
@@ -289,6 +291,7 @@ function handleHemoparasitesFormSubmit() {
 
 function handleDistemperFormSubmit() {
   try {
+    toggleVisibility(["resultadoPDF"], false);
     const inputs = document.querySelectorAll("#commonFormFields input, #formularioDistemper input");
 
     // Validate all inputs
@@ -339,6 +342,6 @@ window.electron.onPDFGenerado((event, rutaPDF) => {
     return;
   }
 
-  document.getElementById("resultadoPDF").style.display = "block";
+  toggleVisibility(["resultadoPDF"], true);
   document.getElementById("abrirUbicacionPDF").setAttribute("data-pdf-path", rutaPDF);
 });
