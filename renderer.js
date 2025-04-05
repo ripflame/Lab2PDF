@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("hemoparasitesLink")
     .addEventListener("click", () => loadForm("hemoparasites"));
   document.getElementById("hemogramLink").addEventListener("click", () => {
-    const optionSelected = document.getElementById("sucursalSelect").value;
+    const optionSelected = document.getElementById("proveedorSelect").value;
     loadHemogramVariant(optionSelected);
   });
   document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
   //Handling on change events
-  document.getElementById("sucursalSelect").addEventListener("change", (event) => {
+  document.getElementById("proveedorSelect").addEventListener("change", (event) => {
     loadHemogramVariant(event.target.value);
   });
   document.getElementById("specificFormFields").addEventListener("change", (event) => {
@@ -69,16 +69,16 @@ function loadForm(formType) {
         // Show only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], true);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
-        toggleVisibility(["sucursalWrapper"], false);
+        toggleVisibility(["proveedorWrapper"], false);
       } else if (formType === "hemogram" || formType === "hemogram_palenque") {
         // Show all species options
         toggleVisibility(["caninoOption", "felinoOption", "equinoOption", "bovinoOption"], true);
-        toggleVisibility(["sucursalWrapper"], true);
+        toggleVisibility(["proveedorWrapper"], true);
       } else if (formType === "distemper") {
         //Show only "caninoOption" and hide the others
         toggleVisibility(["caninoOption"], true);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
-        toggleVisibility(["sucursalWrapper"], false);
+        toggleVisibility(["proveedorWrapper"], false);
       }
       updateFormSubmitHandler(formType);
     })
