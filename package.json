@@ -7,7 +7,7 @@
     "start": "electron .",
     "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
-    "prebuild:mac": "npm uninstall sharp && npm install sharp",
+    "prebuild:mac": "npm uninstall sharp && npm install sharp --os=darwin --cpu=x64",
     "build:mac": "electron-builder --mac",
     "prebuild:win": "npm uninstall sharp && npm install sharp --os=win32 --cpu=x64",
     "build:win": "electron-builder --win",
@@ -15,7 +15,9 @@
     "predev": "npm run ensure-platform",
     "pretest": "npm run ensure-platform",
     "ensure-platform": "node scripts/ensure-platform.js",
+    "prerelease:mac": "npm uninstall sharp && npm install sharp --os=darwin --cpu=x64",
     "release:mac": "node macos-release.js",
+    "prerelease:win": "npm uninstall sharp && npm install sharp --os=win32 --cpu=x64",
     "release:win": "electron-builder --win --publish always",
     "clean": "rm -rf dist/*"
   },
