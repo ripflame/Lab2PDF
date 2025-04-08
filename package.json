@@ -1,6 +1,6 @@
 {
   "name": "lab2pdf",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
