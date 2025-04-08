@@ -381,10 +381,10 @@ class PDFGenerator {
       // Apply form-specific processing
       switch (formType) {
         case "hemogram":
-          htmlContent = TemplateProcessor.processHemogramTemplate(htmlContent, formData);
+          htmlContent = await TemplateProcessor.processHemogramTemplate(htmlContent, formData);
           break;
         case "hemogram_palenque":
-          htmlContent = TemplateProcessor.processHemogram_PalenqueTemplate(htmlContent, formData);
+          htmlContent = await TemplateProcessor.processHemogram_PalenqueTemplate(htmlContent, formData);
           break;
         case "hemoparasites":
           htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
