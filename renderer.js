@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hemoparasitesLink")
     .addEventListener("click", () => loadForm("hemoparasites"));
+  document
+    .getElementById("gastroenteritisLink")
+    .addEventListener("click", () => loadForm("gastroenteritis"));
   document.getElementById("hemogramLink").addEventListener("click", () => {
     const optionSelected = document.getElementById("proveedorSelect").value;
     loadHemogramVariant(optionSelected);
@@ -20,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("specificFormFields").addEventListener("change", (event) => {
     if (
       event.target.id === "testFoto" &&
-      (currentFormType === "hemoparasites" || currentFormType === "distemper")
+      (currentFormType === "hemoparasites" || currentFormType === "distemper" || currentFormType === "gastroenteritis")
     ) {
       handleTestFotoChange(event);
     }
@@ -79,6 +82,11 @@ function loadForm(formType) {
         toggleVisibility(["caninoOption"], true);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
         toggleVisibility(["proveedorWrapper"], false);
+      } else if (formType === "gastroenteritis") {
+        //Show only caninoOption and hide the others
+        toggleVisibility(["caninoOption"], true);
+        toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
+        toggleVisibility(["proveedorWrapper"], false);
       }
       updateFormSubmitHandler(formType);
     })
@@ -95,6 +103,7 @@ function updateFormSubmitHandler(formType) {
     hemogram: handleHemogramFormSubmit,
     hemogram_palenque: handleHemogramPalenqueFormSubmit,
     distemper: handleDistemperFormSubmit,
+    gastroenteritis: handleGastroenteritisFormSubmit,
   };
 
   const handler =
@@ -326,6 +335,49 @@ function handleDistemperFormSubmit() {
     };
 
     window.electron.generarPDF(datos, "distemper");
+  } catch (error) {
+    console.error("Error handling distemper form submission:", error);
+  }
+}
+
+function handleGastroenteritisFormSubmit() {
+  try {
+    toggleVisibility(["resultadoPDF"], false);
+    const inputs = document.querySelectorAll("#commonFormFields input, #formularioDistemper input");
+
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      parvovirus: document.querySelector("input[name='parvovirus']:checked").value,
+      coronavirus: document.querySelector("input[name='coronavirus']:checked").value,
+      giardiasis: document.querySelector("input[name='giardiasis']:checked").value,
+      testFoto: document.getElementById("testFotoThumbnail").src,
+      testFotoPath: document.getElementById("testFoto").value,
+    };
+
+    window.electron.generarPDF(datos, "gastroenteritis");
   } catch (error) {
     console.error("Error handling distemper form submission:", error);
   }

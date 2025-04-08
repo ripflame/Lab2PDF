@@ -1,0 +1,36 @@
+<h1 class="title">RESULTADOS DE LABORATORIO<br>HEMOPARÁSITOS</h1>
+<div id="formularioHemoparasitos" class="form">
+  <fieldset class="fieldset">
+    <legend class="legend">Hemoparásitos</legend>
+    <div class="form-columns">
+      <div class="form-column">
+        <label class="label" for="parvovirus">Parvovirus:</label>
+        <div class="radio-group">
+          <input type="radio" id="parvovirusPositivo" name="parvovirus" value="Positivo" required>
+          <label class="label" for="parvovirusPositivo">Positivo</label>
+          <input type="radio" id="parvovirusNegativo" name="parvovirus" value="Negativo" checked>
+          <label class="label" for="parvovirusNegativo">Negativo</label>
+        </div>
+        <label class="label" for="coronavirus">Coronavirus:</label>
+        <div class="radio-group">
+          <input type="radio" id="coronavirusPositivo" name="coronavirus" value="Positivo" required>
+          <label class="label" for="coronavirusPositivo">Positivo</label>
+          <input type="radio" id="coronavirusNegativo" name="coronavirus" value="Negativo" checked>
+          <label class="label" for="coronavirusNegativo">Negativo</label>
+        </div>
+        <label class="label" for="giardiasis">Giardiasis:</label>
+        <div class="radio-group">
+          <input type="radio" id="giardiasisPositivo" name="giardiasis" value="Positivo" required>
+          <label class="label" for="giardiasisPositivo">Positivo</label>
+          <input type="radio" id="giardiasisNegativo" name="giardiasis" value="Negativo" checked>
+          <label class="label" for="giardiasisNegativo">Negativo</label>
+        </div>
+      </div>
+      <div class="form-column">
+        <label class="label" for="testFoto">Seleccionar foto:</label>
+        <input type="file" id="testFoto" accept="image/*" required>
+        <img id="testFotoThumbnail" class="testFotoThumbnail" src="" alt="Foto del test">
+      </div>
+    </div>
+  </fieldset>
+</div>

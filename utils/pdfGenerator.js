@@ -306,7 +306,7 @@ class TemplateProcessor {
         .replace("{{mpv}}", f(formData.mpv))
         .replace("{{pdw}}", f(formData.pdw))
         .replace("{{p_lcr}}", f(formData.p_lcr))
-        .replace("{{p_lcc}}", f(formData.p_lcc))
+        .replace("{{p_lcc}}", f(formData.p_lcc));
     } catch (error) {
       Logger.logError(new Error(`Hemogram-palenque template processing error: ${error.message}`));
       throw error;
@@ -334,6 +334,12 @@ class TemplateProcessor {
         return htmlContent
           .replace("{{distemper}}", this.formatTestResult(formData.distemper))
           .replace("{{adenovirus}}", this.formatTestResult(formData.adenovirus))
+          .replace("{{testFoto}}", compressedBase64);
+      } else if (testType === "gastroenteritis") {
+        return htmlContent
+          .replace("{{parvovirus}}", this.formatTestResult(formData.parvovirus))
+          .replace("{{coronavirus}}", this.formatTestResult(formData.coronavirus))
+          .replace("{{giardiasis}}", this.formatTestResult(formData.giardiasis))
           .replace("{{testFoto}}", compressedBase64);
       }
 
@@ -384,7 +390,10 @@ class PDFGenerator {
           htmlContent = await TemplateProcessor.processHemogramTemplate(htmlContent, formData);
           break;
         case "hemogram_palenque":
-          htmlContent = await TemplateProcessor.processHemogram_PalenqueTemplate(htmlContent, formData);
+          htmlContent = await TemplateProcessor.processHemogram_PalenqueTemplate(
+            htmlContent,
+            formData,
+          );
           break;
         case "hemoparasites":
           htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
@@ -398,6 +407,13 @@ class PDFGenerator {
             htmlContent,
             formData,
             "distemper",
+          );
+          break;
+        case "gastroenteritis":
+          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
+            htmlContent,
+            formData,
+            "gastroenteritis",
           );
           break;
         default:
