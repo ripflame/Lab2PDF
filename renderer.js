@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHemogramVariant(optionSelected);
   });
   document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
+  document.getElementById("perfilCompletoLink").addEventListener("click", () => loadForm("perfilCompleto_Caninna"));
+
+
   //Handling on change events
   document.getElementById("proveedorSelect").addEventListener("change", (event) => {
     loadHemogramVariant(event.target.value);
@@ -28,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
       handleTestFotoChange(event);
     }
   });
+
+  // Handling show location button
   document.getElementById("abrirUbicacionPDF").addEventListener("click", (event) => {
     const pdfPath = event.currentTarget.getAttribute("data-pdf-path");
     if (pdfPath) {
