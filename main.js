@@ -1,9 +1,17 @@
-const { app, BrowserWindow, dialog, Menu, globalShortcut } = require("electron");
+const { app, BrowserWindow, dialog, Menu, globalShortcut, Notification } = require("electron");
 const path = require("path");
 const { setupIpcHandlers } = require("./ipcHandlers");
 const { autoUpdater } = require("electron-updater");
-const packageJson = require("./package.json"); // Add this line to import package.json
-const fs = require("fs"); // Add this line to import fs module
+const log = require("electron-log"); // Add logging
+const packageJson = require("./package.json");
+const fs = require("fs");
+
+// Configure logging for auto-updater
+log.transports.file.level = "debug";
+autoUpdater.logger = log;
+console.log(`Log file location: ${log.transports.file.getFile()}`);
+console.log(`Current version: ${packageJson.version}`);
+log.info(`Current version: ${packageJson.version}`);
 
 // Function to log errors to a file
 function logErrorToFile(error) {
@@ -23,13 +31,36 @@ let mainWindow;
 
 process.on("uncaughtException", (error) => {
   console.error("Uncaught exception:", error.message);
+  log.error("Uncaught exception:", error);
   logErrorToFile(error);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled rejection at:", promise, "reason:", reason.message || reason);
+  log.error("Unhandled rejection:", reason);
   logErrorToFile(reason);
 });
+
+function setTaskbarProgress(progressPercent) {
+  if (!mainWindow) return;
+
+  if (progressPercent < 0) {
+    // Remove progress indicator
+    if (process.platform === "win32") {
+      mainWindow.setProgressBar(-1);
+    } else if (process.platform === "darwin") {
+      app.dock.setBadge("");
+    }
+    return;
+  }
+
+  const progress = progressPercent / 100; // Convert percent to decimal
+  if (process.platform === "win32") {
+    mainWindow.setProgressBar(progress);
+  } else if (process.platform === "darwin") {
+    app.dock.setBadge(progressPercent > 0 ? `${Math.round(progressPercent)}%` : "");
+  }
+}
 
 app.whenReady().then(() => {
   try {
@@ -38,6 +69,7 @@ app.whenReady().then(() => {
         mainWindow.webContents.openDevTools();
       }
     });
+
     mainWindow = new BrowserWindow({
       width: 1280,
       height: 720,
@@ -51,71 +83,69 @@ app.whenReady().then(() => {
       },
     });
 
+    // Configure auto-updater
+    autoUpdater.autoDownload = true;
+    autoUpdater.autoInstallOnAppQuit = true;
+
     // Listen for update events
     autoUpdater.on("checking-for-update", () => {
       console.log("Checking for update...");
-      setTaskbarProgress(-1);
+      log.info("Checking for update...");
     });
 
     autoUpdater.on("update-available", (info) => {
       console.log("Update available:", info.version);
-      // Start showing indeterminate progress
+      log.info("Update available:", info.version);
+
+      // Show dialog for update available
+      dialog.showMessageBox({
+        type: "info",
+        title: "Actualización disponible",
+        message: `Se detectó una nueva versión (${info.version}). Descargando...`,
+        buttons: ["Aceptar"],
+      });
+
+      // Also show progress in taskbar if supported
       if (process.platform === "win32") {
         mainWindow.setProgressBar(2); // 2 = indeterminate progress
       } else if (process.platform === "darwin") {
         app.dock.setBadge("?"); // Show a download symbol
       }
-
-      // Optionally notify the user through a small notification
-      // (not a dialog, just a notification)
-      if (Notification.isSupported()) {
-        const notification = new Notification({
-          title: "Actualización disponible",
-          body: `Se detectó una nueva versión (${info.version}). Descargando...`,
-        });
-        notification.show();
-      }
     });
 
     autoUpdater.on("update-not-available", (info) => {
       console.log("Update not available:", info.version);
+      log.info("Update not available:", info.version);
+    });
+
+    autoUpdater.on("download-progress", (progressObj) => {
+      const progress = Math.round(progressObj.percent);
+      console.log(`Download progress: ${progress}%`);
+      log.info(`Download progress: ${progress}%`);
+      setTaskbarProgress(progress);
     });
 
     autoUpdater.on("update-downloaded", (info) => {
       console.log("Update downloaded");
+      log.info("Update downloaded");
 
       // Complete the progress indicator
       setTaskbarProgress(100);
 
-      // Show notification that update is ready
-      if (Notification.isSupported()) {
-        const notification = new Notification({
-          title: "Actualización lista",
-          body: "La actualización se descargó correctamente. Haga clic para instalar.",
-          silent: false,
+      // Show dialog for update downloaded
+      dialog
+        .showMessageBox({
+          type: "info",
+          title: "Actualización descargada",
+          message: "La actualización se descargó correctamente. ¿Desea instalarla ahora?",
+          buttons: ["Si", "Luego"],
+        })
+        .then((result) => {
+          if (result.response === 0) {
+            // 'Si'
+            autoUpdater.quitAndInstall(false, true);
+          }
         });
-
-        notification.on("click", () => {
-          autoUpdater.quitAndInstall(false, true);
-        });
-
-        notification.show();
-      } else {
-        // If notifications aren't supported, show a dialog instead
-        dialog
-          .showMessageBox(mainWindow, {
-            type: "info",
-            title: "Actualización descargada",
-            message: "La actualización se descargó correctamente. Desea instalarla ahora?",
-            buttons: ["Si", "Luego"],
-          })
-          .then((result) => {
-            if (result.response === 0) {
-              // 'Si'
-              autoUpdater.quitAndInstall(false, true);
-            }
-          });
-      }
 
       // Reset progress after a delay
       setTimeout(() => {
@@ -123,22 +153,37 @@ app.whenReady().then(() => {
       }, 3000);
     });
 
-    autoUpdater.on("download-progress", (progressObj) => {
-      const progress = Math.round(progressObj.percent);
-      console.log(`Download progress: ${progress}%`);
-
-      // Update the taskbar/dock progress
-      setTaskbarProgress(progress);
-    });
-
     // Optional: log errors
     autoUpdater.on("error", (error) => {
       console.error("Auto-updater error:", error.message);
+      log.error("Auto-updater error:", error);
       logErrorToFile(error); // Log error to file
     });
 
-    // Check for updates and notify
-    autoUpdater.checkForUpdates();
+    // Check for updates with better error handling
+    try {
+      console.log("Initializing auto-updater...");
+      log.info("Initializing auto-updater...");
+
+      // Only run in packaged app
+      if (app.isPackaged) {
+        console.log("App is packaged, checking for updates...");
+        log.info("App is packaged, checking for updates...");
+
+        autoUpdater.checkForUpdates().catch((err) => {
+          console.error("Error checking for updates:", err);
+          log.error("Error checking for updates:", err);
+          logErrorToFile(err);
+        });
+      } else {
+        console.log("App is in development mode, skipping update check");
+        log.info("App is in development mode, skipping update check");
+      }
+    } catch (error) {
+      console.error("Failed to initialize auto-updater:", error);
+      log.error("Failed to initialize auto-updater:", error);
+      logErrorToFile(error);
+    }
 
     const menu = Menu.buildFromTemplate([
       {
@@ -162,7 +207,22 @@ app.whenReady().then(() => {
           {
             label: "Actualizar",
             click: () => {
-              autoUpdater.checkForUpdates();
+              if (app.isPackaged) {
+                console.log("Manual update check triggered");
+                log.info("Manual update check triggered");
+                autoUpdater.checkForUpdates().catch((err) => {
+                  console.error("Error in manual update check:", err);
+                  log.error("Error in manual update check:", err);
+                  logErrorToFile(err);
+                });
+              } else {
+                dialog.showMessageBox({
+                  type: "info",
+                  title: "Modo desarrollo",
+                  message: "Las actualizaciones no están disponibles en modo desarrollo.",
+                  buttons: ["OK"],
+                });
+              }
             },
           },
         ],
@@ -180,6 +240,7 @@ app.whenReady().then(() => {
     setupIpcHandlers(mainWindow);
   } catch (error) {
     console.error("Error during app initialization:", error.message);
+    log.error("Error during app initialization:", error);
     logErrorToFile(error); // Log error to file
   }
 });
@@ -188,30 +249,16 @@ app.on("will-quit", () => {
   globalShortcut.unregisterAll();
 });
 
-app.on("uncaughtException", (error) => {
-  console.error("Uncaught exception:", error.message);
-  logErrorToFile(error); // Log error to file
+app.on("activate", () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
 
-function setTaskbarProgress(progressPercent) {
-  if (!mainWindow) return;
-
-  const progress = progressPercent / 100; // Convert percent to decimal (0-1)
-
-  if (process.platform === "win32") {
-    // Windows: Use setProgressBar with the progress value
-    mainWindow.setProgressBar(progress);
-  } else if (process.platform === "darwin") {
-    // macOS: Set progress in dock
-    app.dock.setBadge(progressPercent > 0 ? `${Math.round(progressPercent)}%` : "");
-  }
-
-  // When progress is complete or canceled, remove the progress indicator
-  if (progressPercent >= 100 || progressPercent < 0) {
-    if (process.platform === "win32") {
-      mainWindow.setProgressBar(-1); // -1 removes the progress bar
-    } else if (process.platform === "darwin") {
-      app.dock.setBadge(""); // Clear the badge
-    }
-  }
-}
+// This is redundant with the process.on('uncaughtException') handler above,
+// but keeping it for completeness
+app.on("uncaughtException", (error) => {
+  console.error("Uncaught exception:", error.message);
+  log.error("Uncaught exception:", error);
+  logErrorToFile(error); // Log error to file
+});
