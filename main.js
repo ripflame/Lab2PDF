@@ -143,7 +143,7 @@ app.whenReady().then(() => {
         .then((result) => {
           if (result.response === 0) {
             // 'Si'
-            autoUpdater.quitAndInstall(false, true);
+            autoUpdater.quitAndInstall();
           }
         });
 
