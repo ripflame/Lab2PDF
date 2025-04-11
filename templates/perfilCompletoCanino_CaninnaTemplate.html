@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hemograma completo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <style>
+      /* Page setup */
+      @page {
+        size: 8.5in 11in; /* Letter size */
+        margin: 0; /* Avoid default margins */
+      }
+      body {
+        width: 816px;
+        height: 1056px;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+        position: relative;
+        font-family: "Inter", sans-serif;
+        font-size: 16px; /* Base size for rem units */
+        color: #222;
+      }
+
+      /* Graphics */
+      .graphic {
+        width: 100%;
+        position: absolute;
+        z-index: -1; /* Ensure graphics are behind everything */
+      }
+      .graphic-top {
+        top: 0;
+      }
+      .graphic-bottom {
+        bottom: 0;
+      }
+
+      /* Header */
+      .header-title {
+        color: #fff;
+        text-align: center;
+        text-shadow: 1px 1px 0px #ffd94b;
+        font-family: "Poller One";
+        font-size: 1.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 0px;
+        margin-left: 190px;
+        padding-top: 20px;
+        text-transform: uppercase;
+      }
+
+      /* Details section */
+      .details {
+        display: flex;
+        flex-direction: column;
+        padding-top: 30px;
+        padding-left: 210px;
+      }
+      .details-heading {
+        font-weight: 500;
+        margin: 0 0 5px 0;
+      }
+      .details-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 60px;
+        padding: 10px;
+        border: 1px solid #222;
+        z-index: -2;
+      }
+      .details-box {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+      .details-label {
+        font-weight: 500;
+        min-width: 95px;
+      }
+      .details-item {
+        display: flex;
+        margin-bottom: 0;
+      }
+
+      /* Table */
+      .results-table {
+        width: auto;
+        border-collapse: collapse;
+        margin: 30px auto;
+      }
+      .results-table th,
+      .results-table td {
+        border: 1px solid #000;
+        padding: 0 5px;
+        text-align: center;
+      }
+      .results-table td:first-child {
+        text-align: left;
+      }
+      .results-table th {
+        background-color: #00b0f0;
+        color: white;
+      }
+
+      /* Maquilado section */
+      .maquilado-section {
+        padding: 0 40px;
+      }
+      .maquilado-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .maquilado-details {
+        flex: 1;
+      }
+
+      /* Footer */
+      .address-container {
+        min-width: 750px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 85px;
+        left: 30px;
+        z-index: -2;
+      }
+      .address-box {
+        border-style: solid;
+        border-width: 1px;
+        padding: 12px;
+        flex: 1;
+        text-align: center;
+      }
+      .address-box:last-child {
+        border-left: none;
+      }
+      .address-box p {
+        margin: 5px 0px;
+      }
+
+      /* Text styles */
+      .bold {
+        font-weight: bold;
+      }
+      .semi-bold {
+        font-weight: 500;
+      }
+      .center {
+        text-align: center !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top" />
+      <h1 class="header-title">Resultados de laboratorio<br />Hemograma completo</h1>
+    </header>
+    <section class="details">
+      <p class="details-heading">{{requerido}}</p>
+      <div class="details-wrapper">
+        <div class="details-box">
+          <div class="details-item">
+            <span class="details-label">Fecha:</span>
+            <span class="details-value">{{fecha}}</span>
+          </div>
+          <div class="details-item">
+            <span class="details-label">Nombre:</span>
+            <span class="details-value">{{nombreMascota}}</span>
+          </div>
+          <div class="details-item">
+            <span class="details-label">Especie:</span>
+            <span class="details-value">{{especie}}</span>
+          </div>
+          <div class="details-item">
+            <span class="details-label">Propietario:</span>
+            <span class="details-value">{{nombrePropietario}}</span>
+          </div>
+        </div>
+        <div class="details-box">
+          <div class="details-item">
+            <div class="details-label">Edad:</div>
+            <div class="details-value">{{edad}}</div>
+          </div>
+          <div class="details-item">
+            <div class="details-label">Raza:</div>
+            <div class="details-value">{{raza}}</div>
+          </div>
+          <div class="details-item">
+            <div class="details-label">Sexo:</div>
+            <div class="details-value">{{sexo}}</div>
+          </div>
+          <div class="details-item">
+            <div class="details-label">Teléfono:</div>
+            <div class="details-value">{{telefono}}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Prueba</th>
+          <th>Resultado</th>
+          <th colspan="2">Valor de Referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALBUMINA(ALB)</td>
+          <td class="semi-bold">{{alb}}</td>
+          <td>2.6 a 4.6</td>
+          <td>g/dL</td>
+        </tr>
+        <tr>
+          <td>PROTEINAS TOTALES(TP)</td>
+          <td class="semi-bold">{{tp}}</td>
+          <td>5.2 a 8.2</td>
+          <td>g/dL</td>
+        </tr>
+        <tr>
+          <td>GLUCOSA(GLU)</td>
+          <td class="semi-bold">{{glu}}</td>
+          <td>60 a 132</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>COLESTEROL TOTAL(CHOL)</td>
+          <td class="semi-bold">{{chol}}</td>
+          <td>110 a 320</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>FOSFATASA ALCALINA(ALP)</td>
+          <td class="semi-bold">{{alp}}</td>
+          <td>0 a 212</td>
+          <td>U/L</td>
+        </tr>
+        <tr>
+          <td>ALANINA AMINOTRAN(ALT)</td>
+          <td class="semi-bold">{{alt}}</td>
+          <td>0 a 88</td>
+          <td>U/L</td>
+        </tr>
+        <tr>
+          <td>TRANSPEPTIDASA(GGT)</td>
+          <td class="semi-bold">{{ggt}}</td>
+          <td>0 a 10</td>
+          <td>U/L</td>
+        </tr>
+        <tr>
+          <td>BILIRRUBINA TOTAL(TBIL)</td>
+          <td class="semi-bold">{{tbil}}</td>
+          <td>0.0 a 0.9</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>AMILASA(AMY)</td>
+          <td class="semi-bold">{{amy}}</td>
+          <td>400 a 1500</td>
+          <td>U/L</td>
+        </tr>
+        <tr>
+          <td>LIPASA(LIPA)</td>
+          <td class="semi-bold">{{lipa}}</td>
+          <td>0 a 125</td>
+          <td>U/L</td>
+        </tr>
+        <tr>
+          <td>NITROGENO UREICO(BUN)</td>
+          <td class="semi-bold">{{bun}}</td>
+          <td>6.0 a 26.0</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>CREATININA(CREA)</td>
+          <td class="semi-bold">{{crea}}</td>
+          <td>0.40 a 1.60</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>CALCIO(Ca)</td>
+          <td class="semi-bold">{{ca}}</td>
+          <td>7.9 a 12.0</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>FOSFORO(PHOS)</td>
+          <td class="semi-bold">{{phos}}</td>
+          <td>2.5 a 6.8</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>GLOBULINA(#GLOB)</td>
+          <td class="semi-bold">{{glob}}</td>
+          <td>2.2 a 4.6</td>
+          <td>g/dL</td>
+        </tr>
+        <tr>
+          <td>UREA(#UREA)</td>
+          <td class="semi-bold">{{urea}}</td>
+          <td>12.8 a 55.6</td>
+          <td>mg/dL</td>
+        </tr>
+        <tr>
+          <td>RELACION ALBUMINA/GLOBULINA(#A/G)</td>
+          <td class="semi-bold">{{ag}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>RELACION NITROGENO UREICO/CREATININA(#B/C)</td>
+          <td class="semi-bold">{{bc}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="semi-bold">Método:</span> Analizador bioquímico SKYLA VB1 de química seca en
+        sangre, plasma o suero, semi-automático con discos reactivos de biomarcadores
+      </div>
+    </section>
+    <footer>
+      <div class="address-container">
+        <div class="address-box">
+          <p>CaNinna Emiliano Zapata Tab.</p>
+          <p>Calle Moctezuma entre Libertad y</p>
+          <p>Vicente Guerrero, Centro</p>
+          <p>Tel:(934) 113-5079</p>
+        </div>
+        <div class="address-box">
+          <p>CaNinna Palenque Chiapas</p>
+          <p>Avenida Nicolas Bravo entre</p>
+          <p>Abasolo e Independencia, Centro</p>
+          <p>Tel:(916) 124-6050</p>
+        </div>
+      </div>
+      <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom" />
+    </footer>
+  </body>
+</html>
