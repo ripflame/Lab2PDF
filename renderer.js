@@ -1,33 +1,34 @@
 // Global variables
-let currentFormType = "hemoparasites";
-let currentFormSubmitHandler = null;
+let activeFormSubmitHandler = null;
+let activeSidebarItem = "hemoparasitesLink";
+let activeFormType = "hemoparasites";
+let activeVariant = "Zapata";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Attach event listeners after the DOM is loaded
   // Handling side bar clikcs
   document
     .getElementById("hemoparasitesLink")
-    .addEventListener("click", () => loadForm("hemoparasites"));
+    .addEventListener("click", (event) => handleSidebarClick(event, "hemoparasites"));
   document
     .getElementById("gastroenteritisLink")
-    .addEventListener("click", () => loadForm("gastroenteritis"));
-  document.getElementById("hemogramLink").addEventListener("click", () => {
-    const optionSelected = document.getElementById("proveedorSelect").value;
-    loadHemogramVariant(optionSelected);
-  });
-  document.getElementById("distemperLink").addEventListener("click", () => loadForm("distemper"));
-  document.getElementById("perfilCompletoLink").addEventListener("click", () => loadForm("perfilCompleto_Caninna"));
-
+    .addEventListener("click", (event) => handleSidebarClick(event, "gastroenteritis"));
+  document
+    .getElementById("hemogramLink")
+    .addEventListener("click", (event) => handleSidebarClick(event, "hemogram"));
+  document
+    .getElementById("distemperLink")
+    .addEventListener("click", (event) => handleSidebarClick(event, "distemper"));
+  document
+    .getElementById("perfilCompletoLink")
+    .addEventListener("click", (event) => handleSidebarClick(event, "perfilCompleto_Caninna"));
 
   //Handling on change events
   document.getElementById("proveedorSelect").addEventListener("change", (event) => {
-    loadHemogramVariant(event.target.value);
+    handleProviderChange(event);
   });
   document.getElementById("specificFormFields").addEventListener("change", (event) => {
-    if (
-      event.target.id === "testFoto" &&
-      (currentFormType === "hemoparasites" || currentFormType === "distemper" || currentFormType === "gastroenteritis")
-    ) {
+    if (event.target.id === "testFoto") {
       handleTestFotoChange(event);
     }
   });
@@ -41,27 +42,69 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // Load default form
   loadForm("hemoparasites");
+  updateSidebarSelection("hemoparasitesLink");
 });
 
-function loadHemogramVariant(formVariant) {
-  if (formVariant === "Zapata") {
-    loadForm("hemogram");
-  } else if (formVariant === "Palenque") {
-    loadForm("hemogram_palenque");
+// Update sidebar UI based on active item
+function updateSidebarSelection(itemId) {
+  // Remove selection from all items
+  document.querySelectorAll(".sidebar li").forEach((item) => {
+    item.classList.remove("selected");
+  });
+
+  // Add selection to active item
+  if (itemId) {
+    const selectedItem = document.getElementById(itemId).parentNode;
+    selectedItem.classList.add("selected");
+    activeSidebarItem = itemId;
   }
+}
+
+// Handle sidebar item clicks
+function handleSidebarClick(event, formType) {
+  event.preventDefault();
+
+  // Update sidebar selection
+  updateSidebarSelection(event.currentTarget.id);
+
+  // Special case for hemogram
+  if (formType === "hemogram") {
+    activeForm = formType;
+    loadHemogramForm(activeVariant);
+  } else {
+    // Regular form loading
+    activeForm = formType;
+    loadForm(formType);
+  }
+}
+
+// Handle provider selection change
+function handleProviderChange(event) {
+  activeVariant = event.target.value;
+  loadHemogramForm(activeVariant);
+}
+
+// Load the appropriate hemogram form
+function loadHemogramForm(variant) {
+  let formType;
+  if (variant === "Palenque") {
+    formType = "hemogram_palenque";
+  } else if (variant === "Zapata") {
+    formType = "hemogram";
+  }
+  loadForm(formType);
 }
 
 function toggleVisibility(ids, shouldShow) {
   ids.forEach((id) => {
-    const elment = document.getElementById(id);
-    if (elment) {
-      elment.classList.toggle("hidden", !shouldShow);
+    const element = document.getElementById(id);
+    if (element) {
+      element.classList.toggle("hidden", !shouldShow);
     }
   });
 }
 
 function loadForm(formType) {
-  currentFormType = formType;
   fetch(`templates/${formType}.html`)
     .then((response) => response.text())
     .then((html) => {
@@ -113,23 +156,23 @@ function updateFormSubmitHandler(formType) {
 
   const handler =
     formHandlers[formType] ||
-    function() {
+    function () {
       console.warn(`No handler defined for form type: ${formType}`);
     };
 
-  if (currentFormSubmitHandler) {
-    button.removeEventListener("click", currentFormSubmitHandler);
+  if (activeFormSubmitHandler) {
+    button.removeEventListener("click", activeFormSubmitHandler);
   }
 
   button.addEventListener("click", handler);
-  currentFormSubmitHandler = handler;
+  activeFormSubmitHandler = handler;
 }
 
 function handleTestFotoChange(event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const img = document.getElementById("testFotoThumbnail");
       img.src = e.target.result;
       img.style.display = "block";
