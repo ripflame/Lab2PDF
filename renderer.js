@@ -1,7 +1,9 @@
 // Global variables
 let activeFormSubmitHandler = null;
-let activeSidebarItem = "hemoparasitesLink";
-let activeFormType = "hemoparasites";
+// let activeSidebarItem = "hemoparasitesLink";
+let activeSidebarItem = "perfilCompletoLink";
+// let activeFormType = "hemoparasites";
+let activeFormType = "perfilCompletoCanino_Caninna";
 let activeVariant = "Zapata";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,7 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", (event) => handleSidebarClick(event, "distemper"));
   document
     .getElementById("perfilCompletoLink")
-    .addEventListener("click", (event) => handleSidebarClick(event, "perfilCompleto_Caninna"));
+    .addEventListener("click", (event) =>
+      handleSidebarClick(event, "perfilCompletoCanino_Caninna"),
+    );
 
   //Handling on change events
   document.getElementById("proveedorSelect").addEventListener("change", (event) => {
@@ -41,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   // Load default form
-  loadForm("hemoparasites");
-  updateSidebarSelection("hemoparasitesLink");
+  loadForm(activeFormType);
+  updateSidebarSelection(activeSidebarItem);
 });
 
 // Update sidebar UI based on active item
@@ -135,6 +139,10 @@ function loadForm(formType) {
         toggleVisibility(["caninoOption"], true);
         toggleVisibility(["felinoOption", "equinoOption", "bovinoOption"], false);
         toggleVisibility(["proveedorWrapper"], false);
+      } else if (formType === "perfilCompletoCanino_Caninna") {
+        toggleVisibility(["caninoOption", "felinoOption"], true);
+        toggleVisibility(["equinoOption", "bovinoOption"], false);
+        toggleVisibility(["proveedorWrapper"], false);
       }
       updateFormSubmitHandler(formType);
     })
@@ -152,6 +160,7 @@ function updateFormSubmitHandler(formType) {
     hemogram_palenque: handleHemogramPalenqueFormSubmit,
     distemper: handleDistemperFormSubmit,
     gastroenteritis: handleGastroenteritisFormSubmit,
+    perfilCompletoCanino_Caninna: handlePerfilCompletoCanino_CaninnaFormSubmit,
   };
 
   const handler =
@@ -428,6 +437,62 @@ function handleGastroenteritisFormSubmit() {
     window.electron.generarPDF(datos, "gastroenteritis");
   } catch (error) {
     console.error("Error handling distemper form submission:", error);
+  }
+}
+
+function handlePerfilCompletoCanino_CaninnaFormSubmit() {
+  try {
+    toggleVisibility(["resultadoPDF"], false);
+    const inputs = document.querySelectorAll("#commonFormFields input, #formularioHemograma input");
+
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      alb: document.getElementById("alb").value,
+      tp: document.getElementById("tp").value,
+      glu: document.getElementById("glu").value,
+      chol: document.getElementById("chol").value,
+      alp: document.getElementById("alp").value,
+      alt: document.getElementById("alt").value,
+      ggt: document.getElementById("ggt").value,
+      tbil: document.getElementById("tbil").value,
+      amy: document.getElementById("amy").value,
+      lipa: document.getElementById("lipa").value,
+      bun: document.getElementById("bun").value,
+      crea: document.getElementById("crea").value,
+      ca: document.getElementById("ca").value,
+      phos: document.getElementById("phos").value,
+      glob: document.getElementById("glob").value,
+      urea: document.getElementById("urea").value,
+      ag: document.getElementById("ag").value,
+      bc: document.getElementById("bc").value,
+    };
+
+    window.electron.generarPDF(datos, "perfilCompletoCanino_Caninna");
+  } catch (error) {
+    console.error("Error handling hemogram form submission:", error);
   }
 }
 

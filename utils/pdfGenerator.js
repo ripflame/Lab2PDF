@@ -313,6 +313,34 @@ class TemplateProcessor {
     }
   }
 
+  static processPerfilCompletoCanino_CaninnaTemplate(htmlContent, formData) {
+    try {
+      const f = Formatters.number;
+      return htmlContent
+        .replace("{{alb}}", f(formData.alb))
+        .replace("{{tp}}", f(formData.tp))
+        .replace("{{glu}}", f(formData.glu))
+        .replace("{{chol}}", f(formData.chol))
+        .replace("{{alp}}", f(formData.alp))
+        .replace("{{alt}}", f(formData.alt))
+        .replace("{{ggt}}", f(formData.ggt))
+        .replace("{{tbil}}", f(formData.tbil))
+        .replace("{{amy}}", f(formData.amy))
+        .replace("{{lipa}}", f(formData.lipa))
+        .replace("{{bun}}", f(formData.bun))
+        .replace("{{crea}}", f(formData.crea))
+        .replace("{{ca}}", f(formData.ca))
+        .replace("{{phos}}", f(formData.phos))
+        .replace("{{glob}}", f(formData.glob))
+        .replace("{{urea}}", f(formData.urea))
+        .replace("{{ag}}", f(formData.ag))
+        .replace("{{bc}}", f(formData.bc));
+    } catch (error) {
+      Logger.logError(new Error(`Hemogram template processing error: ${error.message}`));
+      throw error;
+    }
+  }
+
   /**
    * Processes templates that include test results with photo evidence
    * Handles hemoparasites and distemper test types
@@ -414,6 +442,12 @@ class PDFGenerator {
             htmlContent,
             formData,
             "gastroenteritis",
+          );
+          break;
+        case "perfilCompletoCanino_Caninna":
+          htmlContent = await TemplateProcessor.processPerfilCompletoCanino_CaninnaTemplate(
+            htmlContent,
+            formData,
           );
           break;
         default:
