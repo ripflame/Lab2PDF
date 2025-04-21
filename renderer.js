@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", (event) =>
       handleSidebarClick(event, "perfilCompletoCanino_Caninna"),
     );
+  document
+    .getElementById("sidaFelinoLink")
+    .addEventListener("click", (event) => handleSidebarClick(event, "sidaFelino"));
 
   //Handling on change events
   document.getElementById("proveedorSelect").addEventListener("change", (event) => {
@@ -143,6 +146,9 @@ function loadForm(formType) {
         toggleVisibility(["caninoOption", "felinoOption"], true);
         toggleVisibility(["equinoOption", "bovinoOption"], false);
         toggleVisibility(["proveedorWrapper"], false);
+      } else if (formType === "sidaFelino") {
+        toggleVisibility(["felinoOption"], true);
+        toggleVisibility(["caninoOption", "equinoOption", "bovinoOption"], false);
       }
       updateFormSubmitHandler(formType);
     })
@@ -161,11 +167,12 @@ function updateFormSubmitHandler(formType) {
     distemper: handleDistemperFormSubmit,
     gastroenteritis: handleGastroenteritisFormSubmit,
     perfilCompletoCanino_Caninna: handlePerfilCompletoCanino_CaninnaFormSubmit,
+    sidaFelino: handleSidaFelinoFormSubmit,
   };
 
   const handler =
     formHandlers[formType] ||
-    function () {
+    function() {
       console.warn(`No handler defined for form type: ${formType}`);
     };
 
@@ -181,7 +188,7 @@ function handleTestFotoChange(event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e) {
       const img = document.getElementById("testFotoThumbnail");
       img.src = e.target.result;
       img.style.display = "block";
@@ -493,6 +500,51 @@ function handlePerfilCompletoCanino_CaninnaFormSubmit() {
     window.electron.generarPDF(datos, "perfilCompletoCanino_Caninna");
   } catch (error) {
     console.error("Error handling hemogram form submission:", error);
+  }
+}
+
+function handleSidaFelinoFormSubmit() {
+  try {
+    toggleVisibility(["resultadoPDF"], false);
+    const inputs = document.querySelectorAll(
+      "#commonFormFields input, #formularioHemoparasitos input",
+    );
+
+    // Validate all inputs
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    const datos = {
+      // Generic Form Fields start here
+      requerido: document.getElementById("requerido").value,
+      nombrePropietario: document.getElementById("nombrePropietario").value,
+      telefono: document.getElementById("telefono").value,
+      nombreMascota: document.getElementById("nombreMascota").value,
+      especie: document.getElementById("especie").value,
+      raza: document.getElementById("raza").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.querySelector("input[name='sexo']:checked").value,
+      fecha: document.getElementById("fecha").value,
+      // Specific Form Fields start here
+      sida: document.querySelector("input[name='sida']:checked").value,
+      leucemia: document.querySelector("input[name='leucemia']:checked").value,
+      gusano: document.querySelector("input[name='gusano']:checked").value,
+      testFoto: document.getElementById("testFotoThumbnail").src,
+      testFotoPath: document.getElementById("testFoto").value,
+    };
+
+    window.electron.generarPDF(datos, "sidaFelino");
+  } catch (error) {
+    console.error("Error handling sida felino form submission:", error);
   }
 }
 

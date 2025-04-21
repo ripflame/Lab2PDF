@@ -369,6 +369,12 @@ class TemplateProcessor {
           .replace("{{coronavirus}}", this.formatTestResult(formData.coronavirus))
           .replace("{{giardiasis}}", this.formatTestResult(formData.giardiasis))
           .replace("{{testFoto}}", compressedBase64);
+      } else if (testType == "sidaFelino") {
+        return htmlContent
+          .replace("{{sida}}", this.formatTestResult(formData.sida))
+          .replace("{{leucemia}}", this.formatTestResult(formData.leucemia))
+          .replace("{{gusano}}", this.formatTestResult(formData.gusano))
+          .replace("{{testFoto}}", compressedBase64);
       }
 
       throw new Error(`Unknown test type: ${testType}`);
@@ -448,6 +454,13 @@ class PDFGenerator {
           htmlContent = await TemplateProcessor.processPerfilCompletoCanino_CaninnaTemplate(
             htmlContent,
             formData,
+          );
+          break;
+        case "sidaFelino":
+          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
+            htmlContent,
+            formData,
+            "sidaFelino",
           );
           break;
         default:
