@@ -18,6 +18,10 @@ const CONFIG = {
   },
   templateDir: path.join(__dirname, "../templates"),
   imageDir: path.join(__dirname, "../templates/img"),
+  configDir: path.join(__dirname, "../config"),
+  get configLoader() {
+    return require(path.join(this.configDir, "configLoader"));
+  },
   chromePaths: {
     win32: [
       "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
@@ -207,16 +211,45 @@ class BrowserManager {
   }
 }
 
-/**
- * Template processing for different veterinary form types
- * Handles data insertion, formatting and template-specific logic
- */
 class TemplateProcessor {
+  constructor(configLoader) {
+    this.configLoader = configLoader;
+  }
+
+  /**
+   * Process a template using provider-specific configuration
+   **/
+  async processTemplate(htmlContent, formData, provider, formType) {
+    try {
+      //Process base template common to all forms
+      htmlContent = await this.processBaseTemplate(htmlContent, formData);
+
+      //Get the appropiate configuration
+      const species = formData.especie.toLowerCase();
+      const config = this.configLoader.getTemplateConfig(provider, formType, species);
+
+      switch (formType) {
+        case "labrios_hemogram_canino":
+        case "zoovet_hemograma_canino":
+        case "caninna_perfilCompleto_canino":
+          return this.processLabResultsTemplate(htmlContent, formData, config);
+        case "hemoparasites":
+        case "distemper":
+        case "gastroenteritis":
+          return this.processTestWithPhotoTemplate(htmlContent, formData, config);
+        default:
+          throw new Error(`Unknown test type: ${formType}`);
+      }
+    } catch (error) {
+      Logger.logError(new Error(`Template processing error: ${error.message}`));
+      throw error;
+    }
+  }
   /**
    * Processes common template elements shared across all form types
    * Inserts patient and owner information
    */
-  static async processBaseTemplate(htmlContent, formData) {
+  async processBaseTemplate(htmlContent, formData) {
     try {
       return htmlContent
         .replace("{{requerido}}", formData.requerido)
@@ -241,145 +274,55 @@ class TemplateProcessor {
       throw error;
     }
   }
-
   /**
-   * Processes hemogram-specific template data
-   * Inserts and formats blood test values
+   * Process lab results templates using config (hemogram, perfil completo, etc.)
    */
-  static processHemogramTemplate(htmlContent, formData) {
+  processLabResultsTemplate(htmlContent, formData, config) {
     try {
       const f = Formatters.number;
-      return htmlContent
-        .replace("{{eritrocitos}}", f(formData.eritrocitos))
-        .replace("{{hemoglobina}}", f(formData.hemoglobina))
-        .replace("{{hematocrito}}", f(formData.hematocrito))
-        .replace("{{vgm}}", f(formData.volumenGlobularMedio))
-        .replace("{{hpe}}", f(formData.hemoglobinaPromedio))
-        .replace("{{cmh}}", f(formData.concentracionMediaHemoglobina))
-        .replace("{{plaquetas}}", f(formData.plaquetas))
-        .replace("{{leucocitos}}", f(formData.leucocitos))
-        .replace("{{monocitos_rel}}", f(formData.monocitos_rel))
-        .replace("{{linfocitos_rel}}", f(formData.linfocitos_rel))
-        .replace("{{eosinofilos_rel}}", f(formData.eosinofilos_rel))
-        .replace("{{basofilos_rel}}", f(formData.basofilos_rel))
-        .replace("{{neutrofilos_segmentados_rel}}", f(formData.neutrofilos_segmentados_rel))
-        .replace("{{neutrofilos_banda_rel}}", f(formData.neutrofilos_banda_rel))
-        .replace("{{monocitos_abs}}", f(formData.monocitos_abs))
-        .replace("{{linfocitos_abs}}", f(formData.linfocitos_abs))
-        .replace("{{eosinofilos_abs}}", f(formData.eosinofilos_abs))
-        .replace("{{basofilos_abs}}", f(formData.basofilos_abs))
-        .replace("{{neutrofilos_segmentados_abs}}", f(formData.neutrofilos_segmentados_abs))
-        .replace("{{neutrofilos_banda_abs}}", f(formData.neutrofilos_banda_abs));
-    } catch (error) {
-      Logger.logError(new Error(`Hemogram template processing error: ${error.message}`));
-      throw error;
-    }
-  }
 
-  /**
-   * Processes hemogram-palenque-specific template data
-   * Inserts and formats blood test values
-   */
-  static processHemogram_PalenqueTemplate(htmlContent, formData) {
-    try {
-      const f = Formatters.number;
-      return htmlContent
-        .replace("{{wbc}}", f(formData.wbc))
-        .replace("{{linfocitos_abs}}", f(formData.linfocitos_abs))
-        .replace("{{monocitos_abs}}", f(formData.monocitos_abs))
-        .replace("{{granulocitos_abs}}", f(formData.granulocitos_abs))
-        .replace("{{eosinofilos_abs}}", f(formData.eosinofilos_abs))
-        .replace("{{linfocitos_rel}}", f(formData.linfocitos_rel))
-        .replace("{{monocitos_rel}}", f(formData.monocitos_rel))
-        .replace("{{granulocitos_rel}}", f(formData.granulocitos_rel))
-        .replace("{{eosinofilos_rel}}", f(formData.eosinofilos_rel))
-        .replace("{{rbc}}", f(formData.rbc))
-        .replace("{{hgb}}", f(formData.hgb))
-        .replace("{{hct}}", f(formData.hct))
-        .replace("{{mcv}}", f(formData.mcv))
-        .replace("{{mch}}", f(formData.mch))
-        .replace("{{mchc}}", f(formData.mchc))
-        .replace("{{rdw_cv}}", f(formData.rdw_cv))
-        .replace("{{rdw_sd}}", f(formData.rdw_sd))
-        .replace("{{plt}}", f(formData.plt))
-        .replace("{{pct}}", f(formData.pct))
-        .replace("{{mpv}}", f(formData.mpv))
-        .replace("{{pdw}}", f(formData.pdw))
-        .replace("{{p_lcr}}", f(formData.p_lcr))
-        .replace("{{p_lcc}}", f(formData.p_lcc));
-    } catch (error) {
-      Logger.logError(new Error(`Hemogram-palenque template processing error: ${error.message}`));
-      throw error;
-    }
-  }
+      // Process each field according to the configuration
+      for (const field of config.fields) {
+        const formValue = formData[field.id];
+        const templateField = field.templateField || field.id;
 
-  static processPerfilCompletoCanino_CaninnaTemplate(htmlContent, formData) {
-    try {
-      const f = Formatters.number;
-      return htmlContent
-        .replace("{{alb}}", f(formData.alb))
-        .replace("{{tp}}", f(formData.tp))
-        .replace("{{glu}}", f(formData.glu))
-        .replace("{{chol}}", f(formData.chol))
-        .replace("{{alp}}", f(formData.alp))
-        .replace("{{alt}}", f(formData.alt))
-        .replace("{{ggt}}", f(formData.ggt))
-        .replace("{{tbil}}", f(formData.tbil))
-        .replace("{{amy}}", f(formData.amy))
-        .replace("{{lipa}}", f(formData.lipa))
-        .replace("{{bun}}", f(formData.bun))
-        .replace("{{crea}}", f(formData.crea))
-        .replace("{{ca}}", f(formData.ca))
-        .replace("{{phos}}", f(formData.phos))
-        .replace("{{glob}}", f(formData.glob))
-        .replace("{{urea}}", f(formData.urea))
-        .replace("{{ag}}", f(formData.ag))
-        .replace("{{bc}}", f(formData.bc));
+        // Replace in template
+        htmlContent = htmlContent.replace(`{{${templateField}}}`, f(formValue));
+      }
+
+      return htmlContent;
     } catch (error) {
-      Logger.logError(new Error(`Hemogram template processing error: ${error.message}`));
+      Logger.logError(new Error(`Lab results template processing error: ${error.message}`));
       throw error;
     }
   }
 
   /**
    * Processes templates that include test results with photo evidence
-   * Handles hemoparasites and distemper test types
+   * Handles hemoparasites, distemper, and gastroenteritis test types
    */
-  static async processTestWithPhotoTemplate(htmlContent, formData, testType) {
+  async processTestWithPhotoTemplate(htmlContent, formData, config) {
     try {
       // Compress and process the test photo
       const compressedBase64 = await ImageProcessor.compressBase64Image(formData.testFoto);
 
-      // Apply test-specific template logic
-      if (testType === "hemoparasites") {
-        return htmlContent
-          .replace("{{gusanoCorazon}}", this.formatTestResult(formData.gusanoCorazon))
-          .replace("{{ehrlichiosis}}", this.formatTestResult(formData.ehrlichiosis))
-          .replace("{{lyme}}", this.formatTestResult(formData.lyme))
-          .replace("{{anaplasmosis}}", this.formatTestResult(formData.anaplasmosis))
-          .replace("{{testFoto}}", compressedBase64);
-      } else if (testType === "distemper") {
-        return htmlContent
-          .replace("{{distemper}}", this.formatTestResult(formData.distemper))
-          .replace("{{adenovirus}}", this.formatTestResult(formData.adenovirus))
-          .replace("{{testFoto}}", compressedBase64);
-      } else if (testType === "gastroenteritis") {
-        return htmlContent
-          .replace("{{parvovirus}}", this.formatTestResult(formData.parvovirus))
-          .replace("{{coronavirus}}", this.formatTestResult(formData.coronavirus))
-          .replace("{{giardiasis}}", this.formatTestResult(formData.giardiasis))
-          .replace("{{testFoto}}", compressedBase64);
-      } else if (testType == "sidaFelino") {
-        return htmlContent
-          .replace("{{sida}}", this.formatTestResult(formData.sida))
-          .replace("{{leucemia}}", this.formatTestResult(formData.leucemia))
-          .replace("{{gusano}}", this.formatTestResult(formData.gusano))
-          .replace("{{testFoto}}", compressedBase64);
+      // Replace test results fields
+      for (const field of config.fields) {
+        const formValue = formData[field.id];
+
+        // Format the result with appropriate styling
+        const formattedValue = this.formatTestResult(formValue);
+
+        // Replace in template
+        htmlContent = htmlContent.replace(`{{${field.id}}}`, formattedValue);
       }
 
-      throw new Error(`Unknown test type: ${testType}`);
+      // Replace the photo
+      htmlContent = htmlContent.replace("{{testFoto}}", compressedBase64);
+
+      return htmlContent;
     } catch (error) {
-      Logger.logError(new Error(`Test template processing error: ${error.message}`));
+      Logger.logError(new Error(`Test with photo template processing error: ${error.message}`));
       throw error;
     }
   }
@@ -387,7 +330,7 @@ class TemplateProcessor {
   /**
    * Formats test results with appropriate styling based on result value
    */
-  static formatTestResult(result) {
+  formatTestResult(result) {
     return result === "Positivo"
       ? '<span class="bold is-positive">Positivo</span>'
       : '<span class="bold">Negativo</span>';
@@ -411,63 +354,24 @@ class PDFGenerator {
     let browser;
 
     try {
-      // Select and load appropriate template
-      const templatePath = path.join(CONFIG.templateDir, `${formType}Template.html`);
-      let htmlContent = fs.readFileSync(templatePath, "utf8");
+      let provider = "caninna"; //Default provider
 
-      // Process common template elements
-      htmlContent = await TemplateProcessor.processBaseTemplate(htmlContent, formData);
-
-      // Apply form-specific processing
-      switch (formType) {
-        case "hemogram":
-          htmlContent = await TemplateProcessor.processHemogramTemplate(htmlContent, formData);
-          break;
-        case "hemogram_palenque":
-          htmlContent = await TemplateProcessor.processHemogram_PalenqueTemplate(
-            htmlContent,
-            formData,
-          );
-          break;
-        case "hemoparasites":
-          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-            htmlContent,
-            formData,
-            "hemoparasites",
-          );
-          break;
-        case "distemper":
-          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-            htmlContent,
-            formData,
-            "distemper",
-          );
-          break;
-        case "gastroenteritis":
-          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-            htmlContent,
-            formData,
-            "gastroenteritis",
-          );
-          break;
-        case "perfilCompletoCanino_Caninna":
-          htmlContent = await TemplateProcessor.processPerfilCompletoCanino_CaninnaTemplate(
-            htmlContent,
-            formData,
-          );
-          break;
-        case "sidaFelino":
-          htmlContent = await TemplateProcessor.processTestWithPhotoTemplate(
-            htmlContent,
-            formData,
-            "sidaFelino",
-          );
-          break;
-        default:
-          throw new Error(`Unknown form type: ${formType}`);
+      if (formType.includes("_")) {
+        const parts = formType.split("_");
+        provider = parts[0]; //Provider name (e.g. caninna)
+        formType = parts[1]; //Base form type (e.g. hemogram)
       }
 
-      // Render HTML to PDF
+      const species = formData.especie.toLowerCase();
+      const config = CONFIG.configLoader.getTemplateConfig(provider, formType, species);
+
+      const templatePath = path.join(CONFIG.templateDir, config.templateFile);
+      let htmlContent = fs.readFileSync(templatePath, "utf8");
+
+      const templateProcessor = new TemplateProcessor(CONFIG.configLoader);
+
+      htmlContent = await templateProcessor.processTemplate(htmlContent, formData, provider, formType);
+
       browser = await BrowserManager.createBrowser();
       const page = await browser.newPage();
       await page.setContent(htmlContent, { waitUntil: "load" });
@@ -479,10 +383,9 @@ class PDFGenerator {
       Logger.logError(new Error(`PDF generation error: ${error.message}`));
       throw error;
     } finally {
-      // Ensure browser is closed even if an error occurs
       if (browser) {
         await browser.close().catch((err) => {
-          Logger.logError(new Error(`Browser close error: ${err.message}`));
+          Logger.logError(new Error(`Browser close error; ${err.message}`));
         });
       }
     }
