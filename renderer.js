@@ -1,9 +1,7 @@
 // Global variables
 let activeFormSubmitHandler = null;
-// let activeSidebarItem = "hemoparasitesLink";
-let activeSidebarItem = "perfilCompletoLink";
-// let activeFormType = "hemoparasites";
-let activeFormType = "perfilCompletoCanino_Caninna";
+let activeSidebarItem = "hemoparasitesLink";
+let activeFormType = "hemoparasites";
 let activeVariant = "Zapata";
 
 document.addEventListener("DOMContentLoaded", () => {
