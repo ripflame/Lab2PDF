@@ -26,9 +26,9 @@ describe("PDF Generation", function () {
       eritrocitos: "7240000",
       hemoglobina: "17.8",
       hematocrito: "54.5",
-      volumenGlobularMedio: "75.2",
-      hemoglobinaPromedio: "24.6",
-      concentracionMediaHemoglobina: "32.7",
+      vgm: "75.2",
+      hpe: "24.6",
+      cmh: "32.7",
       plaquetas: "339000",
       leucocitos: "14400",
       monocitos_rel: "0",
@@ -47,7 +47,7 @@ describe("PDF Generation", function () {
 
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
-    await generatePDF(formData, pdfPath, "hemogram");
+    await generatePDF(formData, pdfPath, "labrios_hemograma_canino");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");

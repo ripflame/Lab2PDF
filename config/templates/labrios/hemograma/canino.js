@@ -1,5 +1,5 @@
 module.exports = {
-  id: "hemograma-canino-labrios",
+  id: "labrios_hemograma_canino",
   templateFile: "hemogramTemplate.html",
   fields: [
     {

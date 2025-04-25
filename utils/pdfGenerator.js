@@ -229,9 +229,10 @@ class TemplateProcessor {
       const config = this.configLoader.getTemplateConfig(provider, formType, species);
 
       switch (formType) {
-        case "labrios_hemogram_canino":
+        case "labrios_hemograma_canino":
         case "zoovet_hemograma_canino":
         case "caninna_perfilCompleto_canino":
+        case "hemograma":
           return this.processLabResultsTemplate(htmlContent, formData, config);
         case "hemoparasites":
         case "distemper":

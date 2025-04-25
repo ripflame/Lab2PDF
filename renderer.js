@@ -308,7 +308,10 @@ function handleHemogramFormSubmit() {
       neutrofilos_banda_abs: document.getElementById("neutrofilos_banda_abs").value,
     };
 
-    window.electron.generarPDF(datos, "hemogram");
+    const provider = "labrios";
+    const formType = `${provider}_hemograma`;
+
+    window.electron.generarPDF(datos, "labrios_hemograma_canino");
   } catch (error) {
     console.error("Error handling hemogram form submission:", error);
   }
