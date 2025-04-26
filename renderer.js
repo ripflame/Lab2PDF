@@ -289,9 +289,9 @@ function handleHemogramFormSubmit() {
       eritrocitos: document.getElementById("eritrocitos").value,
       hemoglobina: document.getElementById("hemoglobina").value,
       hematocrito: document.getElementById("hematocrito").value,
-      volumenGlobularMedio: document.getElementById("volumenGlobularMedio").value,
-      hemoglobinaPromedio: document.getElementById("hemoglobinaPromedio").value,
-      concentracionMediaHemoglobina: document.getElementById("concentracionMediaHemoglobina").value,
+      vgm: document.getElementById("vgm").value,
+      hpe: document.getElementById("hpe").value,
+      cmh: document.getElementById("cmh").value,
       plaquetas: document.getElementById("plaquetas").value,
       leucocitos: document.getElementById("leucocitos").value,
       monocitos_rel: document.getElementById("monocitos_rel").value,
@@ -311,7 +311,7 @@ function handleHemogramFormSubmit() {
     const provider = "labrios";
     const formType = `${provider}_hemograma`;
 
-    window.electron.generarPDF(datos, "labrios_hemograma_canino");
+    window.electron.generarPDF(datos, formType);
   } catch (error) {
     console.error("Error handling hemogram form submission:", error);
   }
