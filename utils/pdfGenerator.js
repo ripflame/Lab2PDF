@@ -371,7 +371,12 @@ class PDFGenerator {
 
       const templateProcessor = new TemplateProcessor(CONFIG.configLoader);
 
-      htmlContent = await templateProcessor.processTemplate(htmlContent, formData, provider, formType);
+      htmlContent = await templateProcessor.processTemplate(
+        htmlContent,
+        formData,
+        provider,
+        formType,
+      );
 
       browser = await BrowserManager.createBrowser();
       const page = await browser.newPage();

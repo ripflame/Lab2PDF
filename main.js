@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, Menu, globalShortcut, Notification } = require("electron");
+const { app, BrowserWindow, dialog, Menu, globalShortcut } = require("electron");
 const path = require("path");
 const { setupIpcHandlers } = require("./ipcHandlers");
 const { autoUpdater } = require("electron-updater");
@@ -15,7 +15,7 @@ log.info(`Current version: ${packageJson.version}`);
 
 // Function to log errors to a file
 function logErrorToFile(error) {
-  const logFilePath = path.join(app.getPath('userData'), 'error.log');
+  const logFilePath = path.join(app.getPath("userData"), "error.log");
   const errorMessage = `${new Date().toISOString()} - ${error.stack || error}\n`;
   fs.appendFileSync(logFilePath, errorMessage);
 }
@@ -64,7 +64,7 @@ function setTaskbarProgress(progressPercent) {
 
 app.whenReady().then(() => {
   try {
-    globalShortcut.register("Ctrl+Shift+I", ()=> {
+    globalShortcut.register("Ctrl+Shift+I", () => {
       if (mainWindow) {
         mainWindow.webContents.openDevTools();
       }
@@ -76,11 +76,11 @@ app.whenReady().then(() => {
       minWidth: 800,
       minHeight: 600,
       webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
+        preload: path.join(__dirname, "preload.js"),
         contextIsolation: true,
         enableRemoteModule: false,
         nodeIntegration: false,
-      }
+      },
     });
 
     // Configure auto-updater
@@ -187,27 +187,25 @@ app.whenReady().then(() => {
 
     const menu = Menu.buildFromTemplate([
       {
-        label: 'Archivo',
-        submenu: [
-          { role: 'quit' }
-        ]
+        label: "Archivo",
+        submenu: [{ role: "quit" }],
       },
       {
-        label: 'Ayuda',
+        label: "Ayuda",
         submenu: [
           {
-            label: 'Acerca de',
+            label: "Acerca de",
             click: () => {
               dialog.showMessageBox({
-                type: 'info',
-                title: 'Acerca de',
-                message: `Lab2PDF\nVersion ${packageJson.version}\nDesarrollada por Ripflame`, // Use dynamic version
-                buttons: ['OK']
+                type: "info",
+                title: "Acerca de",
+                message: `Lab2PDF\nVersion ${packageJson.version}\nDesarrollada por Ripflame para CaNinna`, // Use dynamic version
+                buttons: ["OK"],
               });
-            }
+            },
           },
           {
-            label: 'Actualizar',
+            label: "Actualizar",
             click: () => {
               if (app.isPackaged) {
                 console.log("Manual update check triggered");
@@ -233,13 +231,13 @@ app.whenReady().then(() => {
 
     Menu.setApplicationMenu(menu);
 
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile("index.html");
+    setupIpcHandlers(mainWindow);
 
-    app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') app.quit();
+    app.on("window-all-closed", () => {
+      if (process.platform !== "darwin") app.quit();
     });
 
-    setupIpcHandlers(mainWindow);
   } catch (error) {
     console.error("Error during app initialization:", error.message);
     log.error("Error during app initialization:", error);
@@ -247,7 +245,7 @@ app.whenReady().then(() => {
   }
 });
 
-app.on('will-quit', () => {
+app.on("will-quit", () => {
   globalShortcut.unregisterAll();
 });
 

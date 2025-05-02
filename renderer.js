@@ -170,7 +170,7 @@ function updateFormSubmitHandler(formType) {
 
   const handler =
     formHandlers[formType] ||
-    function() {
+    function () {
       console.warn(`No handler defined for form type: ${formType}`);
     };
 
@@ -186,12 +186,53 @@ function handleTestFotoChange(event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const img = document.getElementById("testFotoThumbnail");
       img.src = e.target.result;
       img.style.display = "block";
     };
     reader.readAsDataURL(file);
+  }
+}
+
+/**
+ * Collect common form fields
+ **/
+
+function handleFormSubmit(formType) {
+  try {
+    toggleVisibility(["resultadoPDF"], false);
+
+    //get relevant formConfig here
+    const configLoader = require(path.join);
+
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    // Validate all inputs
+    const inputs = document.querySelectorAll("#commonFormFields input, #specificFormFields input");
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        input.focus();
+        return;
+      }
+    }
+
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+
+    //Gather all input
+
+    window.electron.generarPDF(datos, "hemogram_palenque");
+  } catch (error) {
+    console.error("Error handling hemogram form submission:", error);
   }
 }
 
@@ -550,7 +591,7 @@ function handleSidaFelinoFormSubmit() {
 }
 
 // Handle PDF Generation Response
-window.electron.onPDFGenerado((event, rutaPDF) => {
+window.electron.onPDFGenerado((rutaPDF) => {
   const button = document.getElementById("generarPDFButton");
   button.disabled = false;
   button.innerHTML = "Generar PDF";
