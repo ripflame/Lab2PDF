@@ -212,40 +212,37 @@ class BrowserManager {
 }
 
 class TemplateProcessor {
-  constructor(configLoader) {
-    this.configLoader = configLoader;
+  constructor(configTemplate) {
+    this.config = configTemplate;
   }
 
   /**
    * Process a template using provider-specific configuration
    **/
-  async processTemplate(htmlContent, formData, provider, formType) {
+  async processTemplate(htmlContent, formData) {
     try {
       //Process base template common to all forms
       htmlContent = await this.processBaseTemplate(htmlContent, formData);
 
-      //Get the appropiate configuration
-      const species = formData.especie.toLowerCase();
-      const config = this.configLoader.getTemplateConfig(provider, formType, species);
-
-      switch (formType) {
+      switch (this.config.id) {
         case "labrios_hemograma_canino":
         case "zoovet_hemograma_canino":
         case "caninna_perfilCompleto_canino":
         case "hemograma":
-          return this.processLabResultsTemplate(htmlContent, formData, config);
+          return this.processLabResultsTemplate(htmlContent, formData);
         case "hemoparasites":
         case "distemper":
         case "gastroenteritis":
-          return this.processTestWithPhotoTemplate(htmlContent, formData, config);
+          return this.processTestWithPhotoTemplate(htmlContent, formData);
         default:
-          throw new Error(`Unknown test type: ${formType}`);
+          throw new Error(`Unknown test type: ${this.config.id}`);
       }
     } catch (error) {
       Logger.logError(new Error(`Template processing error: ${error.message}`));
       throw error;
     }
   }
+
   /**
    * Processes common template elements shared across all form types
    * Inserts patient and owner information
@@ -278,12 +275,12 @@ class TemplateProcessor {
   /**
    * Process lab results templates using config (hemogram, perfil completo, etc.)
    */
-  processLabResultsTemplate(htmlContent, formData, config) {
+  processLabResultsTemplate(htmlContent, formData) {
     try {
       const f = Formatters.number;
 
       // Process each field according to the configuration
-      for (const field of config.fields) {
+      for (const field of this.config.fields) {
         const formValue = formData[field.id];
         const templateField = field.templateField || field.id;
 
@@ -302,13 +299,13 @@ class TemplateProcessor {
    * Processes templates that include test results with photo evidence
    * Handles hemoparasites, distemper, and gastroenteritis test types
    */
-  async processTestWithPhotoTemplate(htmlContent, formData, config) {
+  async processTestWithPhotoTemplate(htmlContent, formData) {
     try {
       // Compress and process the test photo
       const compressedBase64 = await ImageProcessor.compressBase64Image(formData.testFoto);
 
       // Replace test results fields
-      for (const field of config.fields) {
+      for (const field of this.config.fields) {
         const formValue = formData[field.id];
 
         // Format the result with appropriate styling
@@ -348,7 +345,7 @@ class PDFGenerator {
    *
    * @param {Object} formData - The data to be inserted into the template
    * @param {string} outputPath - Path where the PDF will be saved
-   * @param {string} formType - Type of form (hemogram, hemoparasites, distemper)
+   * @param {string} formType - Type of form (provider_testType_species)
    * @returns {string} - Path to the generated PDF file
    */
   static async generatePDF(formData, outputPath, formType) {
@@ -356,27 +353,21 @@ class PDFGenerator {
 
     try {
       let provider = "caninna"; //Default provider
-
       if (formType.includes("_")) {
         const parts = formType.split("_");
         provider = parts[0]; //Provider name (e.g. caninna)
         formType = parts[1]; //Base form type (e.g. hemogram)
       }
-
       const species = formData.especie.toLowerCase();
+
       const config = CONFIG.configLoader.getTemplateConfig(provider, formType, species);
 
       const templatePath = path.join(CONFIG.templateDir, config.templateFile);
       let htmlContent = fs.readFileSync(templatePath, "utf8");
 
-      const templateProcessor = new TemplateProcessor(CONFIG.configLoader);
+      const templateProcessor = new TemplateProcessor(config);
 
-      htmlContent = await templateProcessor.processTemplate(
-        htmlContent,
-        formData,
-        provider,
-        formType,
-      );
+      htmlContent = await templateProcessor.processTemplate(htmlContent, formData);
 
       browser = await BrowserManager.createBrowser();
       const page = await browser.newPage();
