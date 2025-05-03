@@ -1,7 +1,8 @@
 const { ipcMain, shell, app, dialog } = require("electron");
 const path = require("path");
-const { generatePDF } = require("./utils/pdfGenerator");
 const fs = require("fs");
+const { generatePDF } = require("./utils/pdfGenerator");
+const configLoader = require("./config/configLoader");
 
 // Function to log errors to a file
 function logErrorToFile(error) {
@@ -44,6 +45,18 @@ function setupIpcHandlers(mainWindow) {
     } catch (error) {
       logErrorToFile(error);
       console.error("Error opening file location: " + error.message);
+    }
+  });
+
+  ipcMain.handle("getConfig", async (_event, provider, testType, species) => {
+    try {
+      const configTemplate = configLoader.getTemplateConfig(provider, testType, species);
+      return configTemplate;
+    } catch (error) {
+      console.error(
+        `Error loading template for provider: ${provider}, testType: ${testType}, and species: ${species}`,
+      );
+      throw error;
     }
   });
 }
