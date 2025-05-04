@@ -2,7 +2,9 @@
 let activeFormSubmitHandler = null;
 let activeSidebarItem = "hemoparasitesLink";
 let activeFormType = "hemoparasites";
+let newActiveFormType = "hemograma"; //CHANGE AFTER
 let activeVariant = "Zapata";
+let activeProvider = "CaNinna"; //CHANGE AFTER
 
 document.addEventListener("DOMContentLoaded", () => {
   // Attach event listeners after the DOM is loaded
@@ -14,11 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("gastroenteritisLink")
     .addEventListener("click", (event) => handleSidebarClick(event, "gastroenteritis"));
   document
-    .getElementById("hemogramLink")
-    .addEventListener("click", (event) => handleSidebarClick(event, "hemogram"));
-  document
     .getElementById("distemperLink")
     .addEventListener("click", (event) => handleSidebarClick(event, "distemper"));
+  document
+    .getElementById("hemogramLink")
+    .addEventListener("click", (event) => handleSidebarClick(event, "hemogram"));
   document
     .getElementById("perfilCompletoLink")
     .addEventListener("click", (event) =>
@@ -109,6 +111,10 @@ function toggleVisibility(ids, shouldShow) {
   });
 }
 
+function newLoadForm(formType) {
+
+}
+
 function loadForm(formType) {
   fetch(`templates/${formType}.html`)
     .then((response) => response.text())
@@ -195,24 +201,37 @@ function handleTestFotoChange(event) {
   }
 }
 
+function getGenericFormFields() {
+  const datos = {
+    // Generic Form Fields start here
+    requerido: document.getElementById("requerido").value,
+    nombrePropietario: document.getElementById("nombrePropietario").value,
+    telefono: document.getElementById("telefono").value,
+    nombreMascota: document.getElementById("nombreMascota").value,
+    especie: document.getElementById("especie").value,
+    raza: document.getElementById("raza").value,
+    edad: document.getElementById("edad").value,
+    sexo: document.querySelector("input[name='sexo']:checked").value,
+    fecha: document.getElementById("fecha").value,
+  };
+
+  return datos;
+}
+
 /**
  * Collect common form fields
+ * @param {String} provider - The provider for the test
+ * @param {String} formType - The type of test
+ * @param {String} species - The species specific test
  **/
-
-function handleFormSubmit(formType) {
+async function handleFormSubmit(provider, formType, species) {
   try {
     toggleVisibility(["resultadoPDF"], false);
+    const button = document.getElementById("generarPDFButton");
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
 
-    //get relevant formConfig here
-    const configLoader = require(path.join);
-
-    for (const input of inputs) {
-      if (!input.checkValidity()) {
-        input.reportValidity();
-        input.focus();
-        return;
-      }
-    }
+    const config = await window.electron.getConfig(provider, formType, species);
 
     // Validate all inputs
     const inputs = document.querySelectorAll("#commonFormFields input, #specificFormFields input");
@@ -224,13 +243,13 @@ function handleFormSubmit(formType) {
       }
     }
 
-    const button = document.getElementById("generarPDFButton");
-    button.disabled = true;
-    button.innerHTML = '<span class="spinner"></span> Generando PDF...';
+    const datos = getGenericFormFields();
+    for (const field of config.fields) {
+      datos[field.id] = document.getElementById(`${field.templateField || field.id}`).value;
+    }
+    console.log(datos);
 
-    //Gather all input
-
-    window.electron.generarPDF(datos, "hemogram_palenque");
+    window.electron.generarPDF(datos, formType);
   } catch (error) {
     console.error("Error handling hemogram form submission:", error);
   }

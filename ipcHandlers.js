@@ -59,6 +59,8 @@ function setupIpcHandlers(mainWindow) {
       throw error;
     }
   });
+  ipcMain.handle("getProviders", async (_event) => {});
+  ipcMain.handle("getTestsForProvider", async (_event, provider) => {});
 }
 
 module.exports = { setupIpcHandlers };
