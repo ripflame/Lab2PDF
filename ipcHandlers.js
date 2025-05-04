@@ -48,9 +48,13 @@ function setupIpcHandlers(mainWindow) {
     }
   });
 
-  ipcMain.handle("getConfig", async (_event, provider, testType, species) => {
+  ipcMain.handle("getConfig", async (_event, testType, provider, species) => {
     try {
-      const configTemplate = configLoader.getTemplateConfig(provider, testType, species);
+      const configTemplate = await configLoader.getConfigForTestProviderAndSpecies(
+        testType,
+        provider,
+        species,
+      );
       return configTemplate;
     } catch (error) {
       console.error(
@@ -64,6 +68,14 @@ function setupIpcHandlers(mainWindow) {
       return configLoader.getAllTests();
     } catch (error) {
       console.error("Error loading all tests");
+      throw error;
+    }
+  });
+  ipcMain.handle("getProvidersByTest", async (_event, testType) => {
+    try {
+      return configLoader.getProvidersByTest(testType);
+    } catch (error) {
+      console.error(`Error loading providers for: ${testType}`);
       throw error;
     }
   });

@@ -1,3 +1,7 @@
+let activeTestType = "hemograma";
+let activeProvider = "labrios";
+let activeSpecies = "canino";
+
 document.addEventListener("DOMContentLoaded", () => {
   window.electron
     .getAllTests()
@@ -7,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => {
       console.error("Failed to get menu items: ", error);
     });
+  loadForm();
 });
 
 function buildSidebarMenu(menuItems) {
@@ -44,11 +49,26 @@ function attachMenuEventListeners() {
       });
 
       this.parentElement.classList.add("selected");
-      const id = this.id.replace("Link", "");
-
-      console.log("HANDLE SENDING SELECTED ITEM");
+      activeTestType = this.id.replace("Link", "");
     });
   });
+}
+
+async function loadForm() {
+  try {
+    const providers = await window.electron.getProvidersByTest(activeTestType);
+    console.log(providers);
+    activeProvider = providers[0].id;
+    console.log(activeProvider);
+    const config = await window.electron.getConfig(activeTestType, activeProvider, activeSpecies);
+
+    const response = await fetch(`templates/${config.formFile}`);
+    const html = await response.text();
+
+    // Additional processing can go here
+  } catch (error) {
+    console.error("Error loading form:", error);
+  }
 }
 
 // Handle PDF Generation Response

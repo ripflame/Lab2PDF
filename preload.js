@@ -9,9 +9,10 @@ contextBridge.exposeInMainWorld("electron", {
   abrirUbicacion: (ruta) => ipcRenderer.send("abrirUbicacion", ruta),
 
   //Function that returns a config file
-  getConfig: (provider, testType, species) =>
-    ipcRenderer.invoke("getConfig", provider, testType, species),
+  getConfig: (testType, provider, species) =>
+    ipcRenderer.invoke("getConfig", testType, provider, species),
   getAllTests: () => ipcRenderer.invoke("getAllTests"),
+  getProvidersByTest: (testType) => ipcRenderer.invoke("getProvidersByTest", testType),
   // Function to handle PDF generation event
   onPDFGenerado: (callback) =>
     ipcRenderer.on("onPDFGenerado", (_event, ...args) => callback(...args)),

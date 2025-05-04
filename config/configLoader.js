@@ -18,14 +18,15 @@ class ConfigLoader {
       throw new Error(`Tests display names not found: ${error.message}`);
     }
   }
-  async getProvidersForTest(test) {
-    const providersPath = path.join(this.configDirectory, "tests", test, "providers");
+  async getProvidersByTest(testType) {
     try {
-      const items = await fs.promises.readdir(providersPath, { withFileTypes: true });
-      const providers = items.filter((item) => item.isDirectory()).map((dir) => dir.name);
+      const providersPath = path.join(this.configDirectory, "providers_display_names.json");
+      const providersFile = await fs.promises.readFile(providersPath, "utf8");
+      const providers = JSON.parse(providersFile);
+
       return providers;
     } catch (error) {
-      throw new Error(`No providers found for test "${test}"`);
+      throw new Error(`No providers found for test "${testType}"`);
     }
   }
   async getSpeciesForTestAndProvider(test, provider) {
@@ -39,7 +40,7 @@ class ConfigLoader {
     }
   }
 
-  getConfigForTestProviderAndSpecies(testType, provider, species) {
+  async getConfigForTestProviderAndSpecies(testType, provider, species) {
     const cacheKey = `${testType}_${provider}_${species}`;
     if (this.configs[cacheKey]) {
       return this.configs[cacheKey];
