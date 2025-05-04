@@ -59,8 +59,14 @@ function setupIpcHandlers(mainWindow) {
       throw error;
     }
   });
-  ipcMain.handle("getProviders", async (_event) => {});
-  ipcMain.handle("getTestsForProvider", async (_event, provider) => {});
+  ipcMain.handle("getAllTests", async (_event) => {
+    try {
+      return configLoader.getAllTests();
+    } catch (error) {
+      console.error("Error loading all tests");
+      throw error;
+    }
+  });
 }
 
 module.exports = { setupIpcHandlers };

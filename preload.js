@@ -11,9 +11,7 @@ contextBridge.exposeInMainWorld("electron", {
   //Function that returns a config file
   getConfig: (provider, testType, species) =>
     ipcRenderer.invoke("getConfig", provider, testType, species),
-  getProviders: () => ipcRenderer.invoke("getProviders"),
-  getTestsForProvider: (provider) => ipcRenderer.invoke("getTestsForProvider", provider),
-
+  getAllTests: () => ipcRenderer.invoke("getAllTests"),
   // Function to handle PDF generation event
   onPDFGenerado: (callback) =>
     ipcRenderer.on("onPDFGenerado", (_event, ...args) => callback(...args)),

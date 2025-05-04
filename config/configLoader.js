@@ -7,27 +7,15 @@ class ConfigLoader {
     this.configs = {};
   }
 
-  async getTestDisplayNames(testId) {
-    try {
-      const displayNamesPath = path.join(this.configDirectory, "test_display_names.json");
-      const data = await fs.promises.readFile(displayNamesPath, "utf8");
-      const displayNames = JSON.parse(data);
-
-      return displayNames[testId];
-    } catch (error) {
-      throw new Error("Central mapping file not found");
-    }
-  }
   async getAllTests() {
-    const testsPath = path.join(this.configDirectory, "tests");
     try {
-      const items = await fs.promises.readdir(testsPath, { withFileTypes: true });
-      const tests = items.filter((item) => item.isDirectory()).map((dir) => {
-        return this.getTestDisplayNames(dir.name);
-      });
-      return tests;
+      const testsDisplayNamesPath = path.join(this.configDirectory, "tests_display_names.json");
+      const testsDisplaysNamesFile = await fs.promises.readFile(testsDisplayNamesPath, "utf8");
+      const testsDisplayNames = JSON.parse(testsDisplaysNamesFile);
+
+      return testsDisplayNames;
     } catch (error) {
-      throw new Error("Path for tests folder not found");
+      throw new Error(`Tests display names not found: ${error.message}`);
     }
   }
   async getProvidersForTest(test) {
