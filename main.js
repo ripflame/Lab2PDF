@@ -278,6 +278,9 @@ app.whenReady().then(() => {
 
     // Check for updates
     checkForUpdates();
+    if (!app.isPackaged) {
+      mainWindow.webContents.openDevTools();
+    }
   } catch (error) {
     console.error("Error during app initialization:", error.message);
     log.error("Error during app initialization:", error);
