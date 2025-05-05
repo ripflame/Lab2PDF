@@ -2,6 +2,7 @@ module.exports = {
   id: "hemograma_labrios_canino",
   formFile: "hemogram.html",
   templateFile: "hemogramTemplate.html",
+  type: "table",
   fields: [
     {
       id: 'eritrocitos',

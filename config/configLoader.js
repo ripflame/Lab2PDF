@@ -9,10 +9,16 @@ class ConfigLoader {
 
   async getAllTests() {
     try {
-      const testsDisplayNamesPath = path.join(this.configDirectory, "tests_display_names.json");
+      const testsDisplayNamesPath = path.join(
+        this.configDirectory,
+        "tests",
+        "tests_display_names.json",
+      );
       const testsDisplaysNamesFile = await fs.promises.readFile(testsDisplayNamesPath, "utf8");
       const testsDisplayNames = JSON.parse(testsDisplaysNamesFile);
-
+      testsDisplayNames.sort((a, b) => {
+        return a.id.localeCompare(b.id);
+      });
       return testsDisplayNames;
     } catch (error) {
       throw new Error(`Tests display names not found: ${error.message}`);
@@ -20,7 +26,13 @@ class ConfigLoader {
   }
   async getProvidersByTest(testType) {
     try {
-      const providersPath = path.join(this.configDirectory, "providers_display_names.json");
+      const providersPath = path.join(
+        this.configDirectory,
+        "tests",
+        testType,
+        "providers",
+        "providers_display_names.json",
+      );
       const providersFile = await fs.promises.readFile(providersPath, "utf8");
       const providers = JSON.parse(providersFile);
 
@@ -34,7 +46,7 @@ class ConfigLoader {
     try {
       const items = await fs.promises.readdir(speciesPath, { withFileTypes: true });
       const species = items.filter((item) => item.isFile()).map((file) => file.name.split(".")[0]);
-      return species[0];
+      return species;
     } catch (error) {
       throw new Error(`Provider "${provider}" not found for test "${test}"`);
     }
