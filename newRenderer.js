@@ -1,3 +1,4 @@
+let availableTestTypes = [];
 let activeTestType = {};
 let availableProviders = [];
 let activeProvider = {};
@@ -6,17 +7,21 @@ let activeSpecies = "";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const availableTests = await window.electron.getAllTests();
-    await initDefaults(availableTests);
-    buildSidebarMenu(availableTests);
+    availableTestTypes = await window.electron.getAllTests();
+    buildSidebarMenu();
+    await initDefaults();
     await loadForm();
   } catch (error) {
     console.error("Failed to initialize application: ", error);
   }
 });
 
-async function initDefaults(availableTests) {
-  activeTestType = availableTests[0];
+/**
+ * Initializes the availableProviders and availableSpecies arrays with the first test found
+ * @param(Object)availableTestTypes - Object for availableTestTypes with id and displayName
+ **/
+async function initDefaults() {
+  activeTestType = availableTestTypes[0];
   availableProviders = await window.electron.getProvidersByTest(activeTestType.id);
   activeProvider = availableProviders[0];
   availableSpecies = await window.electron.getSpeciesByTestAndProvider(
@@ -24,15 +29,14 @@ async function initDefaults(availableTests) {
     activeProvider.id,
   );
   activeSpecies = availableSpecies[0];
-  // activeSpecies = species.charAt(0).toUpperCase() + species.slice(1);
 }
 
-function buildSidebarMenu(menuItems) {
+function buildSidebarMenu() {
   const sidebar = document.querySelector(".sidebar");
   const menuList = sidebar.querySelector("ul");
   menuList.innerHTML = "";
 
-  menuItems.forEach((item, index) => {
+  availableTestTypes.forEach((item, index) => {
     const li = document.createElement("li");
     if (index === 0) {
       li.classList.add("selected");
@@ -54,15 +58,25 @@ function attachMenuEventListeners() {
   const menuItems = document.querySelectorAll(".sidebar ul li a");
 
   menuItems.forEach((item) => {
-    item.addEventListener("click", function (event) {
+    item.addEventListener("click", async function(event) {
       event.preventDefault();
 
       document.querySelectorAll(".sidebar ul li").forEach((li) => {
         li.classList.remove("selected");
       });
-
       this.parentElement.classList.add("selected");
-      console.log("item sidebar: ", item);
+      const testId = this.id;
+      activeTestType = availableTestTypes.find((test) => {
+        return test.id === testId;
+      });
+      availableProviders = await window.electron.getProvidersByTest(activeTestType.id);
+      activeProvider = availableProviders[0];
+      availableSpecies = await window.electron.getSpeciesByTestAndProvider(
+        activeTestType.id,
+        activeProvider.id,
+      );
+      activeSpecies = availableSpecies[0];
+      await loadForm();
     });
   });
 }
@@ -83,15 +97,13 @@ function loadProviders() {
 function loadSpecies() {
   document.querySelectorAll("#speciesSelect option").forEach((option) => option.remove());
   const speciesSelect = document.getElementById("speciesSelect");
-  for (const species of availableSpecies){
+  for (const species of availableSpecies) {
     const option = new Option(capitalizeString(species), species);
     speciesSelect.options.add(option);
   }
 }
 
 async function loadForm() {
-  loadProviders();
-  loadSpecies()
   try {
     const config = await window.electron.getConfig(
       activeTestType.id,
@@ -104,8 +116,8 @@ async function loadForm() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     document.getElementById("fecha").valueAsDate = today;
-    //LOAD PROVIDERS
-    //LOAD SPECIES
+    loadProviders();
+    loadSpecies();
   } catch (error) {
     console.error("Error loading form:", error);
   }
