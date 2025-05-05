@@ -1,18 +1,29 @@
-let activeTestType = "hemograma";
-let activeProvider = "labrios";
-let activeSpecies = "canino";
+let activeTestType = {};
+let activeProvider = {};
+let activeSpecies = "";
 
-document.addEventListener("DOMContentLoaded", () => {
-  window.electron
-    .getAllTests()
-    .then((menuItems) => {
-      buildSidebarMenu(menuItems);
-    })
-    .catch((error) => {
-      console.error("Failed to get menu items: ", error);
-    });
-  loadForm();
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const availableTests = await window.electron.getAllTests();
+    await initDefaults(availableTests);
+    buildSidebarMenu(availableTests);
+    await loadForm();
+  } catch (error) {
+    console.error("Failed to initialize application: ", error);
+  }
 });
+
+async function initDefaults(availableTests) {
+  activeTestType = availableTests[0];
+  const providers = await window.electron.getProvidersByTest(activeTestType);
+  activeProvider = providers[0];
+  const species = await window.electron.getSpeciesByTestAndProvider(
+    activeTestType.id,
+    activeProvider.id,
+  );
+  activeSpecies = species;
+  // activeSpecies = species.charAt(0).toUpperCase() + species.slice(1);
+}
 
 function buildSidebarMenu(menuItems) {
   const sidebar = document.querySelector(".sidebar");
@@ -41,7 +52,7 @@ function attachMenuEventListeners() {
   const menuItems = document.querySelectorAll(".sidebar ul li a");
 
   menuItems.forEach((item) => {
-    item.addEventListener("click", function(event) {
+    item.addEventListener("click", function (event) {
       event.preventDefault();
 
       document.querySelectorAll(".sidebar ul li").forEach((li) => {
@@ -49,22 +60,19 @@ function attachMenuEventListeners() {
       });
 
       this.parentElement.classList.add("selected");
-      activeTestType = this.id.replace("Link", "");
     });
   });
 }
 
 async function loadForm() {
   try {
-    const providers = await window.electron.getProvidersByTest(activeTestType);
-    console.log(providers);
-    activeProvider = providers[0].id;
-    console.log(activeProvider);
-    const config = await window.electron.getConfig(activeTestType, activeProvider, activeSpecies);
-
+    const config = await window.electron.getConfig(
+      activeTestType.id,
+      activeProvider.id,
+      activeSpecies,
+    );
     const response = await fetch(`templates/${config.formFile}`);
     const html = await response.text();
-
     // Additional processing can go here
   } catch (error) {
     console.error("Error loading form:", error);

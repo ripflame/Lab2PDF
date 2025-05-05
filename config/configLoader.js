@@ -29,12 +29,12 @@ class ConfigLoader {
       throw new Error(`No providers found for test "${testType}"`);
     }
   }
-  async getSpeciesForTestAndProvider(test, provider) {
+  async getSpeciesByTestAndProvider(test, provider) {
     const speciesPath = path.join(this.configDirectory, "tests", test, "providers", provider);
     try {
       const items = await fs.promises.readdir(speciesPath, { withFileTypes: true });
       const species = items.filter((item) => item.isFile()).map((file) => file.name.split(".")[0]);
-      return species;
+      return species[0];
     } catch (error) {
       throw new Error(`Provider "${provider}" not found for test "${test}"`);
     }

@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld("electron", {
     ipcRenderer.invoke("getConfig", testType, provider, species),
   getAllTests: () => ipcRenderer.invoke("getAllTests"),
   getProvidersByTest: (testType) => ipcRenderer.invoke("getProvidersByTest", testType),
+  getSpeciesByTestAndProvider: (testType, provider) =>
+    ipcRenderer.invoke("getSpeciesByTestAndProvider", testType, provider),
   // Function to handle PDF generation event
   onPDFGenerado: (callback) =>
     ipcRenderer.on("onPDFGenerado", (_event, ...args) => callback(...args)),

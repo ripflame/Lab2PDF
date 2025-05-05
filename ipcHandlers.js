@@ -79,6 +79,14 @@ function setupIpcHandlers(mainWindow) {
       throw error;
     }
   });
+  ipcMain.handle("getSpeciesByTestAndProvider", async (_event, testType, provider) => {
+    try {
+      return configLoader.getSpeciesByTestAndProvider(testType, provider);
+    } catch (error) {
+      console.error(`Error loading species for test type: ${testType} and provider: ${provider}`);
+      throw error;
+    }
+  });
 }
 
 module.exports = { setupIpcHandlers };
