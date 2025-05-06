@@ -5,164 +5,188 @@ module.exports = {
   type: "table",
   fields: [
     {
-      id: 'eritrocitos',
-      templateField: 'eritrocitos',
-      label: 'Eritrocitos',
-      min: '5500000', 
-      max: '8500000', 
-      unit: 'x mm<sup>3</sup>'
+      id: 'wbc',
+      templateField: 'wbc',
+      label: 'Leucocitos Totales (WBC)',
+      min: '6.0', 
+      max: '17.0', 
+      unit: '10<sup>9</sup>/L'
     },
     {
-      id: 'hemoglobina',
-      templateField: 'hemoglobina',
-      label: 'Hemoglobina',
-      min: '12.0', 
-      max: '18.0', 
-      unit: 'g/dL'
+      id: 'linfocitos_abs',
+      templateField: 'linfocitos_abs',
+      label: 'Linfocitos (LYM #)',
+      min: '1.0', 
+      max: '4.8', 
+      unit: '10<sup>9</sup>/L'
     },
     {
-      id: 'hematocrito',
-      templateField: 'hematocrito',
-      label: 'Hematocrito',
-      min: '37.0', 
-      max: '55.0', 
-      unit: '%'
+      id: 'monocitos_abs',
+      templateField: 'monocitos_abs',
+      label: 'Monocitos (MON #)',
+      min: '0.15', 
+      max: '1.35', 
+      unit: '10<sup>9</sup>/L'
     },
     {
-      id: 'vgm',
-      templateField: 'vgm',
-      label: 'Volumen Globular Medio',
-      min: '60.0', 
-      max: '77.0', 
-      unit: 'fL'
+      id: 'granulocitos_abs',
+      templateField: 'granulocitos_abs',
+      label: 'Granulocitos (GRA #)',
+      min: '3.62', 
+      max: '11.5', 
+      unit: '10<sup>9</sup>/L'
     },
     {
-      id: 'hpe',
-      templateField: 'hpe',
-      label: 'Hemoglobina Promedio por Eritrocitos',
-      min: '19.5', 
-      max: '24.5', 
-      unit: 'pg'
-    },
-    {
-      id: 'cmh',
-      templateField: 'cmh',
-      label: 'Concentración Media de Hemoglobina',
-      min: '32.0', 
-      max: '36.0', 
-      unit: 'g/dL'
-    },
-    {
-      id: 'plaquetas',
-      templateField: 'plaquetas',
-      label: 'Plaquetas',
-      min: '200000', 
-      max: '500000', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'leucocitos',
-      templateField: 'leucocitos',
-      label: 'Leucocitos',
-      min: '6000', 
-      max: '17000', 
-      unit: 'mm<sup>3</sup>'
-    },
-    {
-      id: 'monocitos_rel',
-      templateField: 'monocitos_rel',
-      label: 'Monocitos',
-      min: '3', 
-      max: '10', 
-      unit: '%'
+      id: 'eosinofilos_abs',
+      templateField: 'eosinofilos_abs',
+      label: 'Eosinófilos (EOS #)',
+      min: '0.1', 
+      max: '1.25', 
+      unit: '10<sup>9</sup>/L'
     },
     {
       id: 'linfocitos_rel',
       templateField: 'linfocitos_rel',
-      label: 'Linfocitos',
-      min: '13', 
-      max: '15', 
+      label: 'Linfocitos (LYM %)',
+      min: '12.00', 
+      max: '33.00', 
+      unit: '%'
+    },
+    {
+      id: 'monocitos_rel',
+      templateField: 'monocitos_rel',
+      label: 'Monocitos (MON %)',
+      min: '2.00', 
+      max: '13.00', 
+      unit: '%'
+    },
+    {
+      id: 'granulocitos_rel',
+      templateField: 'granulocitos_rel',
+      label: 'Granulocitos (GRA %)',
+      min: '52.00', 
+      max: '81.00', 
       unit: '%'
     },
     {
       id: 'eosinofilos_rel',
       templateField: 'eosinofilos_rel',
-      label: 'Eosinófilos',
-      min: '2', 
-      max: '10', 
+      label: 'Eosinófilos (EOS %)',
+      min: '0.50', 
+      max: '10.00', 
       unit: '%'
     },
     {
-      id: 'basofilos_rel',
-      templateField: 'basofilos_rel',
-      label: 'Basófilos',
-      min: '0', 
-      max: '1', 
+      id: 'rbc',
+      templateField: 'rbc',
+      label: 'Eritrocitos (RBC)',
+      min: '5.10', 
+      max: '8.50', 
+      unit: '10<sup>9</sup>/L'
+    },
+    {
+      id: 'hgb',
+      templateField: 'hgb',
+      label: 'Hemoglobina (HGB)',
+      min: '11.00', 
+      max: '19.00', 
+      unit: 'g/dL'
+    },
+    {
+      id: 'hct',
+      templateField: 'hct',
+      label: 'Hematocrito (HCT)',
+      min: '33.00', 
+      max: '56.00', 
       unit: '%'
     },
     {
-      id: 'neutrofilos_segmentados_rel',
-      templateField: 'neutrofilos_segmentados_rel',
-      label: 'Neutrófilos Segmentados',
-      min: '60', 
-      max: '77', 
+      id: 'mcv',
+      templateField: 'mcv',
+      label: 'Volumen Corpuscular Medio',
+      min: '60.00', 
+      max: '76.00', 
+      unit: 'fL'
+    },
+    {
+      id: 'mch',
+      templateField: 'mch',
+      label: 'Hemoglobina Corpuscular Media (MCH)',
+      min: '20.00', 
+      max: '27.00', 
+      unit: 'pg'
+    },
+    {
+      id: 'mchc',
+      templateField: 'mchc',
+      label: 'Concentración de Hemoglobina Corpuscular Media (MCHC)',
+      min: '30.00', 
+      max: '38.00', 
+      unit: 'fL'
+    },
+    {
+      id: 'rdw_cv',
+      templateField: 'rdw_cv',
+      label: 'Amplitud de Distribución Eritrocitaria (RDW_CV)',
+      min: '12.50', 
+      max: '17.20', 
+      unit: 'fL'
+    },
+    {
+      id: 'rdw_sd',
+      templateField: 'rdw_sd',
+      label: 'Desviación de Distribución Eritrocitaria (RDW_SD)',
+      min: '33.20', 
+      max: '46.30', 
+      unit: 'fL'
+    },
+    {
+      id: 'plt',
+      templateField: 'plt',
+      label: 'Plaquetas (PLT)',
+      min: '200', 
+      max: '500', 
+      unit: '10<sup>9</sup>/L'
+    },
+    {
+      id: 'pct',
+      templateField: 'pct',
+      label: 'Procalcitonina',
+      min: '0.09', 
+      max: '0.58', 
       unit: '%'
     },
     {
-      id: 'neutrofilos_banda_rel',
-      templateField: 'neutrofilos_banda_rel',
-      label: 'Neutrófilos en Banda',
-      min: '0', 
-      max: '3', 
+      id: 'mpv',
+      templateField: 'mpv',
+      label: 'Volumen Plaquetario',
+      min: '8.00', 
+      max: '17.10', 
+      unit: 'fL'
+    },
+    {
+      id: 'pdw',
+      templateField: 'pdw',
+      label: 'Índice de Distribución Plaquetaria (PDW)',
+      min: '12.00', 
+      max: '17.50', 
+      unit: 'fL'
+    },
+    {
+      id: 'p_lcr',
+      templateField: 'p_lcr',
+      label: 'Porcentaje de Plaquetas Grandes (P_LCR)',
+      min: '', 
+      max: '', 
       unit: '%'
     },
     {
-      id: 'monocitos_abs',
-      templateField: 'monocitos_abs',
-      label: 'Monocitos',
-      min: '150', 
-      max: '1350', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'linfocitos_abs',
-      templateField: 'linfocitos_abs',
-      label: 'Linfocitos',
-      min: '1000', 
-      max: '5000', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'eosinofilos_abs',
-      templateField: 'eosinofilos_abs',
-      label: 'Eosinófilos',
-      min: '100', 
-      max: '1000', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'basofilos_abs',
-      templateField: 'basofilos_abs',
-      label: 'Basófilos',
-      min: '0', 
-      max: '100', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'neutrofilos_segmentados_abs',
-      templateField: 'neutrofilos_segmentados_abs',
-      label: 'Neutrófilos Segmentados',
-      min: '3000', 
-      max: '11500', 
-      unit: 'x mm<sup>3</sup>'
-    },
-    {
-      id: 'neutrofilos_banda_abs',
-      templateField: 'neutrofilos_banda_abs',
-      label: 'Neutrófilos en Banda',
-      min: '0', 
-      max: '300', 
-      unit: 'x mm<sup>3</sup>'
+      id: 'p_lcc',
+      templateField: 'p_lcc',
+      label: 'Promedio de Plaquetas (P_LCC)',
+      min: '', 
+      max: '', 
+      unit: '10<sup>9</sup>/L'
     },
   ]
 };
