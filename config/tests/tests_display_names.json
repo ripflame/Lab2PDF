@@ -6,5 +6,9 @@
   {
     "id": "hemograma",
     "displayName": "Hemograma"
+  },
+  { 
+    "id": "distemper",
+    "displayName": "Distemper" 
   }
 ]

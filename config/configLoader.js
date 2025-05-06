@@ -47,7 +47,9 @@ class ConfigLoader {
     const speciesPath = path.join(this.configDirectory, "tests", test, "providers", provider);
     try {
       const items = await fs.promises.readdir(speciesPath, { withFileTypes: true });
-      const species = items.filter((item) => item.isFile()).map((file) => file.name.split(".")[0]);
+      const species = items
+        .filter((item) => item.isFile() && !item.name.startsWith("."))
+        .map((file) => file.name.split(".")[0]);
       species.sort((a, b) => {
         return a.localeCompare(b);
       });
