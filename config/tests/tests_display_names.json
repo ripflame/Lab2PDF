@@ -14,5 +14,9 @@
   { 
     "id": "gastroenteritis",
     "displayName": "Gastroenteritis" 
+  },
+  { 
+    "id": "perfilCompleto",
+    "displayName": "Perfil Completo" 
   }
 ]
