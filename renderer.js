@@ -2,7 +2,7 @@
 let activeFormSubmitHandler = null;
 let activeSidebarItem = "hemoparasitesLink";
 let activeFormType = "hemoparasites";
-let newActiveFormType = "hemograma"; //CHANGE AFTER
+let newActiveFormType = "hemograma";
 let activeVariant = "Zapata";
 let activeProvider = "CaNinna"; //CHANGE AFTER
 
@@ -111,9 +111,7 @@ function toggleVisibility(ids, shouldShow) {
   });
 }
 
-function newLoadForm(formType) {
-
-}
+function newLoadForm(formType) {}
 
 function loadForm(formType) {
   fetch(`templates/${formType}.html`)

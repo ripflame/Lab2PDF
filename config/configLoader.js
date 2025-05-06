@@ -35,7 +35,9 @@ class ConfigLoader {
       );
       const providersFile = await fs.promises.readFile(providersPath, "utf8");
       const providers = JSON.parse(providersFile);
-
+      providers.sort((a, b) => {
+        return a.id.localeCompare(b.id);
+      });
       return providers;
     } catch (error) {
       throw new Error(`No providers found for test "${testType}"`);
@@ -46,6 +48,9 @@ class ConfigLoader {
     try {
       const items = await fs.promises.readdir(speciesPath, { withFileTypes: true });
       const species = items.filter((item) => item.isFile()).map((file) => file.name.split(".")[0]);
+      species.sort((a, b) => {
+        return a.localeCompare(b);
+      });
       return species;
     } catch (error) {
       throw new Error(`Provider "${provider}" not found for test "${test}"`);
