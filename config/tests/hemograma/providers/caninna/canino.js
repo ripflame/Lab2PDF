@@ -1,7 +1,7 @@
 module.exports = {
   id: "hemograma_labrios_canino",
-  formFile: "hemogram.html",
-  templateFile: "hemogramTemplate.html",
+  formFile: "hemogram_palenque.html",
+  templateFile: "hemogram_palenqueTemplate.html",
   type: "table",
   fields: [
     {

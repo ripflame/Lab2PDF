@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     availableTestTypes = await window.electron.getAllTests();
     buildSidebarMenu();
+    attachSelectorListeners();
     await initDefaults();
     await loadForm();
   } catch (error) {
@@ -29,6 +30,8 @@ async function initDefaults() {
     activeProvider.id,
   );
   activeSpecies = availableSpecies[0];
+  updateProvidersSelect();
+  updateSpeciesSelect();
 }
 
 function buildSidebarMenu() {
@@ -58,34 +61,59 @@ function attachMenuEventListeners() {
   const menuItems = document.querySelectorAll(".sidebar ul li a");
 
   menuItems.forEach((item) => {
-    item.addEventListener("click", async function(event) {
+    item.addEventListener("click", async function (event) {
       event.preventDefault();
 
       document.querySelectorAll(".sidebar ul li").forEach((li) => {
         li.classList.remove("selected");
       });
       this.parentElement.classList.add("selected");
-      const testId = this.id;
-      activeTestType = availableTestTypes.find((test) => {
-        return test.id === testId;
-      });
-      availableProviders = await window.electron.getProvidersByTest(activeTestType.id);
-      activeProvider = availableProviders[0];
-      availableSpecies = await window.electron.getSpeciesByTestAndProvider(
-        activeTestType.id,
-        activeProvider.id,
-      );
-      activeSpecies = availableSpecies[0];
-      await loadForm();
+      if (this.id !== activeTestType.id) {
+        const testId = this.id;
+        activeTestType = availableTestTypes.find((test) => {
+          return test.id === testId;
+        });
+        availableProviders = await window.electron.getProvidersByTest(activeTestType.id);
+        activeProvider = availableProviders[0];
+        availableSpecies = await window.electron.getSpeciesByTestAndProvider(
+          activeTestType.id,
+          activeProvider.id,
+        );
+        activeSpecies = availableSpecies[0];
+        updateProvidersSelect();
+        updateSpeciesSelect();
+        await loadForm();
+      }
     });
   });
 }
 
-function capitalizeString(string) {
+function attachSelectorListeners() {
+  const providerSelect = document.getElementById("providerSelect");
+  providerSelect.addEventListener("change", async (event) => {
+    if (activeProvider.id !== event.target.value){
+      const providerId = event.target.value;
+      activeProvider = availableProviders.find((provider)=>{
+        return provider.id === providerId;
+      });
+      await loadForm();
+    }
+  });
+
+  const speciesSelect = document.getElementById("speciesSelect");
+  speciesSelect.addEventListener("change", async (event)=>{
+    if (activeSpecies !== event.target.value) {
+      activeSpecies = event.target.value;
+      await loadForm();
+    }
+  })
+}
+
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function loadProviders() {
+function updateProvidersSelect() {
   document.querySelectorAll("#providerSelect option").forEach((option) => option.remove());
   const providersSelect = document.getElementById("providerSelect");
   for (const provider of availableProviders) {
@@ -94,11 +122,11 @@ function loadProviders() {
   }
 }
 
-function loadSpecies() {
+function updateSpeciesSelect() {
   document.querySelectorAll("#speciesSelect option").forEach((option) => option.remove());
   const speciesSelect = document.getElementById("speciesSelect");
   for (const species of availableSpecies) {
-    const option = new Option(capitalizeString(species), species);
+    const option = new Option(capitalizeFirstLetter(species), species);
     speciesSelect.options.add(option);
   }
 }
@@ -116,8 +144,6 @@ async function loadForm() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     document.getElementById("fecha").valueAsDate = today;
-    loadProviders();
-    loadSpecies();
   } catch (error) {
     console.error("Error loading form:", error);
   }
