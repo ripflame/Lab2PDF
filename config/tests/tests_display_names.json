@@ -10,5 +10,9 @@
   { 
     "id": "distemper",
     "displayName": "Distemper" 
+  },
+  { 
+    "id": "gastroenteritis",
+    "displayName": "Gastroenteritis" 
   }
 ]
