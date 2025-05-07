@@ -18,5 +18,9 @@
   { 
     "id": "perfilCompleto",
     "displayName": "Perfil Completo" 
+  },
+  { 
+    "id": "sida",
+    "displayName": "SIDA, Leucemia, Gusano del Corazón" 
   }
 ]
