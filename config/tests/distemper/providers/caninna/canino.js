@@ -1,5 +1,5 @@
 module.exports = {
-  id: "distemper",
+  id: "distemper_caninna",
   formFile: "distemper.html",
   templateFile: "distemperTemplate.html",
   type: "testWithPhoto",

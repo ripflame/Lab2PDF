@@ -1,5 +1,5 @@
 module.exports = {
-  id: "hemoparasitos_caninna_canino",
+  id: "hemoparasitos_caninna",
   formFile: "hemoparasites.html",
   templateFile: "hemoparasitesTemplate.html",
   type: "testWithPhoto",

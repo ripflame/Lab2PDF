@@ -1,5 +1,5 @@
 module.exports = {
-  id: "gastroenteritis",
+  id: "gastroenteritis_caninna",
   formFile: "gastroenteritis.html",
   templateFile: "gastroenteritisTemplate.html",
   type: "testWithPhoto",
