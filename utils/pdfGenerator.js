@@ -225,14 +225,14 @@ class TemplateProcessor {
       htmlContent = await this.processBaseTemplate(htmlContent, formData);
 
       switch (this.config.id) {
-        case "labrios_hemograma_canino":
-        case "zoovet_hemograma_canino":
-        case "caninna_perfilCompleto_canino":
+        case "hemograma_labrios_canino":
+        case "hemograma_zoovet_canino":
+        case "perfilCompleto_caninna_canino":
         case "hemograma":
           return this.processLabResultsTemplate(htmlContent, formData);
-        case "hemoparasites":
-        case "distemper":
-        case "gastroenteritis":
+        case "hemoparasites_caninna":
+        case "distemper_caninna":
+        case "gastroenteritis_caninna":
           return this.processTestWithPhotoTemplate(htmlContent, formData);
         default:
           throw new Error(`Unknown test type: ${this.config.id}`);
