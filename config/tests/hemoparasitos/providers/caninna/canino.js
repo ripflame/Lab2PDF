@@ -5,7 +5,7 @@ module.exports = {
   type: "testWithPhoto",
   fields : [
     {
-      id: "gusano",
+      id: "gusanoCorazon",
       label: "Gusano del Corazón",
     },
     {

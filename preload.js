@@ -4,7 +4,6 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electron", {
   // Function to generate PDF
   generarPDF: (formData, formType) => ipcRenderer.send("generarPDF", formData, formType),
-
   // Function to open file location
   abrirUbicacion: (ruta) => ipcRenderer.send("abrirUbicacion", ruta),
 
@@ -15,6 +14,7 @@ contextBridge.exposeInMainWorld("electron", {
   getProvidersByTest: (testType) => ipcRenderer.invoke("getProvidersByTest", testType),
   getSpeciesByTestAndProvider: (testType, provider) =>
     ipcRenderer.invoke("getSpeciesByTestAndProvider", testType, provider),
+
   // Function to handle PDF generation event
   onPDFGenerado: (callback) =>
     ipcRenderer.on("onPDFGenerado", (_event, ...args) => callback(...args)),
