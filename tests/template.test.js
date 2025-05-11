@@ -47,7 +47,7 @@ describe("PDF Generation", function () {
 
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeLaboratorio.pdf`);
 
-    await generatePDF(formData, pdfPath, "labrios_hemograma_canino");
+    await generatePDF(formData, pdfPath, "hemograma_labrios");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");
@@ -77,7 +77,7 @@ describe("PDF Generation", function () {
 
     const pdfPath = path.join(outputDir, `${formData.nombreMascota}_InformeHemoparasitos.pdf`);
 
-    await generatePDF(formData, pdfPath, "hemoparasites");
+    await generatePDF(formData, pdfPath, "hemoparasitos_caninna");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");
@@ -108,7 +108,7 @@ describe("PDF Generation", function () {
       `${formData.nombreMascota}_InformeDistemperAdenovirus.pdf`,
     );
 
-    await generatePDF(formData, pdfPath, "distemper");
+    await generatePDF(formData, pdfPath, "distemper_caninna");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");
@@ -125,6 +125,7 @@ describe("PDF Generation", function () {
       edad: "5",
       sexo: "Macho",
       fecha: "2023-10-01",
+      wbc: "8",
       rbc: "7240000",
       hgb: "17.8",
       hct: "54.5",
@@ -155,7 +156,7 @@ describe("PDF Generation", function () {
       `${formData.nombreMascota}_InformeLaboratorioPalenque.pdf`,
     );
 
-    await generatePDF(formData, pdfPath, "hemogram_palenque");
+    await generatePDF(formData, pdfPath, "hemograma_zoovet");
 
     // Check if the PDF file was created
     assert(fs.existsSync(pdfPath), "PDF file was not created");
