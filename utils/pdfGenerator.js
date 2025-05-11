@@ -225,14 +225,15 @@ class TemplateProcessor {
       htmlContent = await this.processBaseTemplate(htmlContent, formData);
 
       switch (this.config.id) {
-        case "hemograma_labrios_canino":
-        case "hemograma_zoovet_canino":
-        case "perfilCompleto_caninna_canino":
+        case "hemograma_labrios":
+        case "hemograma_zoovet":
+        case "perfilCompleto_caninna":
         case "hemograma":
           return this.processLabResultsTemplate(htmlContent, formData);
-        case "hemoparasites_caninna":
+        case "hemoparasitos_caninna":
         case "distemper_caninna":
         case "gastroenteritis_caninna":
+        case "sida_caninna":
           return this.processTestWithPhotoTemplate(htmlContent, formData);
         default:
           throw new Error(`Unknown test type: ${this.config.id}`);
@@ -355,12 +356,16 @@ class PDFGenerator {
       let provider = "caninna"; //Default provider
       if (formType.includes("_")) {
         const parts = formType.split("_");
-        provider = parts[0]; //Provider name (e.g. caninna)
-        formType = parts[1]; //Base form type (e.g. hemogram)
+        formType = parts[0]; //Base form type (e.g. hemogram)
+        provider = parts[1]; //Provider name (e.g. caninna)
       }
       const species = formData.especie.toLowerCase();
 
-      const config = CONFIG.configLoader.getTemplateConfig(provider, formType, species);
+      const config = CONFIG.configLoader.getConfigForTestProviderAndSpecies(
+        formType,
+        provider,
+        species,
+      );
 
       const templatePath = path.join(CONFIG.templateDir, config.templateFile);
       let htmlContent = fs.readFileSync(templatePath, "utf8");
