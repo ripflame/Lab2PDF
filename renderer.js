@@ -116,9 +116,9 @@ function attachFormHandlers() {
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function (ev) {
+        reader.onload = function (e) {
           const img = document.getElementById("testFotoThumbnail");
-          img.src = ev.target.result;
+          img.src = e.target.result;
           img.style.display = "block";
         };
         reader.readAsDataURL(file);
@@ -151,7 +151,7 @@ async function updateSpeciesSelect() {
   document.querySelectorAll("#especieSelect option").forEach((option) => option.remove());
   const speciesSelect = document.getElementById("especieSelect");
   for (const species of availableSpecies) {
-    const option = new Option(capitalizeFirstLetter(species), species);
+    const option = new Option(capitalizeFirstLetter(species), capitalizeFirstLetter(species));
     speciesSelect.options.add(option);
   }
 }
