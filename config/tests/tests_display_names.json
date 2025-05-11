@@ -1,0 +1,26 @@
+[
+  {
+    "id": "hemoparasitos",
+    "displayName": "Hemoparásitos"
+  },
+  {
+    "id": "hemograma",
+    "displayName": "Hemograma"
+  },
+  { 
+    "id": "distemper",
+    "displayName": "Distemper" 
+  },
+  { 
+    "id": "gastroenteritis",
+    "displayName": "Gastroenteritis" 
+  },
+  { 
+    "id": "perfilCompleto",
+    "displayName": "Perfil Completo" 
+  },
+  { 
+    "id": "sida",
+    "displayName": "SIDA, Leucemia, Gusano del Corazón" 
+  }
+]
