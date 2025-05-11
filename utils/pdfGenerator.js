@@ -224,19 +224,12 @@ class TemplateProcessor {
       //Process base template common to all forms
       htmlContent = this.processBaseTemplate(htmlContent, formData);
 
-      switch (this.config.id) {
-        case "hemograma_labrios":
-        case "hemograma_zoovet":
-        case "perfilCompleto_caninna":
-        case "hemograma":
-          return this.processLabResultsTemplate(htmlContent, formData);
-        case "hemoparasitos_caninna":
-        case "distemper_caninna":
-        case "gastroenteritis_caninna":
-        case "sida_caninna":
-          return await this.processTestWithPhotoTemplate(htmlContent, formData);
-        default:
-          throw new Error(`Unknown test type: ${this.config.id}`);
+      if (this.config.type === "table") {
+        return this.processLabResultsTemplate(htmlContent, formData);
+      } else if (this.config.type === "testWithPhoto") {
+        return await this.processTestWithPhotoTemplate(htmlContent, formData);
+      } else {
+        throw new Error(`Unknown test type: ${this.config.id}`);
       }
     } catch (error) {
       Logger.logError(new Error(`Template processing error: ${error.message}`));
@@ -278,15 +271,13 @@ class TemplateProcessor {
    */
   processLabResultsTemplate(htmlContent, formData) {
     try {
-      const f = Formatters.number;
-
       // Process each field according to the configuration
       for (const field of this.config.fields) {
         const formValue = formData[field.id];
         const templateField = field.templateField || field.id;
-
+        const formattedValue = this.formatTableTestResult(templateField, formValue);
         // Replace in template
-        htmlContent = htmlContent.replace(`{{${templateField}}}`, f(formValue));
+        htmlContent = htmlContent.replace(`{{${templateField}}}`, formattedValue);
       }
 
       return htmlContent;
@@ -310,7 +301,7 @@ class TemplateProcessor {
         const formValue = formData[field.id];
 
         // Format the result with appropriate styling
-        const formattedValue = this.formatTestResult(formValue);
+        const formattedValue = this.formatTestWithPhotoResult(formValue);
 
         // Replace in template
         htmlContent = htmlContent.replace(`{{${field.id}}}`, formattedValue);
@@ -329,10 +320,34 @@ class TemplateProcessor {
   /**
    * Formats test results with appropriate styling based on result value
    */
-  formatTestResult(result) {
+  formatTestWithPhotoResult(result) {
     return result === "Positivo"
       ? '<span class="bold is-positive">Positivo</span>'
       : '<span class="bold">Negativo</span>';
+  }
+
+  formatTableTestResult(fieldId, result) {
+    const f = Formatters.number;
+    const field = this.config.fields.find((field) => fieldId === field.id);
+
+    if (!field) {
+      throw new Error("Field not found in config file");
+    }
+
+    let formattedResult = f(result);
+
+    const hasValidRange =
+      field.min != null && field.max != null && field.min !== "" && field.max !== "";
+
+    if (hasValidRange) {
+      if (result < field.min) {
+        return "&darr; " + formattedResult;
+      } else if (result > field.max) {
+        return "&uarr; " + formattedResult;
+      }
+    }
+
+    return formattedResult;
   }
 }
 
