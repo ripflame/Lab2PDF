@@ -340,9 +340,9 @@ class TemplateProcessor {
       field.min != null && field.max != null && field.min !== "" && field.max !== "";
 
     if (hasValidRange) {
-      if (result < field.min) {
+      if (Number(result) < Number(field.min)) {
         return "&darr; " + formattedResult;
-      } else if (result > field.max) {
+      } else if (Number(result) > Number(field.max)) {
         return "&uarr; " + formattedResult;
       }
     }
