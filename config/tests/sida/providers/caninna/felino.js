@@ -1,5 +1,5 @@
 module.exports = {
-  id: "sida",
+  id: "sida_caninna",
   formFile: "sida.html",
   templateFile: "sidaTemplate.html",
   type: "testWithPhoto",

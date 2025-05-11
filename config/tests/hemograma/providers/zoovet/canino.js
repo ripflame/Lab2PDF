@@ -1,5 +1,5 @@
 module.exports = {
-  id: "hemograma_zoovet_canino",
+  id: "hemograma_zoovet",
   formFile: "hemogram_palenque.html",
   templateFile: "hemogram_palenqueTemplate.html",
   type: "table",

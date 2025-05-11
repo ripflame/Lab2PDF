@@ -1,5 +1,5 @@
 module.exports = {
-  id: "perfil_completo_caninna",
+  id: "perfilCompleto_caninna",
   formFile: "perfilCompleto.html",
   templateFile: "perfilCompletoTemplate.html",
   type: "table",
