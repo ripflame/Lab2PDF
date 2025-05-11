@@ -222,7 +222,7 @@ class TemplateProcessor {
   async processTemplate(htmlContent, formData) {
     try {
       //Process base template common to all forms
-      htmlContent = await this.processBaseTemplate(htmlContent, formData);
+      htmlContent = this.processBaseTemplate(htmlContent, formData);
 
       switch (this.config.id) {
         case "hemograma_labrios":
@@ -234,7 +234,7 @@ class TemplateProcessor {
         case "distemper_caninna":
         case "gastroenteritis_caninna":
         case "sida_caninna":
-          return this.processTestWithPhotoTemplate(htmlContent, formData);
+          return await this.processTestWithPhotoTemplate(htmlContent, formData);
         default:
           throw new Error(`Unknown test type: ${this.config.id}`);
       }
@@ -248,7 +248,7 @@ class TemplateProcessor {
    * Processes common template elements shared across all form types
    * Inserts patient and owner information
    */
-  async processBaseTemplate(htmlContent, formData) {
+  processBaseTemplate(htmlContent, formData) {
     try {
       return htmlContent
         .replace("{{requerido}}", formData.requerido)
