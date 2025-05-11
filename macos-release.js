@@ -17,10 +17,28 @@ async function main() {
     // 3. Get the file paths from the dist directory
     const distDir = path.join(__dirname, "dist");
     const dmgFile = path.join(distDir, `Lab2PDF-${version}.dmg`);
+    const dmgBlockmapFile = path.join(distDir, `Lab2PDF-${version}.dmg.blockmap`);
+    const zipFile = path.join(distDir, `Lab2PDF-${version}-mac.zip`);
+    const zipBlockmapFile = path.join(distDir, `Lab2PDF-${version}-mac.zip.blockmap`);
     const ymlFile = path.join(distDir, "latest-mac.yml");
 
-    if (!fs.existsSync(dmgFile) || !fs.existsSync(ymlFile)) {
-      throw new Error("Build files not found. Check the build process.");
+    // Check if all required files exist
+    const requiredFiles = [dmgFile, dmgBlockmapFile, ymlFile, zipFile, zipBlockmapFile];
+    const missingFiles = requiredFiles.filter((file) => !fs.existsSync(file));
+
+    if (missingFiles.length > 0) {
+      console.warn(
+        "Warning: Some files don't exist:",
+        missingFiles.map((f) => path.basename(f)).join(", "),
+      );
+      console.warn("Will continue with available files...");
+    }
+
+    // Filter only existing files for upload
+    const filesToUpload = requiredFiles.filter((file) => fs.existsSync(file));
+
+    if (filesToUpload.length === 0) {
+      throw new Error("No build files found to upload. Check the build process.");
     }
 
     // 4. Get the tag name for the current version
@@ -28,11 +46,14 @@ async function main() {
 
     // 5. Upload to GitHub release using gh CLI
     console.log(`Uploading to GitHub release ${tagName}...`);
-    execSync(`gh release upload ${tagName} "${dmgFile}" "${ymlFile}" --clobber`, {
+    const filesArg = filesToUpload.map((file) => `"${file}"`).join(" ");
+    execSync(`gh release upload ${tagName} ${filesArg} --clobber`, {
       stdio: "inherit",
     });
 
     console.log("macOS files uploaded successfully!");
+    console.log("Uploaded files:");
+    filesToUpload.forEach((file) => console.log(`- ${path.basename(file)}`));
   } catch (error) {
     console.error("Error:", error.message);
     process.exit(1);
