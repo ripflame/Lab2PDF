@@ -56,7 +56,7 @@ function attachMenuEventListeners() {
   const menuItems = document.querySelectorAll(".sidebar ul li a");
 
   menuItems.forEach((item) => {
-    item.addEventListener("click", async function(event) {
+    item.addEventListener("click", async function (event) {
       event.preventDefault();
 
       document.querySelectorAll(".sidebar ul li").forEach((li) => {
@@ -116,7 +116,7 @@ function attachFormHandlers() {
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(ev) {
+        reader.onload = function (ev) {
           const img = document.getElementById("testFotoThumbnail");
           img.src = ev.target.result;
           img.style.display = "block";
