@@ -50,7 +50,7 @@ function setupIpcHandlers(mainWindow) {
 
   ipcMain.handle("getConfig", async (_event, testType, provider, species) => {
     try {
-      const configTemplate = await configLoader.getConfigForTestProviderAndSpecies(
+      const configTemplate = configLoader.getConfigForTestProviderAndSpecies(
         testType,
         provider,
         species,
