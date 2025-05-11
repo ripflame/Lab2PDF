@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Informe de Laboratorio</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <script src="renderer.js"></script>
   </head>
 
   <body class="body">
@@ -18,6 +17,7 @@
         </li>
         <li><a href="#" id="hemogramLink">Hemograma</a></li>
         <li><a href="#" id="perfilCompletoLink">Perfil Completo</a></li>
+        <li><a href="#" id="sidaFelinoLink">SIDA | Leucemia | Gusano</a></li>
       </ul>
     </div>
     <div class="content">
@@ -41,14 +41,10 @@
                 <input class="input-text" type="text" id="nombrePropietario" required />
                 <label class="label" for="telefono">Teléfono:</label>
                 <input class="input-tel" type="tel" id="telefono" required />
-                <div id="proveedorWrapper" class="hidden">
+                <div id="proveedorWrapper">
                   <label for="proveedor" class="label">Proveedor</label>
                   <select name="proveedor" id="proveedorSelect" class="form-select">
-                    <option value="Zapata" id="zapataOption">
-                      Laboratorio Clínico de los Ríos
-                    </option>
-                    <option value="Palenque" id="palenqueOption">Zoovet</option>
-                    <option value="Caninna" id="caninnaOption" disabled>CaNinna</option>
+                    <option value="default" id="providerDefault">Cargando...</option>
                   </select>
                 </div>
               </div>
@@ -56,11 +52,8 @@
                 <label class="label" for="nombreMascota">Nombre de la Mascota:</label>
                 <input class="input-text" type="text" id="nombreMascota" required />
                 <label class="label" for="especie">Especie:</label>
-                <select class="form-select" name="especie" id="especie" required>
-                  <option id="caninoOption" value="Canino">🐶 Canino</option>
-                  <option id="felinoOption" value="Felino" disabled>🐱 Felino</option>
-                  <option id="equinoOption" value="Equino" disabled>🐴 Equino</option>
-                  <option id="bovinoOption" value="Bovino" disabled>🐮 Bovino</option>
+                <select class="form-select" name="especie" id="especieSelect" required>
+                  <option id="defaultOption" value="default">Cargando...</option>
                 </select>
                 <label class="label" for="raza">Raza:</label>
                 <input class="input-text" type="text" id="raza" required />
@@ -99,5 +92,6 @@
         </div>
       </div>
     </div>
+    <script src="renderer.js"></script>
   </body>
 </html>
