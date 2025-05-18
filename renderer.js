@@ -84,6 +84,7 @@ function attachSelectorListeners() {
       activeProvider = availableProviders.find((provider) => {
         return provider.id === providerId;
       });
+      await updateSpeciesSelect();
       await loadForm();
     }
   });
