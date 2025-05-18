@@ -84,6 +84,7 @@ function attachSelectorListeners() {
       activeProvider = availableProviders.find((provider) => {
         return provider.id === providerId;
       });
+      await updateSpeciesSelect();
       await loadForm();
     }
   });
@@ -104,27 +105,31 @@ function attachFormHandlers() {
     handleFormSubmit();
   });
 
-  document.getElementById("abrirUbicacionPDF").addEventListener("click", (event) => {
-    const pdfPath = event.currentTarget.getAttribute("data-pdf-path");
-    if (pdfPath) {
-      window.electron.abrirUbicacion(pdfPath);
-    }
-  });
-
-  document.getElementById("specificFormFields").addEventListener("change", (event) => {
-    if (event.target.id === "testFoto") {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const img = document.getElementById("testFotoThumbnail");
-          img.src = e.target.result;
-          img.style.display = "block";
-        };
-        reader.readAsDataURL(file);
+  document
+    .getElementById("abrirUbicacionPDF")
+    .addEventListener("click", (event) => {
+      const pdfPath = event.currentTarget.getAttribute("data-pdf-path");
+      if (pdfPath) {
+        window.electron.abrirUbicacion(pdfPath);
       }
-    }
-  });
+    });
+
+  document
+    .getElementById("specificFormFields")
+    .addEventListener("change", (event) => {
+      if (event.target.id === "testFoto") {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = document.getElementById("testFotoThumbnail");
+            img.src = e.target.result;
+            img.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    });
 }
 
 function capitalizeFirstLetter(string) {
@@ -132,9 +137,13 @@ function capitalizeFirstLetter(string) {
 }
 
 async function updateProvidersSelect() {
-  availableProviders = await window.electron.getProvidersByTest(activeTestType.id);
+  availableProviders = await window.electron.getProvidersByTest(
+    activeTestType.id,
+  );
   activeProvider = availableProviders[0];
-  document.querySelectorAll("#proveedorSelect option").forEach((option) => option.remove());
+  document
+    .querySelectorAll("#proveedorSelect option")
+    .forEach((option) => option.remove());
   const providersSelect = document.getElementById("proveedorSelect");
   for (const provider of availableProviders) {
     const option = new Option(provider.displayName, provider.id);
@@ -148,10 +157,15 @@ async function updateSpeciesSelect() {
     activeProvider.id,
   );
   activeSpecies = availableSpecies[0];
-  document.querySelectorAll("#especieSelect option").forEach((option) => option.remove());
+  document
+    .querySelectorAll("#especieSelect option")
+    .forEach((option) => option.remove());
   const speciesSelect = document.getElementById("especieSelect");
   for (const species of availableSpecies) {
-    const option = new Option(capitalizeFirstLetter(species), capitalizeFirstLetter(species));
+    const option = new Option(
+      capitalizeFirstLetter(species),
+      capitalizeFirstLetter(species),
+    );
     speciesSelect.options.add(option);
   }
 }
@@ -193,7 +207,9 @@ function getGenericFormFields() {
 function handleFormSubmit() {
   document.getElementById("resultadoPDF").classList.add("hidden");
   // Validate all inputs
-  const inputs = document.querySelectorAll("#commonFormFields input, #specificFormFields input");
+  const inputs = document.querySelectorAll(
+    "#commonFormFields input, #specificFormFields input",
+  );
   for (const input of inputs) {
     if (!input.checkValidity()) {
       input.reportValidity();
@@ -209,7 +225,9 @@ function handleFormSubmit() {
   const datos = getGenericFormFields();
   if (activeTestConfig.type === "table") {
     for (const field of activeTestConfig.fields) {
-      datos[field.id] = document.getElementById(`${field.templateField || field.id}`).value;
+      datos[field.id] = document.getElementById(
+        `${field.templateField || field.id}`,
+      ).value;
     }
   } else if (activeTestConfig.type === "testWithPhoto") {
     for (const field of activeTestConfig.fields) {
@@ -236,5 +254,7 @@ window.electron.onPDFGenerado((rutaPDF) => {
   }
 
   document.getElementById("resultadoPDF").classList.remove("hidden");
-  document.getElementById("abrirUbicacionPDF").setAttribute("data-pdf-path", rutaPDF);
+  document
+    .getElementById("abrirUbicacionPDF")
+    .setAttribute("data-pdf-path", rutaPDF);
 });
