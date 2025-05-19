@@ -276,8 +276,14 @@ class TemplateProcessor {
         const formValue = formData[field.id];
         const templateField = field.templateField || field.id;
         const formattedValue = this.formatTableTestResult(templateField, formValue);
+        const minValue = field.min;
+        const maxValue = field.max;
+        const unit = field.unit;
         // Replace in template
         htmlContent = htmlContent.replace(`{{${templateField}}}`, formattedValue);
+        htmlContent = htmlContent.replace(`{{minValue_${templateField}}}`, minValue);
+        htmlContent = htmlContent.replace(`{{maxValue_${templateField}}}`, maxValue);
+        htmlContent = htmlContent.replace(`{{unit_${templateField}}}`, unit);
       }
 
       return htmlContent;
