@@ -338,7 +338,11 @@ class TemplateProcessor {
   }
 
   isOutOfRange(value, min, max) {
-    return Number(value) < Number(min) || Number(value) > Number(max);
+    const hasValidRange = min != null && max != null && min !== "" && max !== "";
+    if (hasValidRange) {
+      return Number(value) < Number(min) || Number(value) > Number(max);
+    }
+    return false;
   }
 
   formatTableTestResult(fieldId, result) {
