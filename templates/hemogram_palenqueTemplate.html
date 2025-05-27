@@ -111,6 +111,9 @@
         background-color: #00b0f0;
         color: white;
       }
+      tr.highlight {
+        background-color: lightsalmon;
+      }
 
       /* Maquilado section */
       .maquilado-section {
@@ -222,7 +225,7 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FORMULA BLANCA</i></td>
         </tr>
-        <tr>
+        <tr {{row_wbc}}>
           <td>Leucocitos Totales (WBC)</td>
           <td class="semi-bold">{{wbc}}</td>
           <td>6.0 a 17.0 10<sup>9</sup>/L</td>
@@ -230,22 +233,22 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_abs}}>
           <td>Linfocitos (LYM #)</td>
           <td class="semi-bold">{{linfocitos_abs}}</td>
           <td>1.0 a 4.80 x 10<sup>9</sup>/L</td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_abs}}>
           <td>Monocitos (MON #)</td>
           <td class="semi-bold">{{monocitos_abs}}</td>
           <td>0.15 a 1.35 x 10<sup>9</sup>/L</td>
         </tr>
-        <tr>
+        <tr {{row_granulocitos_abs}}>
           <td>Granulocitos (GRA #)</td>
           <td class="semi-bold">{{granulocitos_abs}}</td>
           <td>3.62 a 11.5 x 10<sup>9</sup>/L</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_abs}}>
           <td>Eosinófilos (EOS #)</td>
           <td class="semi-bold">{{eosinofilos_abs}}</td>
           <td>0.1 a 1.25 x 10<sup>9</sup>/L</td>
@@ -253,22 +256,22 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_rel}}>
           <td>Linfocitos (LYM %)</td>
           <td class="semi-bold">{{linfocitos_rel}}</td>
           <td>12.00 a 33.00 %</td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_rel}}>
           <td>Monocitos (MON %)</td>
           <td class="semi-bold">{{monocitos_rel}}</td>
           <td>2.00 a 13.00 %</td>
         </tr>
-        <tr>
+        <tr {{row_granulocitos_rel}}>
           <td>Granulocitos (GRA %)</td>
           <td class="semi-bold">{{granulocitos_rel}}</td>
           <td>52.00 a 81.00 %</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_rel}}>
           <td>Eosinófilos (EOS %)</td>
           <td class="semi-bold">{{eosinofilos_rel}}</td>
           <td>0.50 a 10.00 %</td>
@@ -276,72 +279,72 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FORMULA ROJA</i></td>
         </tr>
-        <tr>
+        <tr {{row_rbc}}>
           <td>Eritrocitos (RBC)</td>
           <td class="semi-bold">{{rbc}}</td>
           <td>5.10 a 8.50 x 10<sup>12</sup>/L</td>
         </tr>
-        <tr>
+        <tr {{row_hgb}}>
           <td>Hemoglobina (HGB)</td>
           <td class="semi-bold">{{hgb}}</td>
           <td>11.00 a 19.00 g/dL</td>
         </tr>
-        <tr>
+        <tr {{row_hct}}>
           <td>Hematocrito (HCT)</td>
           <td class="semi-bold">{{hct}}</td>
           <td>33.00 a 56.00 %</td>
         </tr>
-        <tr>
+        <tr {{row_mcv}}>
           <td>Volumen Corpuscular Medio (MCV)</td>
           <td class="semi-bold">{{mcv}}</td>
           <td>60.00 a 76.00 fL</td>
         </tr>
-        <tr>
+        <tr {{row_mch}}>
           <td>Hemoglobina Corpuscular Media (MCH)</td>
           <td class="semi-bold">{{mch}}</td>
           <td>20.00 a 27.00 pg</td>
         </tr>
-        <tr>
+        <tr {{row_mchc}}>
           <td>Concentración de Hemoglobina Corpuscular Media (MCHC)</td>
           <td class="semi-bold">{{mchc}}</td>
           <td>30.00 a 38.00 g/dL</td>
         </tr>
-        <tr>
+        <tr {{row_rdw_cv}}>
           <td>Amplitud de Distribución Eritrocitaria (RDW_CV)</td>
           <td class="semi-bold">{{rdw_cv}}</td>
           <td>12.50 a 17.20 fL</td>
         </tr>
-        <tr>
+        <tr {{row_rdw_sd}}>
           <td>Desviación de Distribución Eritrocitaria (RDW_SD)</td>
           <td class="semi-bold">{{rdw_sd}}</td>
           <td>33.20 a 46.30 fL</td>
         </tr>
-        <tr>
+        <tr {{row_plt}}>
           <td>Plaquetas (PLT)</td>
           <td class="semi-bold">{{plt}}</td>
           <td>200 a 500 x 10<sup>9</sup>/L</td>
         </tr>
-        <tr>
+        <tr {{row_pct}}>
           <td>Procalcitonina (PCT)</td>
           <td class="semi-bold">{{pct}}</td>
           <td>0.09 a 0.58 %</td>
         </tr>
-        <tr>
+        <tr {{row_mpv}}>
           <td>Volumen Plaquetario Medio (MPV)</td>
           <td class="semi-bold">{{mpv}}</td>
           <td>8.00 a 17.10 fL</td>
         </tr>
-        <tr>
+        <tr {{row_pdw}}>
           <td>Índice de Distribución Plaquetaria (PDW)</td>
           <td class="semi-bold">{{pdw}}</td>
           <td>12.00 a 17.50 fL</td>
         </tr>
-        <tr>
+        <tr {{row_p_lcr}}>
           <td>Porcentaje de Plaquetas Grandes (P_LCR)</td>
           <td class="semi-bold">{{p_lcr}}</td>
           <td>%</td>
         </tr>
-        <tr>
+        <tr {{row_p_lcc}}>
           <td>Promedio de Plaquetas (P_LCC)</td>
           <td class="semi-bold">{{p_lcc}}</td>
           <td>x 10<sup>9</sup>L</td>
