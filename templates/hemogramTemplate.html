@@ -111,6 +111,9 @@
         background-color: #00b0f0;
         color: white;
       }
+      tr.highlight {
+        background-color: lightsalmon;
+      }
 
       /* Maquilado section */
       .maquilado-section {
@@ -225,37 +228,37 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FÓRMULA ROJA</i></td>
         </tr>
-        <tr>
+        <tr {{row_eritrocitos}}>
           <td>Eritrocitos</td>
           <td class="semi-bold">{{eritrocitos}}</td>
           <td>5,500,000 a 8,500,000 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_hemoglobina}}>
           <td>Hemoglobina</td>
           <td class="semi-bold">{{hemoglobina}}</td>
           <td>12.0 a 18.0 g/dl</td>
         </tr>
-        <tr>
+        <tr {{row_hematocrito}}>
           <td>Hematocrito</td>
           <td class="semi-bold">{{hematocrito}}</td>
           <td>37.0 a 55.0 %</td>
         </tr>
-        <tr>
+        <tr {{row_vgm}}>
           <td>Volumen Globular Medio</td>
           <td class="semi-bold">{{vgm}}</td>
           <td>60.0 a 77.0 fl</td>
         </tr>
-        <tr>
+        <tr {{row_hpe}}>
           <td>Hemoglobina Promedio por Eritrocito</td>
           <td class="semi-bold">{{hpe}}</td>
           <td>19.5 a 24.5 pg</td>
         </tr>
-        <tr>
+        <tr {{row_cmh}}>
           <td>Concentración Media de Hemoglobina</td>
           <td class="semi-bold">{{cmh}}</td>
           <td>32.0 a 36.0 g/dl</td>
         </tr>
-        <tr>
+        <tr {{row_plaquetas}}>
           <td>Plaquetas</td>
           <td class="semi-bold">{{plaquetas}}</td>
           <td>200,000 a 500,000 x mm³</td>
@@ -263,7 +266,7 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FÓRMULA BLANCA</i></td>
         </tr>
-        <tr>
+        <tr {{row_leucocitos}}>
           <td>Leucocitos</td>
           <td class="semi-bold">{{leucocitos}}</td>
           <td>6,000 a 17,000 x mm³</td>
@@ -271,32 +274,32 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_rel}}>
           <td>Monocitos</td>
           <td class="semi-bold">{{monocitos_rel}}</td>
           <td>3 a 10 %</td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_rel}}>
           <td>Linfocitos</td>
           <td class="semi-bold">{{linfocitos_rel}}</td>
           <td>13 a 15 %</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_rel}}>
           <td>Eosinófilos</td>
           <td class="semi-bold">{{eosinofilos_rel}}</td>
           <td>2 a 10 %</td>
         </tr>
-        <tr>
+        <tr {{row_basofilos_rel}}>
           <td>Basófilos</td>
           <td class="semi-bold">{{basofilos_rel}}</td>
           <td>0 a 1 %</td>
         </tr>
-        <tr>
+        <tr {{row_neutrofilos_segmentados_rel}}>
           <td>Neutrófilos Segmentados</td>
           <td class="semi-bold">{{neutrofilos_segmentados_rel}}</td>
           <td>60 a 77 %</td>
         </tr>
-        <tr>
+        <tr {{row_neutrofilos_banda_rel}}>
           <td>Neutrófilos en Banda</td>
           <td class="semi-bold">{{neutrofilos_banda_rel}}</td>
           <td>0 a 3 %</td>
@@ -304,32 +307,32 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_abs}}>
           <td>Monocitos</td>
           <td class="semi-bold">{{monocitos_abs}}</td>
           <td>150 a 1,350 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_abs}}>
           <td>Linfocitos</td>
           <td class="semi-bold">{{linfocitos_abs}}</td>
           <td>1,000 a 5,000 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_abs}}>
           <td>Eosinófilos</td>
           <td class="semi-bold">{{eosinofilos_abs}}</td>
           <td>100 a 1,000 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_basofilos_abs}}>
           <td>Basófilos</td>
           <td class="semi-bold">{{basofilos_abs}}</td>
           <td>0 a 100 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_neutrofilos_segmentados_abs}}>
           <td>Neutrófilos Segmentados</td>
           <td class="semi-bold">{{neutrofilos_segmentados_abs}}</td>
           <td>3,000 a 11,500 x mm³</td>
         </tr>
-        <tr>
+        <tr {{row_neutrofilos_banda_abs}}>
           <td>Neutrófilos en Banda</td>
           <td class="semi-bold">{{neutrofilos_banda_abs}}</td>
           <td>0 a 300 x mm³</td>

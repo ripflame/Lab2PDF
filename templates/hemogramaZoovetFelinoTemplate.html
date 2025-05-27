@@ -111,6 +111,9 @@
         background-color: #00b0f0;
         color: white;
       }
+      tr.highlight {
+        background-color: lightsalmon;
+      }
 
       /* Maquilado section */
       .maquilado-section {
@@ -222,7 +225,7 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FORMULA BLANCA</i></td>
         </tr>
-        <tr>
+        <tr {{row_wbc}}>
           <td>Leucocitos Totales (WBC)</td>
           <td class="semi-bold">{{wbc}}</td>
           <td>{{minValue_wbc}} a {{maxValue_wbc}} {{unit_wbc}}</td>
@@ -230,22 +233,22 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_abs}}>
           <td>Linfocitos (LYM #)</td>
           <td class="semi-bold">{{linfocitos_abs}}</td>
           <td>{{minValue_linfocitos_abs}} a {{maxValue_linfocitos_abs}} {{unit_linfocitos_abs}}</td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_abs}}>
           <td>Monocitos (MON #)</td>
           <td class="semi-bold">{{monocitos_abs}}</td>
           <td>{{minValue_monocitos_abs}} a {{maxValue_monocitos_abs}} {{unit_monocitos_abs}}</td>
         </tr>
-        <tr>
+        <tr {{row_granulocitos_abs}}>
           <td>Granulocitos (GRA #)</td>
           <td class="semi-bold">{{granulocitos_abs}}</td>
           <td>{{minValue_granulocitos_abs}} a {{maxValue_granulocitos_abs}} {{unit_granulocitos_abs}}</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_abs}}>
           <td>Eosinófilos (EOS #)</td>
           <td class="semi-bold">{{eosinofilos_abs}}</td>
           <td>{{minValue_eosinofilos_abs}} a {{maxValue_eosinofilos_abs}} {{unit_eosinofilos_abs}}</td>
@@ -253,22 +256,22 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
         </tr>
-        <tr>
+        <tr {{row_linfocitos_rel}}>
           <td>Linfocitos (LYM %)</td>
           <td class="semi-bold">{{linfocitos_rel}}</td>
           <td>{{minValue_linfocitos_rel}} a {{maxValue_linfocitos_rel}} {{unit_linfocitos_rel}}</td>
         </tr>
-        <tr>
+        <tr {{row_monocitos_rel}}>
           <td>Monocitos (MON %)</td>
           <td class="semi-bold">{{monocitos_rel}}</td>
           <td>{{minValue_monocitos_rel}} a {{maxValue_monocitos_rel}} {{unit_monocitos_rel}}</td>
         </tr>
-        <tr>
+        <tr {{row_granulocitos_rel}}>
           <td>Granulocitos (GRA %)</td>
           <td class="semi-bold">{{granulocitos_rel}}</td>
           <td>{{minValue_granulocitos_rel}} a {{maxValue_granulocitos_rel}} {{unit_granulocitos_rel}}</td>
         </tr>
-        <tr>
+        <tr {{row_eosinofilos_rel}}>
           <td>Eosinófilos (EOS %)</td>
           <td class="semi-bold">{{eosinofilos_rel}}</td>
           <td>{{minValue_eosinofilos_rel}} a {{maxValue_eosinofilos_rel}} {{unit_eosinofilos_rel}}</td>
@@ -276,72 +279,72 @@
         <tr class="bold">
           <td class="center" colspan="3"><i>FORMULA ROJA</i></td>
         </tr>
-        <tr>
+        <tr {{row_rbc}}>
           <td>Eritrocitos (RBC)</td>
           <td class="semi-bold">{{rbc}}</td>
           <td>{{minValue_rbc}} a {{maxValue_rbc}} {{unit_rbc}}</td>
         </tr>
-        <tr>
+        <tr {{row_hgb}}>
           <td>Hemoglobina (HGB)</td>
           <td class="semi-bold">{{hgb}}</td>
           <td>{{minValue_hgb}} a {{maxValue_hgb}} {{unit_hgb}}</td>
         </tr>
-        <tr>
+        <tr {{row_hct}}>
           <td>Hematocrito (HCT)</td>
           <td class="semi-bold">{{hct}}</td>
           <td>{{minValue_hct}} a {{maxValue_hct}} {{unit_hct}}</td>
         </tr>
-        <tr>
+        <tr {{row_mcv}}>
           <td>Volumen Corpuscular Medio (MCV)</td>
           <td class="semi-bold">{{mcv}}</td>
           <td>{{minValue_mcv}} a {{maxValue_mcv}} {{unit_mcv}}</td>
         </tr>
-        <tr>
+        <tr {{row_mch}}>
           <td>Hemoglobina Corpuscular Media (MCH)</td>
           <td class="semi-bold">{{mch}}</td>
           <td>{{minValue_mch}} a {{maxValue_mch}} {{unit_mch}}</td>
         </tr>
-        <tr>
+        <tr {{row_mchc}}>
           <td>Concentración de Hemoglobina Corpuscular Media (MCHC)</td>
           <td class="semi-bold">{{mchc}}</td>
           <td>{{minValue_mchc}} a {{maxValue_mchc}} {{unit_mchc}}</td>
         </tr>
-        <tr>
+        <tr {{row_rdw_cv}}>
           <td>Amplitud de Distribución Eritrocitaria (RDW_CV)</td>
           <td class="semi-bold">{{rdw_cv}}</td>
           <td>{{minValue_rdw_cv}} a {{maxValue_rdw_cv}} {{unit_rdw_cv}}</td>
         </tr>
-        <tr>
+        <tr {{row_rdw_sd}}>
           <td>Desviación de Distribución Eritrocitaria (RDW_SD)</td>
           <td class="semi-bold">{{rdw_sd}}</td>
           <td>{{minValue_rdw_sd}} a {{maxValue_rdw_sd}} {{unit_rdw_sd}}</td>
         </tr>
-        <tr>
+        <tr {{row_plt}}>
           <td>Plaquetas (PLT)</td>
           <td class="semi-bold">{{plt}}</td>
           <td>{{minValue_plt}} a {{maxValue_plt}} {{unit_plt}}</td>
         </tr>
-        <tr>
+        <tr {{row_pct}}>
           <td>Procalcitonina (PCT)</td>
           <td class="semi-bold">{{pct}}</td>
           <td>{{minValue_pct}} a {{maxValue_pct}} {{unit_pct}}</td>
         </tr>
-        <tr>
+        <tr {{row_mpv}}>
           <td>Volumen Plaquetario Medio (MPV)</td>
           <td class="semi-bold">{{mpv}}</td>
           <td>{{minValue_mpv}} a {{maxValue_mpv}} {{unit_mpv}}</td>
         </tr>
-        <tr>
+        <tr {{row_pdw}}>
           <td>Índice de Distribución Plaquetaria (PDW)</td>
           <td class="semi-bold">{{pdw}}</td>
           <td>{{minValue_pdw}} a {{maxValue_pdw}} {{unit_pdw}}</td>
         </tr>
-        <tr>
+        <tr {{row_p_lcr}}>
           <td>Porcentaje de Plaquetas Grandes (P_LCR)</td>
           <td class="semi-bold">{{p_lcr}}</td>
           <td>{{unit_p_lcr}}</td>
         </tr>
-        <tr>
+        <tr {{row_p_lcc}}>
           <td>Promedio de Plaquetas (P_LCC)</td>
           <td class="semi-bold">{{p_lcc}}</td>
           <td>{{unit_p_lcc}}</td>

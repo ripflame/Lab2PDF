@@ -280,6 +280,11 @@ class TemplateProcessor {
         const maxValue = field.max;
         const unit = field.unit;
         // Replace in template
+        if (this.isOutOfRange(formValue, minValue, maxValue)) {
+          htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class="highlight"');
+        } else {
+          htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class=""');
+        }
         htmlContent = htmlContent.replace(`{{${templateField}}}`, formattedValue);
         htmlContent = htmlContent.replace(`{{minValue_${templateField}}}`, minValue);
         htmlContent = htmlContent.replace(`{{maxValue_${templateField}}}`, maxValue);
@@ -330,6 +335,10 @@ class TemplateProcessor {
     return result === "Positivo"
       ? '<span class="bold is-positive">Positivo</span>'
       : '<span class="bold">Negativo</span>';
+  }
+
+  isOutOfRange(value, min, max) {
+    return Number(value) < Number(min) || Number(value) > Number(max);
   }
 
   formatTableTestResult(fieldId, result) {
