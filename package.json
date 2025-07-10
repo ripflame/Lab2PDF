@@ -8,9 +8,9 @@
     "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
     "prebuild:mac": "npm uninstall sharp && npm install sharp --os=darwin --cpu=x64",
-    "build:mac": "electron-builder --mac",
+    "build:mac": "GH_TOKEN=$(gh auth token) electron-builder --mac",
     "prebuild:win": "npm uninstall sharp && npm install sharp --os=win32 --cpu=x64",
-    "build:win": "electron-builder --win",
+    "build:win": "GH_TOKEN=$(gh auth token) electron-builder --win",
     "prestart": "npm run ensure-platform",
     "predev": "npm run ensure-platform",
     "pretest": "npm run ensure-platform",
@@ -18,7 +18,7 @@
     "prerelease:mac": "npm uninstall sharp && npm install sharp --os=darwin --cpu=x64",
     "release:mac": "node macos-release.js",
     "prerelease:win": "npm uninstall sharp && npm install sharp --os=win32 --cpu=x64",
-    "release:win": "electron-builder --win --publish always",
+    "release:win": "GH_TOKEN=$(gh auth token) electron-builder --win --publish always",
     "clean": "rm -rf dist/*"
   },
   "build": {
