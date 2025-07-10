@@ -279,9 +279,10 @@ class TemplateProcessor {
         const minValue = field.min;
         const maxValue = field.max;
         const unit = field.unit;
-        // Replace in template
-        if (this.isOutOfRange(formValue, minValue, maxValue)) {
-          htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class="highlight"');
+        if (this.isHighOrLow(formValue, minValue, maxValue) === -1) {
+          htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class="highlight_low"');
+        } else if (this.isHighOrLow(formValue, minValue, maxValue) === 1) {
+          htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class="highlight_high"');
         } else {
           htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class=""');
         }
@@ -337,12 +338,16 @@ class TemplateProcessor {
       : '<span class="bold">Negativo</span>';
   }
 
-  isOutOfRange(value, min, max) {
+  isHighOrLow(value, min, max) {
     const hasValidRange = min != null && max != null && min !== "" && max !== "";
     if (hasValidRange) {
-      return Number(value) < Number(min) || Number(value) > Number(max);
+      if (Number(value) < Number(min)) {
+        return -1;
+      } else if (Number(value) > Number(max)) {
+        return 1;
+      }
     }
-    return false;
+    return 0;
   }
 
   formatTableTestResult(fieldId, result) {
