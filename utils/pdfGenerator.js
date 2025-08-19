@@ -275,6 +275,7 @@ class TemplateProcessor {
       for (const field of this.config.fields) {
         const formValue = formData[field.id];
         const templateField = field.templateField || field.id;
+        const label = field.label;
         const formattedValue = this.formatTableTestResult(templateField, formValue);
         const minValue = field.min;
         const maxValue = field.max;
@@ -287,6 +288,7 @@ class TemplateProcessor {
           htmlContent = htmlContent.replace(`{{row_${templateField}}}`, 'class=""');
         }
         htmlContent = htmlContent.replace(`{{${templateField}}}`, formattedValue);
+        htmlContent = htmlContent.replace(`{{label_${templateField}}}`, label);
         htmlContent = htmlContent.replace(`{{minValue_${templateField}}}`, minValue);
         htmlContent = htmlContent.replace(`{{maxValue_${templateField}}}`, maxValue);
         htmlContent = htmlContent.replace(`{{unit_${templateField}}}`, unit);
