@@ -14,5 +14,9 @@
   {
     "id": "bioceli",
     "displayName": "BIO-C-ELI"
+  },
+  {
+    "id": "vetpec",
+    "displayName": "Veterinaria PEC"
   }
 ]
