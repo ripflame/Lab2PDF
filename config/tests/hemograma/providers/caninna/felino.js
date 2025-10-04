@@ -104,8 +104,8 @@ module.exports = {
       id: "neutrofilos_segmentados_rel",
       templateField: "neutrofilos_segmentados_rel",
       label: "Neutrófilos Segmentados",
-      min: "35.00",
-      max: "75.00",
+      min: "38.00",
+      max: "80.00",
       unit: "%"
     },
     {
@@ -136,7 +136,7 @@ module.exports = {
       id: "eosinofilos_abs",
       templateField: "eosinofilos_abs",
       label: "Eosinófilos",
-      min: "0.04",
+      min: "0.00",
       max: "1.20",
       unit: "x 10<sup>9</sup>/L"
     },
@@ -153,7 +153,7 @@ module.exports = {
       templateField: "neutrofilos_segmentados_abs",
       label: "Neutrófilos Segmentados",
       min: "2.30",
-      max: "12.50",
+      max: "12.58",
       unit: "x 10<sup>9</sup>/L"
     },
     {
