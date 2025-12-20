@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "generate:templates": "node scripts/generateTemplates.js",
+    "generate:preview": "node scripts/generatePreview.js",
     "start": "electron .",
     "dev": "cross-env NODE_ENV=development electron .",
     "test": "mocha --require @babel/register --timeout 5000 tests/template.test.js",
