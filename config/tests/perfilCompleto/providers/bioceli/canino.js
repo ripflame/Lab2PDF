@@ -1,8 +1,23 @@
 module.exports = {
   id: "perfilCompleto_bioceli",
-  formFile: "perfilCompleto_bioceli.html",
-  templateFile: "perfilCompletoTemplate_bioceli.html",
+  formFile: "perfilcompleto_bioceli_canino.html",
+  templateFile: "perfilcompleto_bioceli_canino_template.html",
   type: "table",
+
+  meta: {
+    title: "Perfil Bioquimico Completo",
+    headerTitle: ["Resultados de laboratorio", "Perfil Bioquimico Completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUIMICO COMPLETO",
+    method: "Analizador bioquimico SKYLA VB1 de quimica seca en sangre, plasma o suero, semi-automatico con discos reactivos de biomarcadores"
+  },
+
+  sections: [
+    {
+      title: "Perfil Bioquimico",
+      fields: ["alb", "tgo", "tgp", "fosfatasa_alcalina", "gamma_glutamil", "proteinas_totales", "globulina", "rel_ag", "bilirrubina_total", "bilirrubina_directa", "bilirrubina_indirecta", "dhl", "amilasa", "lipasa", "glucosa", "nitrogeno_ureico", "creatinina", "urea", "acido_urico", "colesterol", "trigliceridos"]
+    }
+  ],
+
   fields: [
     {
       id: 'alb',

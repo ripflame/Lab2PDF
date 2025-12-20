@@ -1,8 +1,35 @@
 module.exports = {
   id: "hemograma_zoovet",
-  formFile: "hemogramaZoovetFelino.html",
-  templateFile: "hemogramaZoovetFelinoTemplate.html",
+  formFile: "hemograma_zoovet_felino.html",
+  templateFile: "hemograma_zoovet_felino_template.html",
   type: "table",
+
+  meta: {
+    title: "Hemograma completo",
+    headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
+    maquilado: "ZOOVET, Calzada Lazaro Cardenas No. 25, colonia Pakal-Na, Palenque, Chiapas"
+  },
+
+  sections: [
+    {
+      title: "Formula Blanca",
+      fields: ["wbc"]
+    },
+    {
+      title: "Valores Absolutos",
+      fields: ["linfocitos_abs", "monocitos_abs", "granulocitos_abs", "eosinofilos_abs"]
+    },
+    {
+      title: "Valores Relativos",
+      fields: ["linfocitos_rel", "monocitos_rel", "granulocitos_rel", "eosinofilos_rel"]
+    },
+    {
+      title: "Formula Roja",
+      fields: ["rbc", "hgb", "hct", "mcv", "mch", "mchc", "rdw_cv", "rdw_sd", "plt", "pct", "mpv", "pdw", "p_lcr", "p_lcc"]
+    }
+  ],
+
   fields: [
     {
       id: 'wbc',
