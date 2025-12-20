@@ -13,11 +13,11 @@ module.exports = {
 
   sections: [
     {
-      title: "Formula Roja",
+      title: "Fórmula Roja",
       fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hpe", "cmh", "plaquetas"]
     },
     {
-      title: "Formula Blanca",
+      title: "Fórmula Blanca",
       fields: ["leucocitos"]
     },
     {
@@ -74,7 +74,7 @@ module.exports = {
     {
       id: 'cmh',
       templateField: 'cmh',
-      label: 'Concentracion Media de Hemoglobina',
+      label: 'Concentración Media de Hemoglobina',
       min: '32.0',
       max: '36.0',
       unit: 'g/dL'
@@ -114,7 +114,7 @@ module.exports = {
     {
       id: 'eosinofilos_rel',
       templateField: 'eosinofilos_rel',
-      label: 'Eosinofilos',
+      label: 'Eosinófilos',
       min: '2',
       max: '10',
       unit: '%'
@@ -122,7 +122,7 @@ module.exports = {
     {
       id: 'basofilos_rel',
       templateField: 'basofilos_rel',
-      label: 'Basofilos',
+      label: 'Basófilos',
       min: '0',
       max: '1',
       unit: '%'
@@ -130,7 +130,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_rel',
       templateField: 'neutrofilos_segmentados_rel',
-      label: 'Neutrofilos Segmentados',
+      label: 'Neutrófilos Segmentados',
       min: '60',
       max: '77',
       unit: '%'
@@ -138,7 +138,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_rel',
       templateField: 'neutrofilos_banda_rel',
-      label: 'Neutrofilos en Banda',
+      label: 'Neutrófilos en Banda',
       min: '0',
       max: '3',
       unit: '%'
@@ -162,7 +162,7 @@ module.exports = {
     {
       id: 'eosinofilos_abs',
       templateField: 'eosinofilos_abs',
-      label: 'Eosinofilos',
+      label: 'Eosinófilos',
       min: '100',
       max: '1000',
       unit: 'x mm<sup>3</sup>'
@@ -170,7 +170,7 @@ module.exports = {
     {
       id: 'basofilos_abs',
       templateField: 'basofilos_abs',
-      label: 'Basofilos',
+      label: 'Basófilos',
       min: '0',
       max: '100',
       unit: 'x mm<sup>3</sup>'
@@ -178,7 +178,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_abs',
       templateField: 'neutrofilos_segmentados_abs',
-      label: 'Neutrofilos Segmentados',
+      label: 'Neutrófilos Segmentados',
       min: '3000',
       max: '11500',
       unit: 'x mm<sup>3</sup>'
@@ -186,7 +186,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_abs',
       templateField: 'neutrofilos_banda_abs',
-      label: 'Neutrofilos en Banda',
+      label: 'Neutrófilos en Banda',
       min: '0',
       max: '300',
       unit: 'x mm<sup>3</sup>'

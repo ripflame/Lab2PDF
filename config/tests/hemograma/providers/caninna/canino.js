@@ -8,16 +8,16 @@ module.exports = {
     title: "Hemograma completo",
     headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
     formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
-    method: "Analizador morfologico multifuncional veterinario AIvet1 por estandarizacion de microscopia y cuantificacion de parametros en sangre entera."
+    method: "Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera."
   },
 
   sections: [
     {
-      title: "Formula Roja",
+      title: "Fórmula Roja",
       fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hpe", "cmh", "plaquetas"]
     },
     {
-      title: "Formula Blanca",
+      title: "Fórmula Blanca",
       fields: ["leucocitos"]
     },
     {
@@ -74,7 +74,7 @@ module.exports = {
     {
       id: "cmh",
       templateField: "cmh",
-      label: "Concentracion Media de Hemoglobina",
+      label: "Concentración Media de Hemoglobina",
       min: "300.00",
       max: "380.00",
       unit: "g/dL"
@@ -114,7 +114,7 @@ module.exports = {
     {
       id: "eosinofilos_rel",
       templateField: "eosinofilos_rel",
-      label: "Eosinofilos",
+      label: "Eosinófilos",
       min: "0.50",
       max: "13.70",
       unit: "%"
@@ -122,7 +122,7 @@ module.exports = {
     {
       id: "basofilos_rel",
       templateField: "basofilos_rel",
-      label: "Basofilos",
+      label: "Basófilos",
       min: "0.00",
       max: "0.50",
       unit: "%"
@@ -130,7 +130,7 @@ module.exports = {
     {
       id: "neutrofilos_segmentados_rel",
       templateField: "neutrofilos_segmentados_rel",
-      label: "Neutrofilos Segmentados",
+      label: "Neutrófilos Segmentados",
       min: "50.00",
       max: "75.00",
       unit: "%"
@@ -138,7 +138,7 @@ module.exports = {
     {
       id: "neutrofilos_banda_rel",
       templateField: "neutrofilos_banda_rel",
-      label: "Neutrofilos en Banda",
+      label: "Neutrófilos en Banda",
       min: "0.00",
       max: "10.00",
       unit: "%"
@@ -162,7 +162,7 @@ module.exports = {
     {
       id: "eosinofilos_abs",
       templateField: "eosinofilos_abs",
-      label: "Eosinofilos",
+      label: "Eosinófilos",
       min: "0.04",
       max: "1.60",
       unit: "x 10<sup>9</sup>/L"
@@ -170,7 +170,7 @@ module.exports = {
     {
       id: "basofilos_abs",
       templateField: "basofilos_abs",
-      label: "Basofilos",
+      label: "Basófilos",
       min: "0.00",
       max: "0.12",
       unit: "x 10<sup>9</sup>/L"
@@ -178,7 +178,7 @@ module.exports = {
     {
       id: "neutrofilos_segmentados_abs",
       templateField: "neutrofilos_segmentados_abs",
-      label: "Neutrofilos Segmentados",
+      label: "Neutrófilos Segmentados",
       min: "2.50",
       max: "11.40",
       unit: "x 10<sup>9</sup>/L"
@@ -186,7 +186,7 @@ module.exports = {
     {
       id: "neutrofilos_banda_abs",
       templateField: "neutrofilos_banda_abs",
-      label: "Neutrofilos en Banda",
+      label: "Neutrófilos en Banda",
       min: "0.00",
       max: "0.80",
       unit: "x 10<sup>9</sup>/L"

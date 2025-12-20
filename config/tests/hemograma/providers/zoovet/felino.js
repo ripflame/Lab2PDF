@@ -13,7 +13,7 @@ module.exports = {
 
   sections: [
     {
-      title: "Formula Blanca",
+      title: "Fórmula Blanca",
       fields: ["wbc"]
     },
     {
@@ -25,7 +25,7 @@ module.exports = {
       fields: ["linfocitos_rel", "monocitos_rel", "granulocitos_rel", "eosinofilos_rel"]
     },
     {
-      title: "Formula Roja",
+      title: "Fórmula Roja",
       fields: ["rbc", "hgb", "hct", "mcv", "mch", "mchc", "rdw_cv", "rdw_sd", "plt", "pct", "mpv", "pdw", "p_lcr", "p_lcc"]
     }
   ],

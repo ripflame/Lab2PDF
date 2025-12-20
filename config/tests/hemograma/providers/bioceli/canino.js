@@ -13,11 +13,11 @@ module.exports = {
 
   sections: [
     {
-      title: "Formula Roja",
+      title: "Fórmula Roja",
       fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hcm", "cmhc", "plaquetas"]
     },
     {
-      title: "Formula Blanca - Valores Absolutos",
+      title: "Fórmula Blanca - Valores Absolutos",
       fields: ["leucocitos_totales", "neutrofilos_totales_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs", "eosinofilos_abs", "basofilos_abs", "monocitos_abs", "linfocitos_abs"]
     },
     {
@@ -70,7 +70,7 @@ module.exports = {
     {
       id: 'cmhc',
       templateField: 'cmhc',
-      label: 'Concentracion Media de Hemoglobina Corpuscular',
+      label: 'Concentración Media de Hemoglobina Corpuscular',
       min: '32.00',
       max: '36.00',
       unit: 'gr/dL'
@@ -94,7 +94,7 @@ module.exports = {
     {
       id: 'neutrofilos_totales_abs',
       templateField: 'neutrofilos_totales_abs',
-      label: 'Neutrofilos Totales Absolutos',
+      label: 'Neutrófilos Totales Absolutos',
       min: '3000',
       max: '11500',
       unit: 'uL'
@@ -102,7 +102,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_abs',
       templateField: 'neutrofilos_segmentados_abs',
-      label: 'Neutrofilos Segmentados Absolutos',
+      label: 'Neutrófilos Segmentados Absolutos',
       min: '3000',
       max: '11500',
       unit: 'uL'
@@ -110,7 +110,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_abs',
       templateField: 'neutrofilos_banda_abs',
-      label: 'Neutrofilos en Banda Absolutos',
+      label: 'Neutrófilos en Banda Absolutos',
       min: '0',
       max: '300',
       unit: 'uL'
@@ -118,7 +118,7 @@ module.exports = {
     {
       id: 'eosinofilos_abs',
       templateField: 'eosinofilos_abs',
-      label: 'Eosinofilos Absolutos',
+      label: 'Eosinófilos Absolutos',
       min: '100',
       max: '1200',
       unit: 'uL'
@@ -126,7 +126,7 @@ module.exports = {
     {
       id: 'basofilos_abs',
       templateField: 'basofilos_abs',
-      label: 'Basofilos Absolutos',
+      label: 'Basófilos Absolutos',
       min: '0',
       max: '100',
       unit: 'uL'
@@ -150,7 +150,7 @@ module.exports = {
     {
       id: 'neutrofilos_totales_rel',
       templateField: 'neutrofilos_totales_rel',
-      label: 'Neutrofilos Totales Relativos',
+      label: 'Neutrófilos Totales Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -158,7 +158,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_rel',
       templateField: 'neutrofilos_segmentados_rel',
-      label: 'Neutrofilos Segmentados Relativos',
+      label: 'Neutrófilos Segmentados Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -166,7 +166,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_rel',
       templateField: 'neutrofilos_banda_rel',
-      label: 'Neutrofilos en Banda Relativos',
+      label: 'Neutrófilos en Banda Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -174,7 +174,7 @@ module.exports = {
     {
       id: 'eosinofilos_rel',
       templateField: 'eosinofilos_rel',
-      label: 'Eosinofilos Relativos',
+      label: 'Eosinófilos Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -182,7 +182,7 @@ module.exports = {
     {
       id: 'basofilos_rel',
       templateField: 'basofilos_rel',
-      label: 'Basofilos Relativos',
+      label: 'Basófilos Relativos',
       min: '',
       max: '',
       unit: '%'

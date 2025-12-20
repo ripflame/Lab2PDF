@@ -5,11 +5,11 @@ module.exports = {
   type: "testWithPhoto",
 
   meta: {
-    title: "Prueba rapida de hemoparasitos",
-    headerTitle: ["Certificado de prueba rapida", "hemoparasitos"],
+    title: "Prueba rápida de hemoparásitos",
+    headerTitle: ["Certificado de prueba rápida", "hemoparásitos"],
     formTitle: "RESULTADOS DE LABORATORIO<br>HEMOPARASITOS",
-    legendTitle: "Hemoparasitos",
-    testDescription: "El analisis mediante inmunoensayo cromatografico revela los siguientes hallazgos en el paciente:",
+    legendTitle: "Hemoparásitos",
+    testDescription: "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
     validation: {
       name: "MVZ Laura Cabrera Borromeo",
       cedula: "11681000",

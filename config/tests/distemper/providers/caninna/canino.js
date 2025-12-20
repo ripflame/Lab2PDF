@@ -5,11 +5,11 @@ module.exports = {
   type: "testWithPhoto",
 
   meta: {
-    title: "Prueba rapida de distemper/adenovirus",
-    headerTitle: ["Certificado de prueba rapida", "distemper/adenovirus canino"],
+    title: "Prueba rápida de distemper/adenovirus",
+    headerTitle: ["Certificado de prueba rápida", "distemper/adenovirus canino"],
     formTitle: "RESULTADOS DE LABORATORIO<br>DISTEMPER/ADENOVIRUS CANINO",
     legendTitle: "Distemper/Adenovirus",
-    testDescription: "El analisis mediante inmunoensayo cromatografico revela los siguientes hallazgos en el paciente:",
+    testDescription: "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
     validation: {
       name: "MVZ Laura Cabrera Borromeo",
       cedula: "11681000",

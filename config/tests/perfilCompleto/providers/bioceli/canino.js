@@ -5,15 +5,15 @@ module.exports = {
   type: "table",
 
   meta: {
-    title: "Perfil Bioquimico Completo",
-    headerTitle: ["Resultados de laboratorio", "Perfil Bioquimico Completo"],
-    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUIMICO COMPLETO",
-    method: "Analizador bioquimico SKYLA VB1 de quimica seca en sangre, plasma o suero, semi-automatico con discos reactivos de biomarcadores"
+    title: "Perfil Bioquímico Completo",
+    headerTitle: ["Resultados de laboratorio", "Perfil Bioquímico Completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUÍMICO COMPLETO",
+    method: "Analizador bioquímico SKYLA VB1 de química seca en sangre, plasma o suero, semiautomático con discos reactivos de biomarcadores"
   },
 
   sections: [
     {
-      title: "Perfil Bioquimico",
+      title: "Perfil Bioquímico",
       fields: ["alb", "tgo", "tgp", "fosfatasa_alcalina", "gamma_glutamil", "proteinas_totales", "globulina", "rel_ag", "bilirrubina_total", "bilirrubina_directa", "bilirrubina_indirecta", "dhl", "amilasa", "lipasa", "glucosa", "nitrogeno_ureico", "creatinina", "urea", "acido_urico", "colesterol", "trigliceridos"]
     }
   ],
@@ -22,7 +22,7 @@ module.exports = {
     {
       id: 'alb',
       templateField: 'alb',
-      label: 'Albumina (ALB)',
+      label: 'Albúmina (ALB)',
       min: '2.6', 
       max: '4.4', 
       unit: 'g/dL'
@@ -62,7 +62,7 @@ module.exports = {
     {
       id: 'proteinas_totales',
       templateField: 'proteinas_totales',
-      label: 'Proteinas Totales',
+      label: 'Proteínas Totales',
       min: '5.40', 
       max: '7.20', 
       unit: 'g/dL'
@@ -78,7 +78,7 @@ module.exports = {
     {
       id: 'rel_ag',
       templateField: 'rel_ag',
-      label: 'Relacion A/G',
+      label: 'Relación A/G',
       min: '0.6', 
       max: '1.1', 
       unit: ''
@@ -110,7 +110,7 @@ module.exports = {
     {
       id: 'dhl',
       templateField: 'dhl',
-      label: 'Desihidrogensa Láctica (DHL)',
+      label: 'Deshidrogenasa Láctica (DHL)',
       min: '', 
       max: '', 
       unit: ''
@@ -182,7 +182,7 @@ module.exports = {
     {
       id: 'trigliceridos',
       templateField: 'trigliceridos',
-      label: 'Trigliceridos',
+      label: 'Triglicéridos',
       min: '25.0', 
       max: '120.0', 
       unit: 'mg/dL'
