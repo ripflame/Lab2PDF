@@ -7,14 +7,6 @@
       <div class="form-column">
         <label class="label" for="wbc">WBC: Leucocitos:</label>
         <input class="input-number" type="number" step="any" id="wbc" required />
-        <label class="label" for="neu">NEU: Netrófilos:</label>
-        <input class="input-number" type="number" step="any" id="neu" required />
-      </div>
-      <div class="form-column">
-        <label class="label" for="nst">NST: Neutrófilos en banda:</label>
-        <input class="input-number" type="number" step="any" id="nst" required />
-        <label class="label" for="nsg">NSG: Neutrófilos segmentados:</label>
-        <input class="input-number" type="number" step="any" id="nsg" required />
       </div>
     </div>
   </fieldset>
@@ -22,14 +14,22 @@
     <legend class="legend">Valores Absolutos</legend>
     <div class="form-columns">
       <div class="form-column">
+        <label class="label" for="neu_abs">NEU: Netrófilos:</label>
+        <input class="input-number" type="number" step="any" id="neu_abs" required />
+        <label class="label" for="nst_abs">NST: Neutrófilos en banda:</label>
+        <input class="input-number" type="number" step="any" id="nst_abs" required />
+        <label class="label" for="nsg_abs">NSG: Neutrófilos segmentados:</label>
+        <input class="input-number" type="number" step="any" id="nsg_abs" required />
+      </div>
+      <div class="form-column">
         <label class="label" for="lym_abs">LYM: Linfocitos:</label>
         <input class="input-number" type="number" step="any" id="lym_abs" required />
         <label class="label" for="mon_abs">MON: Monocitos:</label>
         <input class="input-number" type="number" step="any" id="mon_abs" required />
-      </div>
-      <div class="form-column">
         <label class="label" for="eos_abs">EOS: Eosinófilos:</label>
         <input class="input-number" type="number" step="any" id="eos_abs" required />
+      </div>
+      <div class="form-column">
         <label class="label" for="bas_abs">BAS: Basófilos:</label>
         <input class="input-number" type="number" step="any" id="bas_abs" required />
       </div>
@@ -39,15 +39,21 @@
     <legend class="legend">Valores Relativos</legend>
     <div class="form-columns">
       <div class="form-column">
-        <label class="label" for="lym_rel">LYM: Linfocitos:</label>
+        <label class="label" for="neu_rel">NEU%: Neutrófilos %:</label>
+        <input class="input-number" type="number" step="any" id="neu_rel" required />
+        <label class="label" for="nsg_rel">NSG%: Neutrófilos segmentados %:</label>
+        <input class="input-number" type="number" step="any" id="nsg_rel" required />
+      </div>
+      <div class="form-column">
+        <label class="label" for="lym_rel">LYM%: Linfocitos %:</label>
         <input class="input-number" type="number" step="any" id="lym_rel" required />
-        <label class="label" for="mon_rel">MON: Monocitos:</label>
+        <label class="label" for="mon_rel">MON%: Monocitos %:</label>
         <input class="input-number" type="number" step="any" id="mon_rel" required />
       </div>
       <div class="form-column">
-        <label class="label" for="eos_rel">EOS: Eosinófilos:</label>
+        <label class="label" for="eos_rel">EOS%: Eosinófilos %:</label>
         <input class="input-number" type="number" step="any" id="eos_rel" required />
-        <label class="label" for="bas_rel">BAS: Basófilos:</label>
+        <label class="label" for="bas_rel">BAS%: Basófilos %:</label>
         <input class="input-number" type="number" step="any" id="bas_rel" required />
       </div>
     </div>
@@ -79,10 +85,6 @@
       <div class="form-column">
         <label class="label" for="plt">PLT: Plaquetas:</label>
         <input class="input-number" type="number" step="any" id="plt" required />
-      </div>
-      <div class="form-column">
-        <label class="label" for="pct">PCT: Plaquetocrito:</label>
-        <input class="input-number" type="number" step="any" id="pct" required />
       </div>
       <div class="form-column">
         <label class="label" for="mpv">MPV:</label>
