@@ -8,16 +8,16 @@ module.exports = {
     title: "Hemograma completo",
     headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
     formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
-    maquilado: "Veterinaria PEC. Prol. Aldama esq. Revolucion, col. Unitaria. Perif. sur a 200mts. Tel: (916) 590-6418"
+    maquilado: "Veterinaria PEC. Prol. Aldama esq. Revolución, col. Unitaria. Perif. sur a 200mts. Tel: (916) 590-6418"
   },
 
   sections: [
     {
-      title: "Formula Roja",
+      title: "Fórmula Roja",
       fields: ["eri", "hb", "hct", "vcm", "hcm", "chcm", "rdwc", "rdws", "plt", "vpm", "pct", "pdwc", "pdws"]
     },
     {
-      title: "Formula Blanca - Valores Absolutos",
+      title: "Fórmula Blanca - Valores Absolutos",
       fields: ["leu_abs", "lym_abs", "mon_abs", "neu_abs", "eos_abs", "bas_abs"]
     },
     {
@@ -214,7 +214,7 @@ module.exports = {
     {
       id: 'pdws',
       templateField: 'pdws',
-      label: 'Disperción de plaquetas (PDWs)',
+      label: 'Dispersión de plaquetas (PDWs)',
       min: '', 
       max: '', 
       unit: 'fl'

@@ -5,15 +5,15 @@ module.exports = {
   type: "table",
 
   meta: {
-    title: "Perfil Bioquimico Completo",
-    headerTitle: ["Resultados de laboratorio", "Perfil Bioquimico Completo"],
-    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUIMICO COMPLETO",
-    method: "Analizador bioquimico SKYLA VB1 de quimica seca en sangre, plasma o suero, semi-automatico con discos reactivos de biomarcadores"
+    title: "Perfil Bioquímico Completo",
+    headerTitle: ["Resultados de laboratorio", "Perfil Bioquímico Completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUÍMICO COMPLETO",
+    method: "Analizador bioquímico SKYLA VB1 de química seca en sangre, plasma o suero, semiautomático con discos reactivos de biomarcadores"
   },
 
   sections: [
     {
-      title: "Perfil Bioquimico",
+      title: "Perfil Bioquímico",
       fields: ["alb", "tp", "glu", "chol", "alp", "alt", "ggt", "tbil", "amy", "lipa", "bun", "crea", "ca", "phos", "glob", "urea", "ag", "bc"]
     }
   ],
@@ -22,7 +22,7 @@ module.exports = {
     {
       id: 'alb',
       templateField: 'alb',
-      label: 'Albumina (ALB)',
+      label: 'Albúmina (ALB)',
       min: '2.6', 
       max: '4.6', 
       unit: 'g/dL'
@@ -30,7 +30,7 @@ module.exports = {
     {
       id: 'tp',
       templateField: 'tp',
-      label: 'Proteinas Totales (TP)',
+      label: 'Proteínas Totales (TP)',
       min: '5.2', 
       max: '8.2', 
       unit: 'g/dL'
@@ -102,7 +102,7 @@ module.exports = {
     {
       id: 'bun',
       templateField: 'bun',
-      label: 'Nitrogeno Ureico (BUN)',
+      label: 'Nitrógeno Uréico (BUN)',
       min: '6.0', 
       max: '26.0', 
       unit: 'mg/dL'
@@ -150,7 +150,7 @@ module.exports = {
     {
       id: 'ag',
       templateField: 'ag',
-      label: 'Relación Albumina/Globulina (#A/G)',
+      label: 'Relación Albúmina/Globulina (#A/G)',
       min: '', 
       max: '', 
       unit: ''
@@ -158,7 +158,7 @@ module.exports = {
     {
       id: 'bc',
       templateField: 'bc',
-      label: 'Relación Nitrogeno Uréico/Creatinina (#B/C)',
+      label: 'Relación Nitrógeno Uréico/Creatinina (#B/C)',
       min: '', 
       max: '', 
       unit: ''

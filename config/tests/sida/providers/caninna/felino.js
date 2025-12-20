@@ -5,11 +5,11 @@ module.exports = {
   type: "testWithPhoto",
 
   meta: {
-    title: "Prueba rapida SIDA | Leucemia | Gusano del corazon",
-    headerTitle: ["Certificado de prueba rapida", "SIDA | Leucemia | Gusano del corazon"],
-    formTitle: "RESULTADOS DE LABORATORIO<br>SIDA | LEUCEMIA | GUSANO DEL CORAZON",
-    legendTitle: "SIDA | Leucemia | Gusano del corazon",
-    testDescription: "El analisis mediante inmunoensayo cromatografico revela los siguientes hallazgos en el paciente:",
+    title: "Prueba rápida SIDA | Leucemia | Gusano del corazón",
+    headerTitle: ["Certificado de prueba rápida", "SIDA | Leucemia | Gusano del corazón"],
+    formTitle: "RESULTADOS DE LABORATORIO<br>SIDA | LEUCEMIA | GUSANO DEL CORAZÓN",
+    legendTitle: "SIDA | Leucemia | Gusano del corazón",
+    testDescription: "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
     validation: {
       name: "MVZ Laura Cabrera Borromeo",
       cedula: "11681000",

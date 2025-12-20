@@ -5,11 +5,11 @@ module.exports = {
   type: "testWithPhoto",
 
   meta: {
-    title: "Prueba rapida de gastroenteritis",
-    headerTitle: ["Certificado de prueba rapida", "gastroenteritis"],
+    title: "Prueba rápida de gastroenteritis",
+    headerTitle: ["Certificado de prueba rápida", "gastroenteritis"],
     formTitle: "RESULTADOS DE LABORATORIO<br>GASTROENTERITIS",
     legendTitle: "Gastroenteritis",
-    testDescription: "El analisis mediante inmunoensayo cromatografico revela los siguientes hallazgos en el paciente:",
+    testDescription: "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
     validation: {
       name: "MVZ Laura Cabrera Borromeo",
       cedula: "11681000",
