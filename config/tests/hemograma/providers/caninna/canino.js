@@ -8,188 +8,193 @@ module.exports = {
     title: "Hemograma completo",
     headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
     formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
-    method: "Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera."
+    method:
+      "Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera.",
   },
 
   sections: [
     {
-      title: "Fórmula Roja",
-      fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hpe", "cmh", "plaquetas"]
-    },
-    {
       title: "Fórmula Blanca",
-      fields: ["leucocitos"]
-    },
-    {
-      title: "Valores Relativos",
-      fields: ["monocitos_rel", "linfocitos_rel", "eosinofilos_rel", "basofilos_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel"]
+      fields: ["wbc", "neu", "nst", "nsg"],
     },
     {
       title: "Valores Absolutos",
-      fields: ["monocitos_abs", "linfocitos_abs", "eosinofilos_abs", "basofilos_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs"]
-    }
+      fields: ["lym_abs", "mon_abs", "eos_abs", "bas_abs"],
+    },
+    {
+      title: "Valores Relativos",
+      fields: ["lym_rel", "mon_rel", "eos_rel", "bas_rel"],
+    },
+    {
+      title: "Fórmula Roja",
+      fields: ["rbc", "hgb", "hct", "mcv", "mch", "mchc"],
+    },
+    {
+      title: "Plaquetas",
+      fields: ["plt", "pct", "mpv"],
+    },
   ],
 
   fields: [
     {
-      id: "eritrocitos",
-      templateField: "eritrocitos",
-      label: "Eritrocitos",
-      min: "4.50",
-      max: "8.50",
-      unit: "x 10<sup>12</sup>/L"
-    },
-    {
-      id: "hemoglobina",
-      templateField: "hemoglobina",
-      label: "Hemoglobina",
-      min: "110.00",
-      max: "190.00",
-      unit: "g/L"
-    },
-    {
-      id: "hematocrito",
-      templateField: "hematocrito",
-      label: "Hematocrito",
-      min: "30.00",
-      max: "56.00",
-      unit: "%"
-    },
-    {
-      id: "vgm",
-      templateField: "vgm",
-      label: "Volumen Globular Medio",
-      min: "59.00",
-      max: "78.00",
-      unit: "fL"
-    },
-    {
-      id: "hpe",
-      templateField: "hpe",
-      label: "Hemoglobina Promedio por Eritrocitos",
-      min: "19.00",
-      max: "27.00",
-      unit: "pg"
-    },
-    {
-      id: "cmh",
-      templateField: "cmh",
-      label: "Concentración Media de Hemoglobina",
-      min: "300.00",
-      max: "380.00",
-      unit: "g/dL"
-    },
-    {
-      id: "plaquetas",
-      templateField: "plaquetas",
-      label: "Plaquetas",
-      min: "117.00",
-      max: "500.00",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "leucocitos",
-      templateField: "leucocitos",
-      label: "Leucocitos",
+      id: "wbc",
+      templateField: "wbc",
+      label: "WBC: Leucocitos",
       min: "4.30",
       max: "16.50",
-      unit: "x 10<sup>9</sup>/L"
+      unit: "x 10<sup>9</sup>/L",
     },
     {
-      id: "monocitos_rel",
-      templateField: "monocitos_rel",
-      label: "Monocitos",
-      min: "0.00",
-      max: "14.70",
-      unit: "%"
+      id: "neu",
+      templateField: "neu",
+      label: "NEU: Netrófilos",
+      min: "2.70",
+      max: "12.80",
+      unit: "x 10<sup>9</sup>/L",
     },
     {
-      id: "linfocitos_rel",
-      templateField: "linfocitos_rel",
-      label: "Linfocitos",
-      min: "20.00",
-      max: "50.00",
-      unit: "%"
-    },
-    {
-      id: "eosinofilos_rel",
-      templateField: "eosinofilos_rel",
-      label: "Eosinófilos",
-      min: "0.50",
-      max: "13.70",
-      unit: "%"
-    },
-    {
-      id: "basofilos_rel",
-      templateField: "basofilos_rel",
-      label: "Basófilos",
-      min: "0.00",
-      max: "0.50",
-      unit: "%"
-    },
-    {
-      id: "neutrofilos_segmentados_rel",
-      templateField: "neutrofilos_segmentados_rel",
-      label: "Neutrófilos Segmentados",
-      min: "50.00",
-      max: "75.00",
-      unit: "%"
-    },
-    {
-      id: "neutrofilos_banda_rel",
-      templateField: "neutrofilos_banda_rel",
-      label: "Neutrófilos en Banda",
-      min: "0.00",
-      max: "10.00",
-      unit: "%"
-    },
-    {
-      id: "monocitos_abs",
-      templateField: "monocitos_abs",
-      label: "Monocitos",
-      min: "0.00",
-      max: "1.50",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "linfocitos_abs",
-      templateField: "linfocitos_abs",
-      label: "Linfocitos",
-      min: "0.83",
-      max: "4.50",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "eosinofilos_abs",
-      templateField: "eosinofilos_abs",
-      label: "Eosinófilos",
-      min: "0.04",
-      max: "1.60",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "basofilos_abs",
-      templateField: "basofilos_abs",
-      label: "Basófilos",
-      min: "0.00",
-      max: "0.12",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "neutrofilos_segmentados_abs",
-      templateField: "neutrofilos_segmentados_abs",
-      label: "Neutrófilos Segmentados",
-      min: "2.50",
-      max: "11.40",
-      unit: "x 10<sup>9</sup>/L"
-    },
-    {
-      id: "neutrofilos_banda_abs",
-      templateField: "neutrofilos_banda_abs",
-      label: "Neutrófilos en Banda",
+      id: "nst",
+      templateField: "nst",
+      label: "NST: Neutrófilos en banda",
       min: "0.00",
       max: "0.80",
-      unit: "x 10<sup>9</sup>/L"
+      unit: "x 10<sup>9</sup>/L",
     },
-  ]
+    {
+      id: "nsg",
+      templateField: "nsg",
+      label: "NSG: Neutrófilos segmentados",
+      min: "2.50",
+      max: "11.40",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "lym_abs",
+      templateField: "lym_abs",
+      label: "LYM: Linfocitos",
+      min: "0.83",
+      max: "4.50",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "mon_abs",
+      templateField: "mon_abs",
+      label: "MON: Monocitos",
+      min: "0.00",
+      max: "1.50",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "eos_abs",
+      templateField: "eos_abs",
+      label: "EOS: Eosinófilos",
+      min: "0.04",
+      max: "1.60",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "bas_abs",
+      templateField: "bas_abs",
+      label: "BAS: Basófilos",
+      min: "0.00",
+      max: "0.12",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "lym_rel",
+      templateField: "lym_rel",
+      label: "LYM: Linfocitos",
+      min: "20.00",
+      max: "50.00",
+      unit: "%",
+    },
+    {
+      id: "mon_rel",
+      templateField: "mon_rel",
+      label: "MON: Monocitos",
+      min: "0.00",
+      max: "14.70",
+      unit: "%",
+    },
+    {
+      id: "eos_rel",
+      templateField: "eos_rel",
+      label: "EOS: Eosinófilos",
+      min: "0.50",
+      max: "13.70",
+      unit: "%",
+    },
+    {
+      id: "bas_rel",
+      templateField: "bas_rel",
+      label: "BAS: Basófilos",
+      min: "0.00",
+      max: "0.50",
+      unit: "%",
+    },
+    {
+      id: "rbc",
+      templateField: "rbc",
+      label: "RBC: Hematíes",
+      min: "4.50",
+      max: "8.50",
+      unit: "x 10<sup>12</sup>/L",
+    },
+    {
+      id: "hgb",
+      templateField: "hgb",
+      label: "HGB: Hemoglobina",
+      min: "110.00",
+      max: "190.00",
+      unit: "g/L",
+    },
+    {
+      id: "mcv",
+      templateField: "mcv",
+      label: "MCV",
+      min: "59.00",
+      max: "78.00",
+      unit: "fL",
+    },
+    {
+      id: "mch",
+      templateField: "mch",
+      label: "MCH",
+      min: "19.00",
+      max: "27.00",
+      unit: "pg",
+    },
+    {
+      id: "mchc",
+      templateField: "mchc",
+      label: "MCHC",
+      min: "300.00",
+      max: "380.00",
+      unit: "g/L",
+    },
+    {
+      id: "plt",
+      templateField: "plt",
+      label: "PLT: Plaquetas",
+      min: "117.00",
+      max: "500.00",
+      unit: "10<sup>9</sup>/L",
+    },
+    {
+      id: "pct",
+      templateField: "pct",
+      label: "PCT: Plaquetocrito",
+      min: "0.10",
+      max: "0.60",
+      unit: "%",
+    },
+    {
+      id: "mpv",
+      templateField: "mpv",
+      label: "MPV",
+      min: "5.60",
+      max: "14.10",
+      unit: "fL",
+    },
+  ],
 };
