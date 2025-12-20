@@ -36,6 +36,8 @@
     },
     "files": [
       "**/*",
+      "!scripts/**",
+      "!templates/preview/**",
       "main.js",
       "package.json",
       "assets/",
