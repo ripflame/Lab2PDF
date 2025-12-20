@@ -1,3 +1,6 @@
+#Project Specific
+templates/preview
+
 # Node.js dependencies
 node_modules/
 
