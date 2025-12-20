@@ -1,0 +1,39 @@
+/* Test results section */
+.test-results {
+  margin-bottom: 50px;
+}
+.test-description {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.columns-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 10px;
+  font-size: 19px;
+}
+.test-result-image {
+  width: 350px;
+  height: 200px;
+  background-color: #fff;
+  object-fit: contain;
+}
+
+/* Report validation section */
+.report-validation {
+  text-align: center;
+}
+
+.is-positive {
+  color: #ff0000;
+}
