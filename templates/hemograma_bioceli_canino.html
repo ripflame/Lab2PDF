@@ -27,34 +27,40 @@
     </div>
   </fieldset>
   <fieldset class="fieldset">
-    <legend class="legend">Fórmula Blanca - Valores Absolutos</legend>
+    <legend class="legend">Fórmula Blanca</legend>
     <div class="form-columns">
       <div class="form-column">
         <label class="label" for="leucocitos_totales">Leucocitos Totales Absolutos:</label>
         <input class="input-number" type="number" step="any" id="leucocitos_totales" required />
+      </div>
+    </div>
+    <fieldset class="fieldset nested-fieldset">
+      <legend class="legend">Valores Absolutos</legend>
+    <div class="form-columns">
+      <div class="form-column">
         <label class="label" for="neutrofilos_totales_abs">Neutrófilos Totales Absolutos:</label>
         <input class="input-number" type="number" step="any" id="neutrofilos_totales_abs" required />
         <label class="label" for="neutrofilos_segmentados_abs">Neutrófilos Segmentados Absolutos:</label>
         <input class="input-number" type="number" step="any" id="neutrofilos_segmentados_abs" required />
-      </div>
-      <div class="form-column">
         <label class="label" for="neutrofilos_banda_abs">Neutrófilos en Banda Absolutos:</label>
         <input class="input-number" type="number" step="any" id="neutrofilos_banda_abs" required />
+      </div>
+      <div class="form-column">
         <label class="label" for="eosinofilos_abs">Eosinófilos Absolutos:</label>
         <input class="input-number" type="number" step="any" id="eosinofilos_abs" required />
         <label class="label" for="basofilos_abs">Basófilos Absolutos:</label>
         <input class="input-number" type="number" step="any" id="basofilos_abs" required />
-      </div>
-      <div class="form-column">
         <label class="label" for="monocitos_abs">Monocitos Absolutos:</label>
         <input class="input-number" type="number" step="any" id="monocitos_abs" required />
+      </div>
+      <div class="form-column">
         <label class="label" for="linfocitos_abs">Linfocitos Absolutos:</label>
         <input class="input-number" type="number" step="any" id="linfocitos_abs" required />
       </div>
     </div>
-  </fieldset>
-  <fieldset class="fieldset">
-    <legend class="legend">Valores Relativos</legend>
+    </fieldset>
+    <fieldset class="fieldset nested-fieldset">
+      <legend class="legend">Valores Relativos</legend>
     <div class="form-columns">
       <div class="form-column">
         <label class="label" for="neutrofilos_totales_rel">Neutrófilos Totales Relativos:</label>
@@ -77,5 +83,6 @@
         <input class="input-number" type="number" step="any" id="linfocitos_rel" required />
       </div>
     </div>
+    </fieldset>
   </fieldset>
 </div>

@@ -18,15 +18,17 @@ module.exports = {
     },
     {
       title: "Fórmula Blanca",
-      fields: ["leucocitos"]
-    },
-    {
-      title: "Valores Relativos",
-      fields: ["monocitos_rel", "linfocitos_rel", "eosinofilos_rel", "basofilos_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel"]
-    },
-    {
-      title: "Valores Absolutos",
-      fields: ["monocitos_abs", "linfocitos_abs", "eosinofilos_abs", "basofilos_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs"]
+      fields: [
+        "leucocitos",
+        {
+          title: "Valores Relativos",
+          fields: ["monocitos_rel", "linfocitos_rel", "eosinofilos_rel", "basofilos_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel"]
+        },
+        {
+          title: "Valores Absolutos",
+          fields: ["monocitos_abs", "linfocitos_abs", "eosinofilos_abs", "basofilos_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs"]
+        }
+      ]
     }
   ],
 

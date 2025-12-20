@@ -39,30 +39,36 @@
     </div>
   </fieldset>
   <fieldset class="fieldset">
-    <legend class="legend">Fórmula Blanca - Valores Absolutos</legend>
+    <legend class="legend">Fórmula Blanca</legend>
     <div class="form-columns">
       <div class="form-column">
         <label class="label" for="leu_abs">Leucocitos Absolutos (LEU):</label>
         <input class="input-number" type="number" step="any" id="leu_abs" required />
+      </div>
+    </div>
+    <fieldset class="fieldset nested-fieldset">
+      <legend class="legend">Valores Absolutos</legend>
+    <div class="form-columns">
+      <div class="form-column">
         <label class="label" for="lym_abs">Linfocitos Absolutos (LIN):</label>
         <input class="input-number" type="number" step="any" id="lym_abs" required />
-      </div>
-      <div class="form-column">
         <label class="label" for="mon_abs">Monocitos Absolutos (MON):</label>
         <input class="input-number" type="number" step="any" id="mon_abs" required />
-        <label class="label" for="neu_abs">Neutrófilos Absolutos (NEU):</label>
-        <input class="input-number" type="number" step="any" id="neu_abs" required />
       </div>
       <div class="form-column">
+        <label class="label" for="neu_abs">Neutrófilos Absolutos (NEU):</label>
+        <input class="input-number" type="number" step="any" id="neu_abs" required />
         <label class="label" for="eos_abs">Eosinófilos Absolutos (EOS):</label>
         <input class="input-number" type="number" step="any" id="eos_abs" required />
+      </div>
+      <div class="form-column">
         <label class="label" for="bas_abs">Basófilos Absolutos (BAS):</label>
         <input class="input-number" type="number" step="any" id="bas_abs" required />
       </div>
     </div>
-  </fieldset>
-  <fieldset class="fieldset">
-    <legend class="legend">Valores Relativos</legend>
+    </fieldset>
+    <fieldset class="fieldset nested-fieldset">
+      <legend class="legend">Valores Relativos</legend>
     <div class="form-columns">
       <div class="form-column">
         <label class="label" for="lym_rel">Linfocitos Relativos (LYM%):</label>
@@ -81,5 +87,6 @@
         <input class="input-number" type="number" step="any" id="bas_rel" required />
       </div>
     </div>
+    </fieldset>
   </fieldset>
 </div>

@@ -14,15 +14,17 @@ module.exports = {
   sections: [
     {
       title: "Fórmula Blanca",
-      fields: ["wbc"]
-    },
-    {
-      title: "Valores Absolutos",
-      fields: ["linfocitos_abs", "monocitos_abs", "granulocitos_abs", "eosinofilos_abs"]
-    },
-    {
-      title: "Valores Relativos",
-      fields: ["linfocitos_rel", "monocitos_rel", "granulocitos_rel", "eosinofilos_rel"]
+      fields: [
+        "wbc",
+        {
+          title: "Valores Absolutos",
+          fields: ["linfocitos_abs", "monocitos_abs", "granulocitos_abs", "eosinofilos_abs"]
+        },
+        {
+          title: "Valores Relativos",
+          fields: ["linfocitos_rel", "monocitos_rel", "granulocitos_rel", "eosinofilos_rel"]
+        }
+      ]
     },
     {
       title: "Fórmula Roja",
