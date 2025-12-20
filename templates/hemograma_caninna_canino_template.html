@@ -235,23 +235,23 @@ tr.highlight_low {
           <td class="semi-bold">{{wbc}}</td>
           <td>{{minValue_wbc}} a {{maxValue_wbc}} {{unit_wbc}}</td>
         </tr>
-        <tr {{row_neu}}>
-          <td>NEU: Netrófilos</td>
-          <td class="semi-bold">{{neu}}</td>
-          <td>{{minValue_neu}} a {{maxValue_neu}} {{unit_neu}}</td>
-        </tr>
-        <tr {{row_nst}}>
-          <td>NST: Neutrófilos en banda</td>
-          <td class="semi-bold">{{nst}}</td>
-          <td>{{minValue_nst}} a {{maxValue_nst}} {{unit_nst}}</td>
-        </tr>
-        <tr {{row_nsg}}>
-          <td>NSG: Neutrófilos segmentados</td>
-          <td class="semi-bold">{{nsg}}</td>
-          <td>{{minValue_nsg}} a {{maxValue_nsg}} {{unit_nsg}}</td>
-        </tr>
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
+        </tr>
+        <tr {{row_neu_abs}}>
+          <td>NEU: Netrófilos</td>
+          <td class="semi-bold">{{neu_abs}}</td>
+          <td>{{minValue_neu_abs}} a {{maxValue_neu_abs}} {{unit_neu_abs}}</td>
+        </tr>
+        <tr {{row_nst_abs}}>
+          <td>NST: Neutrófilos en banda</td>
+          <td class="semi-bold">{{nst_abs}}</td>
+          <td>{{minValue_nst_abs}} a {{maxValue_nst_abs}} {{unit_nst_abs}}</td>
+        </tr>
+        <tr {{row_nsg_abs}}>
+          <td>NSG: Neutrófilos segmentados</td>
+          <td class="semi-bold">{{nsg_abs}}</td>
+          <td>{{minValue_nsg_abs}} a {{maxValue_nsg_abs}} {{unit_nsg_abs}}</td>
         </tr>
         <tr {{row_lym_abs}}>
           <td>LYM: Linfocitos</td>
@@ -276,23 +276,33 @@ tr.highlight_low {
         <tr class="bold">
           <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
         </tr>
+        <tr {{row_neu_rel}}>
+          <td>NEU%: Neutrófilos %</td>
+          <td class="semi-bold">{{neu_rel}}</td>
+          <td>{{minValue_neu_rel}} a {{maxValue_neu_rel}} {{unit_neu_rel}}</td>
+        </tr>
+        <tr {{row_nsg_rel}}>
+          <td>NSG%: Neutrófilos segmentados %</td>
+          <td class="semi-bold">{{nsg_rel}}</td>
+          <td>{{minValue_nsg_rel}} a {{maxValue_nsg_rel}} {{unit_nsg_rel}}</td>
+        </tr>
         <tr {{row_lym_rel}}>
-          <td>LYM: Linfocitos</td>
+          <td>LYM%: Linfocitos %</td>
           <td class="semi-bold">{{lym_rel}}</td>
           <td>{{minValue_lym_rel}} a {{maxValue_lym_rel}} {{unit_lym_rel}}</td>
         </tr>
         <tr {{row_mon_rel}}>
-          <td>MON: Monocitos</td>
+          <td>MON%: Monocitos %</td>
           <td class="semi-bold">{{mon_rel}}</td>
           <td>{{minValue_mon_rel}} a {{maxValue_mon_rel}} {{unit_mon_rel}}</td>
         </tr>
         <tr {{row_eos_rel}}>
-          <td>EOS: Eosinófilos</td>
+          <td>EOS%: Eosinófilos %</td>
           <td class="semi-bold">{{eos_rel}}</td>
           <td>{{minValue_eos_rel}} a {{maxValue_eos_rel}} {{unit_eos_rel}}</td>
         </tr>
         <tr {{row_bas_rel}}>
-          <td>BAS: Basófilos</td>
+          <td>BAS%: Basófilos %</td>
           <td class="semi-bold">{{bas_rel}}</td>
           <td>{{minValue_bas_rel}} a {{maxValue_bas_rel}} {{unit_bas_rel}}</td>
         </tr>
@@ -331,11 +341,6 @@ tr.highlight_low {
           <td>PLT: Plaquetas</td>
           <td class="semi-bold">{{plt}}</td>
           <td>{{minValue_plt}} a {{maxValue_plt}} {{unit_plt}}</td>
-        </tr>
-        <tr {{row_pct}}>
-          <td>PCT: Plaquetocrito</td>
-          <td class="semi-bold">{{pct}}</td>
-          <td>{{minValue_pct}} a {{maxValue_pct}} {{unit_pct}}</td>
         </tr>
         <tr {{row_mpv}}>
           <td>MPV</td>

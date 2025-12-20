@@ -15,23 +15,23 @@ module.exports = {
   sections: [
     {
       title: "Fórmula Blanca",
-      fields: ["wbc", "neu", "nst", "nsg"],
+      fields: ["wbc"],
     },
     {
       title: "Valores Absolutos",
-      fields: ["lym_abs", "mon_abs", "eos_abs", "bas_abs"],
+      fields: ["neu_abs", "nst_abs", "nsg_abs", "lym_abs", "mon_abs", "eos_abs", "bas_abs"],
     },
     {
       title: "Valores Relativos",
-      fields: ["lym_rel", "mon_rel", "eos_rel", "bas_rel"],
+      fields: ["neu_rel", "nsg_rel", "lym_rel", "mon_rel", "eos_rel", "bas_rel"],
     },
     {
       title: "Fórmula Roja",
-      fields: ["rbc", "hgb", "hct", "mcv", "mch", "mchc"],
+      fields: ["rbc", "hgb", "mcv", "mch", "mchc"],
     },
     {
       title: "Plaquetas",
-      fields: ["plt", "pct", "mpv"],
+      fields: ["plt", "mpv"],
     },
   ],
 
@@ -45,24 +45,24 @@ module.exports = {
       unit: "x 10<sup>9</sup>/L",
     },
     {
-      id: "neu",
-      templateField: "neu",
+      id: "neu_abs",
+      templateField: "neu_abs",
       label: "NEU: Netrófilos",
       min: "2.70",
       max: "12.80",
       unit: "x 10<sup>9</sup>/L",
     },
     {
-      id: "nst",
-      templateField: "nst",
+      id: "nst_abs",
+      templateField: "nst_abs",
       label: "NST: Neutrófilos en banda",
       min: "0.00",
       max: "0.80",
       unit: "x 10<sup>9</sup>/L",
     },
     {
-      id: "nsg",
-      templateField: "nsg",
+      id: "nsg_abs",
+      templateField: "nsg_abs",
       label: "NSG: Neutrófilos segmentados",
       min: "2.50",
       max: "11.40",
@@ -101,9 +101,25 @@ module.exports = {
       unit: "x 10<sup>9</sup>/L",
     },
     {
+      id: "neu_rel",
+      templateField: "neu_rel",
+      label: "NEU%: Neutrófilos %",
+      min: "38.00",
+      max: "80.00",
+      unit: "%",
+    },
+    {
+      id: "nsg_rel",
+      templateField: "nsg_rel",
+      label: "NSG%: Neutrófilos segmentados %",
+      min: "35.00",
+      max: "75.00",
+      unit: "%",
+    },
+    {
       id: "lym_rel",
       templateField: "lym_rel",
-      label: "LYM: Linfocitos",
+      label: "LYM%: Linfocitos %",
       min: "20.00",
       max: "50.00",
       unit: "%",
@@ -111,7 +127,7 @@ module.exports = {
     {
       id: "mon_rel",
       templateField: "mon_rel",
-      label: "MON: Monocitos",
+      label: "MON%: Monocitos %",
       min: "0.00",
       max: "14.70",
       unit: "%",
@@ -119,7 +135,7 @@ module.exports = {
     {
       id: "eos_rel",
       templateField: "eos_rel",
-      label: "EOS: Eosinófilos",
+      label: "EOS%: Eosinófilos %",
       min: "0.50",
       max: "13.70",
       unit: "%",
@@ -127,7 +143,7 @@ module.exports = {
     {
       id: "bas_rel",
       templateField: "bas_rel",
-      label: "BAS: Basófilos",
+      label: "BAS%: Basófilos %",
       min: "0.00",
       max: "0.50",
       unit: "%",
@@ -179,14 +195,6 @@ module.exports = {
       min: "117.00",
       max: "500.00",
       unit: "10<sup>9</sup>/L",
-    },
-    {
-      id: "pct",
-      templateField: "pct",
-      label: "PCT: Plaquetocrito",
-      min: "0.10",
-      max: "0.60",
-      unit: "%",
     },
     {
       id: "mpv",
