@@ -228,123 +228,131 @@ tr.highlight_low {
       </thead>
       <tbody>
         <tr class="bold">
-          <td class="center" colspan="3"><i>FÓRMULA ROJA</i></td>
-        </tr>
-        <tr {{row_eritrocitos}}>
-          <td>Eritrocitos</td>
-          <td class="semi-bold">{{eritrocitos}}</td>
-          <td>{{minValue_eritrocitos}} a {{maxValue_eritrocitos}} {{unit_eritrocitos}}</td>
-        </tr>
-        <tr {{row_hemoglobina}}>
-          <td>Hemoglobina</td>
-          <td class="semi-bold">{{hemoglobina}}</td>
-          <td>{{minValue_hemoglobina}} a {{maxValue_hemoglobina}} {{unit_hemoglobina}}</td>
-        </tr>
-        <tr {{row_hematocrito}}>
-          <td>Hematocrito</td>
-          <td class="semi-bold">{{hematocrito}}</td>
-          <td>{{minValue_hematocrito}} a {{maxValue_hematocrito}} {{unit_hematocrito}}</td>
-        </tr>
-        <tr {{row_vgm}}>
-          <td>Volumen Globular Medio</td>
-          <td class="semi-bold">{{vgm}}</td>
-          <td>{{minValue_vgm}} a {{maxValue_vgm}} {{unit_vgm}}</td>
-        </tr>
-        <tr {{row_hpe}}>
-          <td>Hemoglobina Promedio por Eritrocitos</td>
-          <td class="semi-bold">{{hpe}}</td>
-          <td>{{minValue_hpe}} a {{maxValue_hpe}} {{unit_hpe}}</td>
-        </tr>
-        <tr {{row_cmh}}>
-          <td>Concentración Media de Hemoglobina</td>
-          <td class="semi-bold">{{cmh}}</td>
-          <td>{{minValue_cmh}} a {{maxValue_cmh}} {{unit_cmh}}</td>
-        </tr>
-        <tr {{row_plaquetas}}>
-          <td>Plaquetas</td>
-          <td class="semi-bold">{{plaquetas}}</td>
-          <td>{{minValue_plaquetas}} a {{maxValue_plaquetas}} {{unit_plaquetas}}</td>
-        </tr>
-        <tr class="bold">
           <td class="center" colspan="3"><i>FÓRMULA BLANCA</i></td>
         </tr>
-        <tr {{row_leucocitos}}>
-          <td>Leucocitos</td>
-          <td class="semi-bold">{{leucocitos}}</td>
-          <td>{{minValue_leucocitos}} a {{maxValue_leucocitos}} {{unit_leucocitos}}</td>
+        <tr {{row_wbc}}>
+          <td>WBC: Leucocitos</td>
+          <td class="semi-bold">{{wbc}}</td>
+          <td>{{minValue_wbc}} a {{maxValue_wbc}} {{unit_wbc}}</td>
         </tr>
         <tr class="bold">
-          <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
+          <td class="center" colspan="3"><i>Valores Absolutos</i></td>
         </tr>
-        <tr {{row_monocitos_rel}}>
-          <td>Monocitos</td>
-          <td class="semi-bold">{{monocitos_rel}}</td>
-          <td>{{minValue_monocitos_rel}} a {{maxValue_monocitos_rel}} {{unit_monocitos_rel}}</td>
+        <tr {{row_neu_abs}}>
+          <td>NEU: Netrófilos</td>
+          <td class="semi-bold">{{neu_abs}}</td>
+          <td>{{minValue_neu_abs}} a {{maxValue_neu_abs}} {{unit_neu_abs}}</td>
         </tr>
-        <tr {{row_linfocitos_rel}}>
-          <td>Linfocitos</td>
-          <td class="semi-bold">{{linfocitos_rel}}</td>
-          <td>{{minValue_linfocitos_rel}} a {{maxValue_linfocitos_rel}} {{unit_linfocitos_rel}}</td>
+        <tr {{row_nst_abs}}>
+          <td>NST: Neutrófilos en banda</td>
+          <td class="semi-bold">{{nst_abs}}</td>
+          <td>{{minValue_nst_abs}} a {{maxValue_nst_abs}} {{unit_nst_abs}}</td>
         </tr>
-        <tr {{row_eosinofilos_rel}}>
-          <td>Eosinófilos</td>
-          <td class="semi-bold">{{eosinofilos_rel}}</td>
-          <td>{{minValue_eosinofilos_rel}} a {{maxValue_eosinofilos_rel}} {{unit_eosinofilos_rel}}</td>
+        <tr {{row_nsg_abs}}>
+          <td>NSG: Neutrófilos segmentados</td>
+          <td class="semi-bold">{{nsg_abs}}</td>
+          <td>{{minValue_nsg_abs}} a {{maxValue_nsg_abs}} {{unit_nsg_abs}}</td>
         </tr>
-        <tr {{row_basofilos_rel}}>
-          <td>Basófilos</td>
-          <td class="semi-bold">{{basofilos_rel}}</td>
-          <td>{{minValue_basofilos_rel}} a {{maxValue_basofilos_rel}} {{unit_basofilos_rel}}</td>
+        <tr {{row_lym_abs}}>
+          <td>LYM: Linfocitos</td>
+          <td class="semi-bold">{{lym_abs}}</td>
+          <td>{{minValue_lym_abs}} a {{maxValue_lym_abs}} {{unit_lym_abs}}</td>
         </tr>
-        <tr {{row_neutrofilos_segmentados_rel}}>
-          <td>Neutrófilos Segmentados</td>
-          <td class="semi-bold">{{neutrofilos_segmentados_rel}}</td>
-          <td>{{minValue_neutrofilos_segmentados_rel}} a {{maxValue_neutrofilos_segmentados_rel}} {{unit_neutrofilos_segmentados_rel}}</td>
+        <tr {{row_mon_abs}}>
+          <td>MON: Monocitos</td>
+          <td class="semi-bold">{{mon_abs}}</td>
+          <td>{{minValue_mon_abs}} a {{maxValue_mon_abs}} {{unit_mon_abs}}</td>
         </tr>
-        <tr {{row_neutrofilos_banda_rel}}>
-          <td>Neutrófilos en Banda</td>
-          <td class="semi-bold">{{neutrofilos_banda_rel}}</td>
-          <td>{{minValue_neutrofilos_banda_rel}} a {{maxValue_neutrofilos_banda_rel}} {{unit_neutrofilos_banda_rel}}</td>
+        <tr {{row_eos_abs}}>
+          <td>EOS: Eosinófilos</td>
+          <td class="semi-bold">{{eos_abs}}</td>
+          <td>{{minValue_eos_abs}} a {{maxValue_eos_abs}} {{unit_eos_abs}}</td>
+        </tr>
+        <tr {{row_bas_abs}}>
+          <td>BAS: Basófilos</td>
+          <td class="semi-bold">{{bas_abs}}</td>
+          <td>{{minValue_bas_abs}} a {{maxValue_bas_abs}} {{unit_bas_abs}}</td>
         </tr>
         <tr class="bold">
-          <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
+          <td class="center" colspan="3"><i>Valores Relativos</i></td>
         </tr>
-        <tr {{row_monocitos_abs}}>
-          <td>Monocitos</td>
-          <td class="semi-bold">{{monocitos_abs}}</td>
-          <td>{{minValue_monocitos_abs}} a {{maxValue_monocitos_abs}} {{unit_monocitos_abs}}</td>
+        <tr {{row_neu_rel}}>
+          <td>NEU%: Neutrófilos %</td>
+          <td class="semi-bold">{{neu_rel}}</td>
+          <td>{{minValue_neu_rel}} a {{maxValue_neu_rel}} {{unit_neu_rel}}</td>
         </tr>
-        <tr {{row_linfocitos_abs}}>
-          <td>Linfocitos</td>
-          <td class="semi-bold">{{linfocitos_abs}}</td>
-          <td>{{minValue_linfocitos_abs}} a {{maxValue_linfocitos_abs}} {{unit_linfocitos_abs}}</td>
+        <tr {{row_nsg_rel}}>
+          <td>NSG%: Neutrófilos segmentados %</td>
+          <td class="semi-bold">{{nsg_rel}}</td>
+          <td>{{minValue_nsg_rel}} a {{maxValue_nsg_rel}} {{unit_nsg_rel}}</td>
         </tr>
-        <tr {{row_eosinofilos_abs}}>
-          <td>Eosinófilos</td>
-          <td class="semi-bold">{{eosinofilos_abs}}</td>
-          <td>{{minValue_eosinofilos_abs}} a {{maxValue_eosinofilos_abs}} {{unit_eosinofilos_abs}}</td>
+        <tr {{row_lym_rel}}>
+          <td>LYM%: Linfocitos %</td>
+          <td class="semi-bold">{{lym_rel}}</td>
+          <td>{{minValue_lym_rel}} a {{maxValue_lym_rel}} {{unit_lym_rel}}</td>
         </tr>
-        <tr {{row_basofilos_abs}}>
-          <td>Basófilos</td>
-          <td class="semi-bold">{{basofilos_abs}}</td>
-          <td>{{minValue_basofilos_abs}} a {{maxValue_basofilos_abs}} {{unit_basofilos_abs}}</td>
+        <tr {{row_mon_rel}}>
+          <td>MON%: Monocitos %</td>
+          <td class="semi-bold">{{mon_rel}}</td>
+          <td>{{minValue_mon_rel}} a {{maxValue_mon_rel}} {{unit_mon_rel}}</td>
         </tr>
-        <tr {{row_neutrofilos_segmentados_abs}}>
-          <td>Neutrófilos Segmentados</td>
-          <td class="semi-bold">{{neutrofilos_segmentados_abs}}</td>
-          <td>{{minValue_neutrofilos_segmentados_abs}} a {{maxValue_neutrofilos_segmentados_abs}} {{unit_neutrofilos_segmentados_abs}}</td>
+        <tr {{row_eos_rel}}>
+          <td>EOS%: Eosinófilos %</td>
+          <td class="semi-bold">{{eos_rel}}</td>
+          <td>{{minValue_eos_rel}} a {{maxValue_eos_rel}} {{unit_eos_rel}}</td>
         </tr>
-        <tr {{row_neutrofilos_banda_abs}}>
-          <td>Neutrófilos en Banda</td>
-          <td class="semi-bold">{{neutrofilos_banda_abs}}</td>
-          <td>{{minValue_neutrofilos_banda_abs}} a {{maxValue_neutrofilos_banda_abs}} {{unit_neutrofilos_banda_abs}}</td>
+        <tr {{row_bas_rel}}>
+          <td>BAS%: Basófilos %</td>
+          <td class="semi-bold">{{bas_rel}}</td>
+          <td>{{minValue_bas_rel}} a {{maxValue_bas_rel}} {{unit_bas_rel}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>FÓRMULA ROJA</i></td>
+        </tr>
+        <tr {{row_rbc}}>
+          <td>RBC: Hematíes</td>
+          <td class="semi-bold">{{rbc}}</td>
+          <td>{{minValue_rbc}} a {{maxValue_rbc}} {{unit_rbc}}</td>
+        </tr>
+        <tr {{row_hgb}}>
+          <td>HGB: Hemoglobina</td>
+          <td class="semi-bold">{{hgb}}</td>
+          <td>{{minValue_hgb}} a {{maxValue_hgb}} {{unit_hgb}}</td>
+        </tr>
+        <tr {{row_mcv}}>
+          <td>MCV</td>
+          <td class="semi-bold">{{mcv}}</td>
+          <td>{{minValue_mcv}} a {{maxValue_mcv}} {{unit_mcv}}</td>
+        </tr>
+        <tr {{row_mch}}>
+          <td>MCH</td>
+          <td class="semi-bold">{{mch}}</td>
+          <td>{{minValue_mch}} a {{maxValue_mch}} {{unit_mch}}</td>
+        </tr>
+        <tr {{row_mchc}}>
+          <td>MCHC</td>
+          <td class="semi-bold">{{mchc}}</td>
+          <td>{{minValue_mchc}} a {{maxValue_mchc}} {{unit_mchc}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>PLAQUETAS</i></td>
+        </tr>
+        <tr {{row_plt}}>
+          <td>PLT: Plaquetas</td>
+          <td class="semi-bold">{{plt}}</td>
+          <td>{{minValue_plt}} a {{maxValue_plt}} {{unit_plt}}</td>
+        </tr>
+        <tr {{row_mpv}}>
+          <td>MPV</td>
+          <td class="semi-bold">{{mpv}}</td>
+          <td>{{minValue_mpv}} a {{maxValue_mpv}} {{unit_mpv}}</td>
         </tr>
       </tbody>
     </table>
     <section class="maquilado-section">
       <div class="maquilado-info">
         <span class="maquilado-label">Metodo: </span>
-        <span class="maquilado-details">Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parámetros en sangre entera.</span>
+        <span class="maquilado-details">Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera.</span>
       </div>
     </section>
     <footer>

@@ -17,12 +17,18 @@ module.exports = {
       fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hcm", "cmhc", "plaquetas"]
     },
     {
-      title: "Fórmula Blanca - Valores Absolutos",
-      fields: ["leucocitos_totales", "neutrofilos_totales_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs", "eosinofilos_abs", "basofilos_abs", "monocitos_abs", "linfocitos_abs"]
-    },
-    {
-      title: "Valores Relativos",
-      fields: ["neutrofilos_totales_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel", "eosinofilos_rel", "basofilos_rel", "monocitos_rel", "linfocitos_rel"]
+      title: "Fórmula Blanca",
+      fields: [
+        "leucocitos_totales",
+        {
+          title: "Valores Absolutos",
+          fields: ["neutrofilos_totales_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs", "eosinofilos_abs", "basofilos_abs", "monocitos_abs", "linfocitos_abs"]
+        },
+        {
+          title: "Valores Relativos",
+          fields: ["neutrofilos_totales_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel", "eosinofilos_rel", "basofilos_rel", "monocitos_rel", "linfocitos_rel"]
+        }
+      ]
     }
   ],
 

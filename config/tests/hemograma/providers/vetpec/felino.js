@@ -17,12 +17,18 @@ module.exports = {
       fields: ["eri", "hb", "hct", "vcm", "hcm", "chcm", "rdwc", "rdws", "plt", "vpm", "pct", "pdwc", "pdws"]
     },
     {
-      title: "Fórmula Blanca - Valores Absolutos",
-      fields: ["leu_abs", "lym_abs", "mon_abs", "neu_abs", "eos_abs", "bas_abs"]
-    },
-    {
-      title: "Valores Relativos",
-      fields: ["lym_rel", "mon_rel", "neu_rel", "eos_rel", "bas_rel"]
+      title: "Fórmula Blanca",
+      fields: [
+        "leu_abs",
+        {
+          title: "Valores Absolutos",
+          fields: ["lym_abs", "mon_abs", "neu_abs", "eos_abs", "bas_abs"]
+        },
+        {
+          title: "Valores Relativos",
+          fields: ["lym_rel", "mon_rel", "neu_rel", "eos_rel", "bas_rel"]
+        }
+      ]
     }
   ],
 
