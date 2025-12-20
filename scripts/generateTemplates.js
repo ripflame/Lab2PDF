@@ -102,6 +102,132 @@ function generateTableRow(field, useLabels = false) {
 }
 
 /**
+ * Recursively process fields array that may contain field IDs or nested sections
+ */
+function processFieldsRecursive(items, fieldMap, useLabels, depth = 0) {
+  let html = '';
+  for (const item of items) {
+    if (typeof item === 'string') {
+      // It's a field ID
+      const field = fieldMap.get(item);
+      if (field) {
+        html += generateTableRow(field, useLabels) + '\n';
+      }
+    } else if (typeof item === 'object' && item.title && item.fields) {
+      // It's a nested section - render subsection header (same style, not uppercase)
+      html += `        <tr class="bold">
+          <td class="center" colspan="3"><i>${item.title}</i></td>
+        </tr>\n`;
+      // Recursively process nested fields
+      html += processFieldsRecursive(item.fields, fieldMap, useLabels, depth + 1);
+    }
+  }
+  return html;
+}
+
+/**
+ * Check if a fields array has any valid fields (including nested)
+ */
+function hasValidFields(items, fieldMap) {
+  for (const item of items) {
+    if (typeof item === 'string' && fieldMap.has(item)) {
+      return true;
+    } else if (typeof item === 'object' && item.fields) {
+      if (hasValidFields(item.fields, fieldMap)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Collect all fields from a section, including nested sections
+ */
+function collectFieldsRecursive(items, fieldMap) {
+  const result = [];
+  for (const item of items) {
+    if (typeof item === 'string') {
+      const field = fieldMap.get(item);
+      if (field) result.push(field);
+    } else if (typeof item === 'object' && item.fields) {
+      result.push(...collectFieldsRecursive(item.fields, fieldMap));
+    }
+  }
+  return result;
+}
+
+/**
+ * Generate form fields HTML for an array of field objects
+ */
+function generateFormFieldsHtml(fields, columnsPerRow = 3) {
+  if (fields.length === 0) return '';
+
+  const fieldsPerColumn = Math.ceil(fields.length / columnsPerRow);
+  const columns = [];
+  for (let i = 0; i < columnsPerRow; i++) {
+    const columnFields = fields.slice(i * fieldsPerColumn, (i + 1) * fieldsPerColumn);
+    if (columnFields.length > 0) {
+      columns.push(columnFields);
+    }
+  }
+
+  const columnsHtml = columns.map(columnFields => {
+    const inputs = columnFields.map(field => {
+      return `        <label class="label" for="${field.id}">${field.label}:</label>
+        <input class="input-number" type="number" step="any" id="${field.id}" required />`;
+    }).join('\n');
+    return `      <div class="form-column">
+${inputs}
+      </div>`;
+  }).join('\n');
+
+  return `    <div class="form-columns">
+${columnsHtml}
+    </div>`;
+}
+
+/**
+ * Recursively process section fields and generate form HTML with nested fieldsets
+ */
+function processFormFieldsRecursive(items, fieldMap, columnsPerRow = 3) {
+  let html = '';
+  let topLevelFields = [];
+
+  for (const item of items) {
+    if (typeof item === 'string') {
+      // Collect top-level field IDs
+      const field = fieldMap.get(item);
+      if (field) {
+        topLevelFields.push(field);
+      }
+    } else if (typeof item === 'object' && item.title && item.fields) {
+      // Before processing nested section, output any accumulated top-level fields
+      if (topLevelFields.length > 0) {
+        html += generateFormFieldsHtml(topLevelFields, columnsPerRow) + '\n';
+        topLevelFields = [];
+      }
+
+      // Process nested section as a nested fieldset
+      const nestedFields = collectFieldsRecursive(item.fields, fieldMap);
+      if (nestedFields.length > 0) {
+        html += `    <fieldset class="fieldset nested-fieldset">
+      <legend class="legend">${item.title}</legend>
+${generateFormFieldsHtml(nestedFields, columnsPerRow)}
+    </fieldset>\n`;
+      }
+    }
+  }
+
+  // Output any remaining top-level fields
+  if (topLevelFields.length > 0) {
+    html += generateFormFieldsHtml(topLevelFields, columnsPerRow) + '\n';
+  }
+
+  return html;
+}
+
+/**
  * Generate PDF template HTML for table-type tests
  */
 function generateTableTemplate(config) {
@@ -117,22 +243,18 @@ function generateTableTemplate(config) {
     const fieldMap = new Map(config.fields.map(f => [f.id, f]));
 
     for (const section of config.sections) {
-      // Check if section has any valid fields
-      const hasFields = section.fields.some(id => fieldMap.has(id));
-      if (!hasFields) {
+      // Check if section has any valid fields (including nested)
+      if (!hasValidFields(section.fields, fieldMap)) {
         continue;
       }
 
+      // Top-level section header
       tableBody += `        <tr class="bold">
           <td class="center" colspan="3"><i>${section.title.toUpperCase()}</i></td>
         </tr>\n`;
 
-      for (const fieldId of section.fields) {
-        const field = fieldMap.get(fieldId);
-        if (field) {
-          tableBody += generateTableRow(field, useLabels) + '\n';
-        }
-      }
+      // Process fields recursively (handles both strings and nested sections)
+      tableBody += processFieldsRecursive(section.fields, fieldMap, useLabels);
     }
   } else {
     for (const field of config.fields) {
@@ -294,41 +416,53 @@ function generateTableForm(config) {
     const fieldMap = new Map(config.fields.map(f => [f.id, f]));
 
     for (const section of config.sections) {
-      const sectionFields = section.fields
-        .map(id => fieldMap.get(id))
-        .filter(f => f);
-
-      // Skip sections with no fields
-      if (sectionFields.length === 0) {
+      // Check if section has any valid fields (including nested)
+      if (!hasValidFields(section.fields, fieldMap)) {
         continue;
       }
 
       const columnsPerRow = section.columns || 3;
-      const fieldsPerColumn = Math.ceil(sectionFields.length / columnsPerRow);
-      const columns = [];
-      for (let i = 0; i < columnsPerRow; i++) {
-        const columnFields = sectionFields.slice(i * fieldsPerColumn, (i + 1) * fieldsPerColumn);
-        if (columnFields.length > 0) {
-          columns.push(columnFields);
-        }
-      }
 
-      const columnsHtml = columns.map(columnFields => {
-        const inputs = columnFields.map(field => {
-          return `        <label class="label" for="${field.id}">${field.label}:</label>
+      // Check if section has nested sections
+      const hasNestedSections = section.fields.some(
+        item => typeof item === 'object' && item.title && item.fields
+      );
+
+      if (hasNestedSections) {
+        // Use recursive processing for nested fieldsets
+        const innerContent = processFormFieldsRecursive(section.fields, fieldMap, columnsPerRow);
+        formContent += `  <fieldset class="fieldset">
+    <legend class="legend">${section.title}</legend>
+${innerContent}  </fieldset>\n`;
+      } else {
+        // Flat section - collect all fields and render normally
+        const sectionFields = collectFieldsRecursive(section.fields, fieldMap);
+        const fieldsPerColumn = Math.ceil(sectionFields.length / columnsPerRow);
+        const columns = [];
+        for (let i = 0; i < columnsPerRow; i++) {
+          const columnFields = sectionFields.slice(i * fieldsPerColumn, (i + 1) * fieldsPerColumn);
+          if (columnFields.length > 0) {
+            columns.push(columnFields);
+          }
+        }
+
+        const columnsHtml = columns.map(columnFields => {
+          const inputs = columnFields.map(field => {
+            return `        <label class="label" for="${field.id}">${field.label}:</label>
         <input class="input-number" type="number" step="any" id="${field.id}" required />`;
-        }).join('\n');
-        return `      <div class="form-column">
+          }).join('\n');
+          return `      <div class="form-column">
 ${inputs}
       </div>`;
-      }).join('\n');
+        }).join('\n');
 
-      formContent += `  <fieldset class="fieldset">
+        formContent += `  <fieldset class="fieldset">
     <legend class="legend">${section.title}</legend>
     <div class="form-columns">
 ${columnsHtml}
     </div>
   </fieldset>\n`;
+      }
     }
   } else {
     const columnsPerRow = 3;
