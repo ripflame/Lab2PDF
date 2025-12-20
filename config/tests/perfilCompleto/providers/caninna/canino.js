@@ -1,8 +1,23 @@
 module.exports = {
   id: "perfilCompleto_caninna",
-  formFile: "perfilCompleto.html",
-  templateFile: "perfilCompletoTemplate.html",
+  formFile: "perfilcompleto_caninna_canino.html",
+  templateFile: "perfilcompleto_caninna_canino_template.html",
   type: "table",
+
+  meta: {
+    title: "Perfil Bioquimico Completo",
+    headerTitle: ["Resultados de laboratorio", "Perfil Bioquimico Completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUIMICO COMPLETO",
+    method: "Analizador bioquimico SKYLA VB1 de quimica seca en sangre, plasma o suero, semi-automatico con discos reactivos de biomarcadores"
+  },
+
+  sections: [
+    {
+      title: "Perfil Bioquimico",
+      fields: ["alb", "tp", "glu", "chol", "alp", "alt", "ggt", "tbil", "amy", "lipa", "bun", "crea", "ca", "phos", "glob", "urea", "ag", "bc"]
+    }
+  ],
+
   fields: [
     {
       id: 'alb',

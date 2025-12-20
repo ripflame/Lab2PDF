@@ -1,8 +1,31 @@
 module.exports = {
   id: "hemograma_vetpec",
-  formFile: "hemograma_vetpec.html",
-  templateFile: "hemogramaTemplate_vetpec.html",
+  formFile: "hemograma_vetpec_canino.html",
+  templateFile: "hemograma_vetpec_canino_template.html",
   type: "table",
+
+  meta: {
+    title: "Hemograma completo",
+    headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
+    maquilado: "Veterinaria PEC. Prol. Aldama esq. Revolucion, col. Unitaria. Perif. sur a 200mts. Tel: (916) 590-6418"
+  },
+
+  sections: [
+    {
+      title: "Formula Roja",
+      fields: ["eri", "hb", "hct", "vcm", "hcm", "chcm", "rdwc", "rdws", "plt", "vpm", "pct", "pdwc", "pdws"]
+    },
+    {
+      title: "Formula Blanca - Valores Absolutos",
+      fields: ["leu_abs", "lym_abs", "mon_abs", "neu_abs", "eos_abs", "bas_abs"]
+    },
+    {
+      title: "Valores Relativos",
+      fields: ["lym_rel", "mon_rel", "neu_rel", "eos_rel", "bas_rel"]
+    }
+  ],
+
   fields: [
     {
       id: 'leu_abs',

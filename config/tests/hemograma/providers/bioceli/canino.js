@@ -1,8 +1,31 @@
 module.exports = {
   id: "hemograma_bioceli",
-  formFile: "hemograma_bioceli.html",
-  templateFile: "hemogramaTemplate_bioceli.html",
+  formFile: "hemograma_bioceli_canino.html",
+  templateFile: "hemograma_bioceli_canino_template.html",
   type: "table",
+
+  meta: {
+    title: "Hemograma completo",
+    headerTitle: ["Resultados de laboratorio", "Hemograma completo"],
+    formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
+    maquilado: "Laboratorio BIO-C-ELI. Av. Nicolas Bravo entre Abasolo e Independencia. Palenque, Chiapas. Tel: (916) 142-1529"
+  },
+
+  sections: [
+    {
+      title: "Formula Roja",
+      fields: ["eritrocitos", "hemoglobina", "hematocrito", "vgm", "hcm", "cmhc", "plaquetas"]
+    },
+    {
+      title: "Formula Blanca - Valores Absolutos",
+      fields: ["leucocitos_totales", "neutrofilos_totales_abs", "neutrofilos_segmentados_abs", "neutrofilos_banda_abs", "eosinofilos_abs", "basofilos_abs", "monocitos_abs", "linfocitos_abs"]
+    },
+    {
+      title: "Valores Relativos",
+      fields: ["neutrofilos_totales_rel", "neutrofilos_segmentados_rel", "neutrofilos_banda_rel", "eosinofilos_rel", "basofilos_rel", "monocitos_rel", "linfocitos_rel"]
+    }
+  ],
+
   fields: [
     {
       id: 'eritrocitos',
@@ -47,7 +70,7 @@ module.exports = {
     {
       id: 'cmhc',
       templateField: 'cmhc',
-      label: 'Concentración Media de Hemoglobina Corpuscular',
+      label: 'Concentracion Media de Hemoglobina Corpuscular',
       min: '32.00',
       max: '36.00',
       unit: 'gr/dL'
@@ -71,7 +94,7 @@ module.exports = {
     {
       id: 'neutrofilos_totales_abs',
       templateField: 'neutrofilos_totales_abs',
-      label: 'Neutrófilos Totales Absolutos',
+      label: 'Neutrofilos Totales Absolutos',
       min: '3000',
       max: '11500',
       unit: 'uL'
@@ -79,7 +102,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_abs',
       templateField: 'neutrofilos_segmentados_abs',
-      label: 'Neutrófilos Segmentados Absolutos',
+      label: 'Neutrofilos Segmentados Absolutos',
       min: '3000',
       max: '11500',
       unit: 'uL'
@@ -87,7 +110,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_abs',
       templateField: 'neutrofilos_banda_abs',
-      label: 'Neutrófilos en Banda Absolutos',
+      label: 'Neutrofilos en Banda Absolutos',
       min: '0',
       max: '300',
       unit: 'uL'
@@ -95,7 +118,7 @@ module.exports = {
     {
       id: 'eosinofilos_abs',
       templateField: 'eosinofilos_abs',
-      label: 'Eosinófilos Absolutos',
+      label: 'Eosinofilos Absolutos',
       min: '100',
       max: '1200',
       unit: 'uL'
@@ -103,7 +126,7 @@ module.exports = {
     {
       id: 'basofilos_abs',
       templateField: 'basofilos_abs',
-      label: 'Basófilos Absolutos',
+      label: 'Basofilos Absolutos',
       min: '0',
       max: '100',
       unit: 'uL'
@@ -127,7 +150,7 @@ module.exports = {
     {
       id: 'neutrofilos_totales_rel',
       templateField: 'neutrofilos_totales_rel',
-      label: 'Neutrófilos Totales Relativos',
+      label: 'Neutrofilos Totales Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -135,7 +158,7 @@ module.exports = {
     {
       id: 'neutrofilos_segmentados_rel',
       templateField: 'neutrofilos_segmentados_rel',
-      label: 'Neutrófilos Segmentados Relativos',
+      label: 'Neutrofilos Segmentados Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -143,7 +166,7 @@ module.exports = {
     {
       id: 'neutrofilos_banda_rel',
       templateField: 'neutrofilos_banda_rel',
-      label: 'Neutrófilos en Banda Relativos',
+      label: 'Neutrofilos en Banda Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -151,7 +174,7 @@ module.exports = {
     {
       id: 'eosinofilos_rel',
       templateField: 'eosinofilos_rel',
-      label: 'Eosinófilos Relativos',
+      label: 'Eosinofilos Relativos',
       min: '',
       max: '',
       unit: '%'
@@ -159,7 +182,7 @@ module.exports = {
     {
       id: 'basofilos_rel',
       templateField: 'basofilos_rel',
-      label: 'Basófilos Relativos',
+      label: 'Basofilos Relativos',
       min: '',
       max: '',
       unit: '%'
