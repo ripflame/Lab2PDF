@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hemograma completo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <style>
+/* Page setup */
+@page {
+  size: 8.5in 11in;
+  margin: 0;
+}
+body {
+  width: 816px;
+  height: 1056px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #222;
+}
+
+/* Graphics */
+.graphic {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.graphic-top {
+  top: 0;
+}
+.graphic-bottom {
+  bottom: 0;
+}
+
+/* Header */
+.header-title {
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 0px #ffd94b;
+  font-family: "Poller One";
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 0px;
+  margin-left: 190px;
+  padding-top: 20px;
+  text-transform: uppercase;
+}
+
+/* Details section */
+.details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  padding-left: 210px;
+}
+.details-heading {
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+.details-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 60px;
+  padding: 10px;
+  border: 1px solid #222;
+  z-index: -2;
+}
+.details-box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.details-label {
+  font-weight: 500;
+  min-width: 95px;
+}
+.details-item {
+  display: flex;
+  margin-bottom: 0;
+}
+
+/* Footer */
+.address-container {
+  min-width: 750px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 100px;
+  left: 30px;
+  z-index: -2;
+}
+.address-box {
+  border-style: solid;
+  border-width: 1px;
+  padding: 12px;
+  flex: 1;
+  text-align: center;
+}
+.address-box:last-child {
+  border-left: none;
+}
+.address-box p {
+  margin: 5px 0px;
+}
+
+/* Text styles */
+.bold {
+  font-weight: bold;
+}
+.semi-bold {
+  font-weight: 500;
+}
+.center {
+  text-align: center !important;
+}
+
+/* Table */
+.results-table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 10px auto;
+}
+.results-table th,
+.results-table td {
+  border: 1px solid #000;
+  padding: 0 5px;
+  text-align: center;
+}
+.results-table td:first-child {
+  text-align: left;
+}
+.results-table th {
+  background-color: #00b0f0;
+  color: white;
+}
+tr.highlight_high {
+  background-color: lightsalmon;
+}
+tr.highlight_low {
+  background-color: lightblue;
+}
+
+/* Maquilado section */
+.maquilado-section {
+  padding: 0 58px;
+}
+.maquilado-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.maquilado-details {
+  flex: 1;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top" />
+      <h1 class="header-title">Resultados de laboratorio<br />Hemograma completo</h1>
+    </header>
+    <section class="details">
+  <p class="details-heading">{{requerido}}</p>
+  <div class="details-wrapper">
+    <div class="details-box">
+      <div class="details-item">
+        <span class="details-label">Fecha:</span>
+        <span class="details-value">{{fecha}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Nombre:</span>
+        <span class="details-value">{{nombreMascota}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Especie:</span>
+        <span class="details-value">{{especie}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Propietario:</span>
+        <span class="details-value">{{nombrePropietario}}</span>
+      </div>
+    </div>
+    <div class="details-box">
+      <div class="details-item">
+        <div class="details-label">Edad:</div>
+        <div class="details-value">{{edad}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Raza:</div>
+        <div class="details-value">{{raza}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Sexo:</div>
+        <div class="details-value">{{sexo}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Telefono:</div>
+        <div class="details-value">{{telefono}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Prueba</th>
+          <th>Resultado</th>
+          <th>Valor de Referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>FORMULA ROJA</i></td>
+        </tr>
+        <tr {{row_eritrocitos}}>
+          <td>Eritrocitos</td>
+          <td class="semi-bold">{{eritrocitos}}</td>
+          <td>{{minValue_eritrocitos}} a {{maxValue_eritrocitos}} {{unit_eritrocitos}}</td>
+        </tr>
+        <tr {{row_hemoglobina}}>
+          <td>Hemoglobina</td>
+          <td class="semi-bold">{{hemoglobina}}</td>
+          <td>{{minValue_hemoglobina}} a {{maxValue_hemoglobina}} {{unit_hemoglobina}}</td>
+        </tr>
+        <tr {{row_hematocrito}}>
+          <td>Hematocrito</td>
+          <td class="semi-bold">{{hematocrito}}</td>
+          <td>{{minValue_hematocrito}} a {{maxValue_hematocrito}} {{unit_hematocrito}}</td>
+        </tr>
+        <tr {{row_vgm}}>
+          <td>Volumen Globular Medio</td>
+          <td class="semi-bold">{{vgm}}</td>
+          <td>{{minValue_vgm}} a {{maxValue_vgm}} {{unit_vgm}}</td>
+        </tr>
+        <tr {{row_hpe}}>
+          <td>Hemoglobina Promedio por Eritrocitos</td>
+          <td class="semi-bold">{{hpe}}</td>
+          <td>{{minValue_hpe}} a {{maxValue_hpe}} {{unit_hpe}}</td>
+        </tr>
+        <tr {{row_cmh}}>
+          <td>Concentracion Media de Hemoglobina</td>
+          <td class="semi-bold">{{cmh}}</td>
+          <td>{{minValue_cmh}} a {{maxValue_cmh}} {{unit_cmh}}</td>
+        </tr>
+        <tr {{row_plaquetas}}>
+          <td>Plaquetas</td>
+          <td class="semi-bold">{{plaquetas}}</td>
+          <td>{{minValue_plaquetas}} a {{maxValue_plaquetas}} {{unit_plaquetas}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>FORMULA BLANCA</i></td>
+        </tr>
+        <tr {{row_leucocitos}}>
+          <td>Leucocitos</td>
+          <td class="semi-bold">{{leucocitos}}</td>
+          <td>{{minValue_leucocitos}} a {{maxValue_leucocitos}} {{unit_leucocitos}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>VALORES RELATIVOS</i></td>
+        </tr>
+        <tr {{row_monocitos_rel}}>
+          <td>Monocitos</td>
+          <td class="semi-bold">{{monocitos_rel}}</td>
+          <td>{{minValue_monocitos_rel}} a {{maxValue_monocitos_rel}} {{unit_monocitos_rel}}</td>
+        </tr>
+        <tr {{row_linfocitos_rel}}>
+          <td>Linfocitos</td>
+          <td class="semi-bold">{{linfocitos_rel}}</td>
+          <td>{{minValue_linfocitos_rel}} a {{maxValue_linfocitos_rel}} {{unit_linfocitos_rel}}</td>
+        </tr>
+        <tr {{row_eosinofilos_rel}}>
+          <td>Eosinofilos</td>
+          <td class="semi-bold">{{eosinofilos_rel}}</td>
+          <td>{{minValue_eosinofilos_rel}} a {{maxValue_eosinofilos_rel}} {{unit_eosinofilos_rel}}</td>
+        </tr>
+        <tr {{row_basofilos_rel}}>
+          <td>Basofilos</td>
+          <td class="semi-bold">{{basofilos_rel}}</td>
+          <td>{{minValue_basofilos_rel}} a {{maxValue_basofilos_rel}} {{unit_basofilos_rel}}</td>
+        </tr>
+        <tr {{row_neutrofilos_segmentados_rel}}>
+          <td>Neutrofilos Segmentados</td>
+          <td class="semi-bold">{{neutrofilos_segmentados_rel}}</td>
+          <td>{{minValue_neutrofilos_segmentados_rel}} a {{maxValue_neutrofilos_segmentados_rel}} {{unit_neutrofilos_segmentados_rel}}</td>
+        </tr>
+        <tr {{row_neutrofilos_banda_rel}}>
+          <td>Neutrofilos en Banda</td>
+          <td class="semi-bold">{{neutrofilos_banda_rel}}</td>
+          <td>{{minValue_neutrofilos_banda_rel}} a {{maxValue_neutrofilos_banda_rel}} {{unit_neutrofilos_banda_rel}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>VALORES ABSOLUTOS</i></td>
+        </tr>
+        <tr {{row_monocitos_abs}}>
+          <td>Monocitos</td>
+          <td class="semi-bold">{{monocitos_abs}}</td>
+          <td>{{minValue_monocitos_abs}} a {{maxValue_monocitos_abs}} {{unit_monocitos_abs}}</td>
+        </tr>
+        <tr {{row_linfocitos_abs}}>
+          <td>Linfocitos</td>
+          <td class="semi-bold">{{linfocitos_abs}}</td>
+          <td>{{minValue_linfocitos_abs}} a {{maxValue_linfocitos_abs}} {{unit_linfocitos_abs}}</td>
+        </tr>
+        <tr {{row_eosinofilos_abs}}>
+          <td>Eosinofilos</td>
+          <td class="semi-bold">{{eosinofilos_abs}}</td>
+          <td>{{minValue_eosinofilos_abs}} a {{maxValue_eosinofilos_abs}} {{unit_eosinofilos_abs}}</td>
+        </tr>
+        <tr {{row_basofilos_abs}}>
+          <td>Basofilos</td>
+          <td class="semi-bold">{{basofilos_abs}}</td>
+          <td>{{minValue_basofilos_abs}} a {{maxValue_basofilos_abs}} {{unit_basofilos_abs}}</td>
+        </tr>
+        <tr {{row_neutrofilos_segmentados_abs}}>
+          <td>Neutrofilos Segmentados</td>
+          <td class="semi-bold">{{neutrofilos_segmentados_abs}}</td>
+          <td>{{minValue_neutrofilos_segmentados_abs}} a {{maxValue_neutrofilos_segmentados_abs}} {{unit_neutrofilos_segmentados_abs}}</td>
+        </tr>
+        <tr {{row_neutrofilos_banda_abs}}>
+          <td>Neutrofilos en Banda</td>
+          <td class="semi-bold">{{neutrofilos_banda_abs}}</td>
+          <td>{{minValue_neutrofilos_banda_abs}} a {{maxValue_neutrofilos_banda_abs}} {{unit_neutrofilos_banda_abs}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="maquilado-label">Metodo: </span>
+        <span class="maquilado-details">Analizador morfologico multifuncional veterinario AIvet1 por estandarizacion de microscopia y cuantificacion de parametros en sangre entera.</span>
+      </div>
+    </section>
+    <footer>
+  <div class="address-container">
+    <div class="address-box">
+      <p>CaNinna Emiliano Zapata Tab.</p>
+      <p>Calle Moctezuma entre Libertad y</p>
+      <p>Vicente Guerrero, Centro</p>
+      <p>Tel:(934) 113-5079</p>
+    </div>
+    <div class="address-box">
+      <p>CaNinna Palenque Chiapas</p>
+      <p>Avenida Nicolas Bravo entre</p>
+      <p>Abasolo e Independencia, Centro</p>
+      <p>Tel:(916) 124-6050</p>
+    </div>
+  </div>
+  <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom" />
+</footer>
+
+  </body>
+</html>
