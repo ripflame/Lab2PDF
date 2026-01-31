@@ -52,14 +52,35 @@ const MOCK_DATA = {
 };
 
 /**
- * Generate mock value for a field
+ * Generate mock value for a field with randomized high/low/normal status
+ * Returns { value, status } where status is 'normal', 'high', or 'low'
  */
 function getMockValue(field) {
-  const min = parseFloat(field.min) || 0;
-  const max = parseFloat(field.max) || 100;
-  // Generate a value in the middle of the range
-  const value = ((min + max) / 2).toFixed(2);
-  return value;
+  const min = parseFloat(field.min);
+  const max = parseFloat(field.max);
+  const hasRange = !isNaN(min) && !isNaN(max);
+
+  if (!hasRange) {
+    return { value: '50.00', status: 'normal' };
+  }
+
+  const range = max - min;
+  const rand = Math.random();
+
+  // 15% chance high, 15% chance low, 70% normal
+  if (rand < 0.15) {
+    // High value: 5-20% above max
+    const highValue = max + (range * (0.05 + Math.random() * 0.15));
+    return { value: highValue.toFixed(2), status: 'high' };
+  } else if (rand < 0.30) {
+    // Low value: 5-20% below min (but not negative)
+    const lowValue = Math.max(0, min - (range * (0.05 + Math.random() * 0.15)));
+    return { value: lowValue.toFixed(2), status: 'low' };
+  } else {
+    // Normal value: random within range
+    const normalValue = min + (Math.random() * range);
+    return { value: normalValue.toFixed(2), status: 'normal' };
+  }
 }
 
 /**
@@ -93,20 +114,23 @@ ${addressBoxes}
  * Generate table row HTML with mock data
  */
 function generateTableRowWithMock(field) {
-  const mockValue = getMockValue(field);
+  const { value, status } = getMockValue(field);
   const hasRefValues = field.min !== undefined && field.max !== undefined && field.min !== '' && field.max !== '';
 
+  // Add highlight class for high/low values
+  const rowClass = status === 'high' ? ' class="highlight_high"' : status === 'low' ? ' class="highlight_low"' : '';
+
   if (hasRefValues) {
-    return `        <tr>
+    return `        <tr${rowClass}>
           <td>${field.label}</td>
-          <td class="semi-bold">${mockValue}</td>
+          <td class="semi-bold">${value}</td>
           <td>${field.min} a ${field.max} ${field.unit || ''}</td>
         </tr>`;
   }
 
-  return `        <tr>
+  return `        <tr${rowClass}>
           <td>${field.label}</td>
-          <td class="semi-bold">${mockValue}</td>
+          <td class="semi-bold">${value}</td>
           <td>${field.unit || ''}</td>
         </tr>`;
 }
@@ -120,6 +144,45 @@ function getDetailsWithMock() {
     details = details.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), value);
   }
   return details;
+}
+
+/**
+ * Process section fields recursively (handles nested subsections)
+ */
+function processSectionFields(sectionFields, fieldMap) {
+  let rows = '';
+
+  for (const item of sectionFields) {
+    if (typeof item === 'string') {
+      // Simple field ID
+      const field = fieldMap.get(item);
+      if (field) {
+        rows += generateTableRowWithMock(field) + '\n';
+      }
+    } else if (typeof item === 'object' && item.title && item.fields) {
+      // Nested subsection
+      rows += `        <tr class="bold">
+          <td class="center" colspan="3"><i>${item.title.toUpperCase()}</i></td>
+        </tr>\n`;
+      rows += processSectionFields(item.fields, fieldMap);
+    }
+  }
+
+  return rows;
+}
+
+/**
+ * Check if section has any valid fields (recursively)
+ */
+function sectionHasFields(sectionFields, fieldMap) {
+  for (const item of sectionFields) {
+    if (typeof item === 'string') {
+      if (fieldMap.has(item)) return true;
+    } else if (typeof item === 'object' && item.fields) {
+      if (sectionHasFields(item.fields, fieldMap)) return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -137,8 +200,7 @@ function generateTablePreview(config) {
     const fieldMap = new Map(config.fields.map(f => [f.id, f]));
 
     for (const section of config.sections) {
-      const hasFields = section.fields.some(id => fieldMap.has(id));
-      if (!hasFields) {
+      if (!sectionHasFields(section.fields, fieldMap)) {
         continue;
       }
 
@@ -146,12 +208,7 @@ function generateTablePreview(config) {
           <td class="center" colspan="3"><i>${section.title.toUpperCase()}</i></td>
         </tr>\n`;
 
-      for (const fieldId of section.fields) {
-        const field = fieldMap.get(fieldId);
-        if (field) {
-          tableBody += generateTableRowWithMock(field) + '\n';
-        }
-      }
+      tableBody += processSectionFields(section.fields, fieldMap);
     }
   } else {
     for (const field of config.fields) {
@@ -173,7 +230,7 @@ function generateTablePreview(config) {
     methodSection = `
     <section class="maquilado-section">
       <div class="maquilado-info">
-        <span class="maquilado-label">Metodo: </span>
+        <span class="maquilado-label">Método: </span>
         <span class="maquilado-details">${meta.method}</span>
       </div>
     </section>`;
@@ -235,11 +292,19 @@ function generateTestWithPhotoPreview(config) {
   const testDescription = meta.testDescription ||
     'El analisis mediante inmunoensayo cromatografico revela los siguientes hallazgos en el paciente:';
 
-  const testResults = config.fields.map(field => {
-    const result = Math.random() > 0.7 ? 'Positivo' : 'Negativo';
-    const resultClass = result === 'Positivo' ? ' class="is-positive"' : '';
+  // Ensure at least one positive result for preview testing
+  const numFields = config.fields.length;
+  const numPositive = Math.max(1, Math.floor(Math.random() * (numFields / 2 + 1)));
+  const positiveIndices = new Set();
+  while (positiveIndices.size < numPositive) {
+    positiveIndices.add(Math.floor(Math.random() * numFields));
+  }
+
+  const testResults = config.fields.map((field, index) => {
+    const result = positiveIndices.has(index) ? 'Positivo' : 'Negativo';
+    const resultClass = result === 'Positivo' ? 'test-result is-positive' : 'test-result';
     return `            <div class="test-name">${field.label}:</div>
-            <div class="test-result"${resultClass}>${result}</div>`;
+            <div class="${resultClass}">${result}</div>`;
   }).join('\n');
 
   let validationSection = '';
