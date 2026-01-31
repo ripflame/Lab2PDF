@@ -276,7 +276,7 @@ function generateTableTemplate(config) {
     methodSection = `
     <section class="maquilado-section">
       <div class="maquilado-info">
-        <span class="maquilado-label">Metodo: </span>
+        <span class="maquilado-label">Método: </span>
         <span class="maquilado-details">${meta.method}</span>
       </div>
     </section>`;
