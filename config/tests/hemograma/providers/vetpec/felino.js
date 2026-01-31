@@ -85,40 +85,40 @@ module.exports = {
       id: 'lym_rel',
       templateField: 'lym_rel',
       label: 'Linfocitos Relativos (LYM%)',
-      min: '', 
-      max: '', 
+      min: '0.00', 
+      max: '100.00', 
       unit: '%'
     },
     {
       id: 'mon_rel',
       templateField: 'mon_rel',
       label: 'Monocitos Relativos (MON%)',
-      min: '', 
-      max: '', 
+      min: '0.00', 
+      max: '100.00', 
       unit: '%'
     },
     {
       id: 'neu_rel',
       templateField: 'neu_rel',
       label: 'Neutrófilos Relativos (NEU%)',
-      min: '', 
-      max: '', 
+      min: '0.00', 
+      max: '100.00', 
       unit: '%'
     },
     {
       id: 'eos_rel',
       templateField: 'eos_rel',
       label: 'Eosinófilos Relativos (EOS%)',
-      min: '', 
-      max: '', 
+      min: '0.00', 
+      max: '100.00', 
       unit: '%'
     },
     {
       id: 'bas_rel',
       templateField: 'bas_rel',
       label: 'Basófilos Relativos (BAS%)',
-      min: '', 
-      max: '', 
+      min: '0.00', 
+      max: '100.00', 
       unit: '%'
     },
     {
