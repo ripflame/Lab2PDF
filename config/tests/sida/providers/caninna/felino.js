@@ -15,7 +15,8 @@ module.exports = {
       cedula: "11681000",
       org: "COMVEPET",
       memberId: "2020-016"
-    }
+    },
+    additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje. Para confirmar el diagnostico se recomienda realizar estudios complementarios como: hemograma completo, frotis sanguineo y perfil bioquimico."
   },
 
   fields: [

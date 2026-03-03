@@ -395,7 +395,10 @@ ${testResults}
           />
         </div>
       </div>
-    </section>${validationSection}
+    </section>${meta.additionalStudiesNote ? `
+    <div class="additional-studies-note">
+      <strong>Nota:</strong> ${meta.additionalStudiesNote.replace(/^Nota:\s*/, '')}
+    </div>` : ''}${validationSection}
     ${generateFooter(config)}
   </body>
 </html>
