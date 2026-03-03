@@ -1,5 +1,6 @@
 #Project Specific
 templates/preview
+samples/
 
 # Node.js dependencies
 node_modules/
