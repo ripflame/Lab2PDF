@@ -16,7 +16,7 @@ module.exports = {
       org: "COMVEPET",
       memberId: "2020-016"
     },
-    additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje. Para confirmar el diagnostico se recomienda realizar estudios complementarios como: frotis sanguineo o hemograma completo con revision de plaquetas."
+    additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje. Para confirmar el diagnostico se recomienda realizar estudios complementarios como: análisis de gota gruesa o hemograma completo con revision de plaquetas."
   },
 
   fields : [
