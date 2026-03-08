@@ -9,7 +9,8 @@
 5. Run `npm run generate:preview`
 6. Run `npm start` and verify
 
-Two test types available: `table` (numeric results with reference ranges) and `testWithPhoto` (rapid test with positive/negative fields and an image upload).
+Two test types available: `table` (numeric results with reference ranges) and `testWithPhoto` (rapid
+test with positive/negative fields and an image upload).
 
 ---
 
@@ -17,9 +18,13 @@ Two test types available: `table` (numeric results with reference ranges) and `t
 
 ### Test types
 
-**`table`** — Used for tests like hemograma. Fields have `id`, `label`, `min`, `max`, and `unit`. Fields are organized into `sections` for visual grouping in the PDF. The generated PDF displays each field in a row with the result, reference range, and unit.
+**`table`** — Used for tests like hemograma. Fields have `id`, `label`, `min`, `max`, and `unit`.
+Fields are organized into `sections` for visual grouping in the PDF. The generated PDF displays each
+field in a row with the result, reference range, and unit.
 
-**`testWithPhoto`** — Used for rapid immunoassay tests like hemoparasitos or distemper. Fields have `id` and `label` only (no ranges). The PDF includes a photo upload slot and displays each field as positive/negative.
+**`testWithPhoto`** — Used for rapid immunoassay tests like hemoparasitos or distemper. Fields have
+`id` and `label` only (no ranges). The PDF includes a photo upload slot and displays each field as
+positive/negative.
 
 ---
 
@@ -34,7 +39,8 @@ Edit `config/tests/tests_display_names.json` and add an entry:
 }
 ```
 
-The `id` must be a unique camelCase string. It becomes the directory name and is referenced throughout.
+The `id` must be a unique camelCase string. It becomes the directory name and is referenced
+throughout.
 
 ---
 
@@ -53,9 +59,7 @@ config/tests/myTest/
 `providers_display_names.json` lists only the providers that support this test:
 
 ```json
-[
-  { "id": "caninna", "displayName": "Veterinaria CaNinna" }
-]
+[{ "id": "caninna", "displayName": "Veterinaria CaNinna" }]
 ```
 
 Provider `id` values must match existing provider directory names used by other tests.
@@ -64,7 +68,8 @@ Provider `id` values must match existing provider directory names used by other 
 
 ### Step 3: Create config JS files
 
-Create one `.js` file per provider/species combination. The filename is the species (e.g., `canino.js`, `felino.js`).
+Create one `.js` file per provider/species combination. The filename is the species (e.g.,
+`canino.js`, `felino.js`).
 
 #### `testWithPhoto` example
 
@@ -80,20 +85,21 @@ module.exports = {
     headerTitle: ["Certificado de prueba rápida", "my test"],
     formTitle: "RESULTADOS DE LABORATORIO<br>MY TEST",
     legendTitle: "My Test",
-    testDescription: "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
+    testDescription:
+      "El análisis mediante inmunoensayo cromatográfico revela los siguientes hallazgos en el paciente:",
     validation: {
       name: "MVZ Name Here",
       cedula: "00000000",
       org: "ORG",
-      memberId: "0000-000"
+      memberId: "0000-000",
     },
-    additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje."
+    additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje.",
   },
 
   fields: [
     { id: "fieldOne", label: "Field One" },
-    { id: "fieldTwo", label: "Field Two" }
-  ]
+    { id: "fieldTwo", label: "Field Two" },
+  ],
 };
 ```
 
@@ -110,14 +116,14 @@ module.exports = {
     title: "My table test",
     headerTitle: ["Resultados de laboratorio", "My table test"],
     formTitle: "RESULTADOS DE LABORATORIO<br />MY TABLE TEST",
-    method: "Description of the analysis method used."
+    method: "Description of the analysis method used.",
   },
 
   sections: [
     {
       title: "Section Name",
-      fields: ["fieldOne", "fieldTwo"]
-    }
+      fields: ["fieldOne", "fieldTwo"],
+    },
   ],
 
   fields: [
@@ -127,7 +133,7 @@ module.exports = {
       label: "Field One label",
       min: "0.00",
       max: "10.00",
-      unit: "g/L"
+      unit: "g/L",
     },
     {
       id: "fieldTwo",
@@ -135,15 +141,16 @@ module.exports = {
       label: "Field Two label",
       min: "5.00",
       max: "20.00",
-      unit: "%"
-    }
-  ]
+      unit: "%",
+    },
+  ],
 };
 ```
 
-**`id`** — `[testId]_[providerId]`, no species suffix.
-**`formFile` / `templateFile`** — `[testId]_[providerId]_[species].html` and `[testId]_[providerId]_[species]_template.html`. These must match exactly — the generator uses them as output filenames.
-**`templateField`** — For `table` type, matches the `id` unless you need a different binding key.
+**`id`** — `[testId]_[providerId]`, no species suffix. **`formFile` / `templateFile`** —
+`[testId]_[providerId]_[species].html` and `[testId]_[providerId]_[species]_template.html`. These
+must match exactly — the generator uses them as output filenames. **`templateField`** — For `table`
+type, matches the `id` unless you need a different binding key.
 
 ---
 
@@ -153,7 +160,8 @@ module.exports = {
 npm run generate:templates
 ```
 
-This reads all config JS files and outputs the HTML form and PDF template files into `templates/`. Do not edit these files manually — they are overwritten on every run.
+This reads all config JS files and outputs the HTML form and PDF template files into `templates/`.
+Do not edit these files manually — they are overwritten on every run.
 
 ---
 
@@ -163,7 +171,8 @@ This reads all config JS files and outputs the HTML form and PDF template files 
 npm run generate:preview
 ```
 
-Outputs preview HTML files with mock data so you can inspect the PDF layout in a browser without entering real data.
+Outputs preview HTML files with mock data so you can inspect the PDF layout in a browser without
+entering real data.
 
 ---
 
@@ -174,6 +183,7 @@ npm start
 ```
 
 Verify:
+
 - The new test appears in the sidebar
 - Selecting it populates the provider dropdown with the entries from `providers_display_names.json`
 - Selecting a provider and species loads the form

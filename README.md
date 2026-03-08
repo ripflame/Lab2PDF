@@ -1,6 +1,7 @@
 # Lab2PDF
 
-A modern Electron application for generating PDF reports from veterinary laboratory results with support for multiple test types and laboratory providers.
+A modern Electron application for generating PDF reports from veterinary laboratory results with
+support for multiple test types and laboratory providers.
 
 ## Features
 
@@ -52,16 +53,19 @@ A modern Electron application for generating PDF reports from veterinary laborat
 ## Development
 
 ### Development Mode
+
 ```bash
 npm run dev
 ```
 
 ### Testing
+
 ```bash
 npm test
 ```
 
 ### Building
+
 ```bash
 # macOS
 npm run build:mac
@@ -71,7 +75,9 @@ npm run build:win
 ```
 
 ### Platform Setup
+
 The application automatically ensures platform-specific dependencies are installed:
+
 ```bash
 npm run ensure-platform
 ```
