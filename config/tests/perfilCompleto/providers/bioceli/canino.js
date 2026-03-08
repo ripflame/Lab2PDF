@@ -143,7 +143,7 @@ module.exports = {
       id: 'nitrogeno_ureico',
       templateField: 'nitrogeno_ureico',
       label: 'Nitrógeno Uréico',
-      min: '4,5', 
+      min: '4.5', 
       max: '30.5', 
       unit: 'mg/dL'
     },
