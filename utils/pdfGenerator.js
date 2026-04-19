@@ -269,7 +269,26 @@ class TemplateProcessor {
           ImageProcessor.loadImageAsBase64(
             path.join(CONFIG.imageDir, formData.requerido === "Mundo Animal" ? "bottom_mundo_animal.svg" : "bottom.svg"),
           ),
-        );
+        )
+        .replace("{{footer_address}}", formData.requerido === "Mundo Animal"
+          ? `<div class="address-box" style="border-left: 1px solid; flex: 0 0 auto; margin: 0 auto;">
+      <p>Calle Corregidaora, entre Calle Ignacio Aldama y 2 de Abril.</p>
+      <p>Emiliano Zapata, Tabasco.</p>
+      <p>Teléfono: (934) 100 4664</p>
+      <p>Horario laboral: Lunes a Sábado de 9:00am a 8:00pm</p>
+    </div>`
+          : `<div class="address-box">
+      <p>CaNinna Emiliano Zapata Tab.</p>
+      <p>Calle Moctezuma entre Libertad y</p>
+      <p>Vicente Guerrero, Centro</p>
+      <p>Tel:(934) 113-5079</p>
+    </div>
+    <div class="address-box">
+      <p>CaNinna Palenque Chiapas</p>
+      <p>Avenida Nicolas Bravo entre</p>
+      <p>Abasolo e Independencia, Centro</p>
+      <p>Tel:(916) 124-6050</p>
+    </div>`);
     } catch (error) {
       Logger.logError(new Error(`Base template processing error: ${error.message}`));
       throw error;
