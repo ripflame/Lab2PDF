@@ -133,6 +133,11 @@ class ImageProcessor {
    */
   static loadImageAsBase64(imagePath) {
     try {
+      const ext = path.extname(imagePath).toLowerCase();
+      if (ext === ".png") {
+        const buffer = fs.readFileSync(imagePath);
+        return `data:image/png;base64,${buffer.toString("base64")}`;
+      }
       const imageContent = fs.readFileSync(imagePath, "utf8");
       return `data:image/svg+xml;base64,${Buffer.from(imageContent).toString("base64")}`;
     } catch (error) {
@@ -255,11 +260,15 @@ class TemplateProcessor {
         .replace("{{telefono}}", Formatters.phoneNumber(formData.telefono))
         .replace(
           "./img/top.svg",
-          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, "top.svg")),
+          ImageProcessor.loadImageAsBase64(
+            path.join(CONFIG.imageDir, formData.requerido === "Mundo Animal" ? "top_mundo_animal.png" : "top.svg"),
+          ),
         )
         .replace(
           "./img/bottom.svg",
-          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, "bottom.svg")),
+          ImageProcessor.loadImageAsBase64(
+            path.join(CONFIG.imageDir, formData.requerido === "Mundo Animal" ? "bottom_mundo_animal.svg" : "bottom.svg"),
+          ),
         );
     } catch (error) {
       Logger.logError(new Error(`Base template processing error: ${error.message}`));

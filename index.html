@@ -28,13 +28,10 @@
               <legend class="legend">Información General</legend>
               <div class="form-column">
                 <label class="label" for="requerido">Requerido por:</label>
-                <input
-                  class="input-text"
-                  type="text"
-                  id="requerido"
-                  value="Veterinaria CaNinna"
-                  required
-                />
+                <select class="form-select" id="requerido" required>
+                  <option value="Veterinaria CaNinna" selected>Veterinaria CaNinna</option>
+                  <option value="Mundo Animal">Mundo Animal</option>
+                </select>
                 <label class="label" for="fecha">Fecha:</label>
                 <input class="input-date" type="date" id="fecha" required />
                 <label class="label" for="nombrePropietario">Nombre del Propietario:</label>
