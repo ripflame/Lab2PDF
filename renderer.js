@@ -77,6 +77,15 @@ function attachMenuEventListeners() {
 }
 
 function attachSelectorListeners() {
+  const requeridoSelect = document.getElementById("requerido");
+  requeridoSelect.addEventListener("change", () => {
+    const wrapper = document.getElementById("requeridoCustomWrapper");
+    const customInput = document.getElementById("requeridoCustom");
+    const isOtro = requeridoSelect.value === "Otro...";
+    wrapper.style.display = isOtro ? "block" : "none";
+    customInput.required = isOtro;
+  });
+
   const providerSelect = document.getElementById("proveedorSelect");
   providerSelect.addEventListener("change", async (event) => {
     if (activeProvider.id !== event.target.value) {
@@ -177,7 +186,9 @@ async function loadForm() {
 
 function getGenericFormFields() {
   const datos = {
-    requerido: document.getElementById("requerido").value,
+    requerido: document.getElementById("requerido").value === "Otro..."
+      ? document.getElementById("requeridoCustom").value
+      : document.getElementById("requerido").value,
     nombrePropietario: document.getElementById("nombrePropietario").value,
     telefono: document.getElementById("telefono").value,
     nombreMascota: document.getElementById("nombreMascota").value,
