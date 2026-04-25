@@ -248,7 +248,7 @@ class TemplateProcessor {
    */
   processBaseTemplate(htmlContent, formData) {
     try {
-      return htmlContent
+      htmlContent = htmlContent
         .replace("{{requerido}}", formData.requerido)
         .replace("{{fecha}}", Formatters.date(formData.fecha))
         .replace("{{nombreMascota}}", formData.nombreMascota)
@@ -289,6 +289,35 @@ class TemplateProcessor {
       <p>Abasolo e Independencia, Centro</p>
       <p>Tel:(916) 124-6050</p>
     </div>`);
+
+      if (formData.requerido === "Mundo Animal") {
+        const caninnaMaquiladoText = "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050.";
+        const maquiladoSectionTable = `<section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="maquilado-label">Maquilado por: </span>
+        <span class="maquilado-details">${caninnaMaquiladoText}</span>
+      </div>
+    </section>`;
+        const maquiladoSectionPhoto = `<section style="padding: 0 58px;">
+      <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+        <span>Maquilado por: </span>
+        <span style="flex: 1;">${caninnaMaquiladoText}</span>
+      </div>
+    </section>`;
+
+        if (this.config.meta.method) {
+          htmlContent = htmlContent.replace(
+            /<section class="maquilado-section">[\s\S]*?<\/section>/,
+            maquiladoSectionTable
+          );
+        }
+        htmlContent = htmlContent.replace(
+          /<section class="report-validation">[\s\S]*?<\/section>/,
+          maquiladoSectionPhoto
+        );
+      }
+
+      return htmlContent;
     } catch (error) {
       Logger.logError(new Error(`Base template processing error: ${error.message}`));
       throw error;
