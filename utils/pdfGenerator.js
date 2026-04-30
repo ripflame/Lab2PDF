@@ -248,8 +248,12 @@ class TemplateProcessor {
    */
   processBaseTemplate(htmlContent, formData) {
     try {
+      const clinicConfig = CONFIG.configLoader.getClinicConfig(formData.clinicId);
+      const clinicDisplayName = clinicConfig.displayName ?? formData.clinicName;
+      const addressHtml = clinicConfig.address ?? `<div class="address-box"><p>${formData.clinicName}</p></div>`;
+
       htmlContent = htmlContent
-        .replace("{{requerido}}", formData.requerido)
+        .replace("{{requerido}}", clinicDisplayName)
         .replace("{{fecha}}", Formatters.date(formData.fecha))
         .replace("{{nombreMascota}}", formData.nombreMascota)
         .replace("{{especie}}", formData.especie)
@@ -260,48 +264,26 @@ class TemplateProcessor {
         .replace("{{telefono}}", Formatters.phoneNumber(formData.telefono))
         .replace(
           "./img/top.svg",
-          ImageProcessor.loadImageAsBase64(
-            path.join(CONFIG.imageDir, formData.requerido === "Mundo Animal" ? "top_mundo_animal.png" : "top.svg"),
-          ),
+          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, clinicConfig.headerImage)),
         )
         .replace(
           "./img/bottom.svg",
-          ImageProcessor.loadImageAsBase64(
-            path.join(CONFIG.imageDir, formData.requerido === "Mundo Animal" ? "bottom_mundo_animal.svg" : "bottom.svg"),
-          ),
+          ImageProcessor.loadImageAsBase64(path.join(CONFIG.imageDir, clinicConfig.footerImage)),
         )
-        .replace("{{footer_address}}", formData.requerido === "Mundo Animal"
-          ? `<div class="address-box" style="border-left: 1px solid; flex: 0 0 auto; margin: 0 auto;">
-      <p>Calle Corregidaora, entre Calle Ignacio Aldama y 2 de Abril.</p>
-      <p>Emiliano Zapata, Tabasco.</p>
-      <p>Teléfono: (934) 100 4664</p>
-      <p>Horario laboral: Lunes a Sábado de 9:00am a 8:00pm</p>
-    </div>`
-          : `<div class="address-box">
-      <p>CaNinna Emiliano Zapata Tab.</p>
-      <p>Calle Moctezuma entre Libertad y</p>
-      <p>Vicente Guerrero, Centro</p>
-      <p>Tel:(934) 113-5079</p>
-    </div>
-    <div class="address-box">
-      <p>CaNinna Palenque Chiapas</p>
-      <p>Avenida Nicolas Bravo entre</p>
-      <p>Abasolo e Independencia, Centro</p>
-      <p>Tel:(916) 124-6050</p>
-    </div>`);
+        .replace("{{footer_address}}", addressHtml);
 
-      if (formData.requerido === "Mundo Animal") {
-        const caninnaMaquiladoText = "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050.";
+      if (clinicConfig.linkedProvider !== formData.provider) {
+        const maquiladoText = this.config.meta.maquilado;
         const maquiladoSectionTable = `<section class="maquilado-section">
       <div class="maquilado-info">
         <span class="maquilado-label">Maquilado por: </span>
-        <span class="maquilado-details">${caninnaMaquiladoText}</span>
+        <span class="maquilado-details">${maquiladoText}</span>
       </div>
     </section>`;
         const maquiladoSectionPhoto = `<section style="padding: 0 58px;">
       <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
         <span>Maquilado por: </span>
-        <span style="flex: 1;">${caninnaMaquiladoText}</span>
+        <span style="flex: 1;">${maquiladoText}</span>
       </div>
     </section>`;
 
@@ -467,6 +449,8 @@ class PDFGenerator {
 
       const templatePath = path.join(CONFIG.templateDir, config.templateFile);
       let htmlContent = fs.readFileSync(templatePath, "utf8");
+
+      formData.provider = provider;
 
       const templateProcessor = new TemplateProcessor(config);
 
