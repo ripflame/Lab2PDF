@@ -59,6 +59,35 @@ class ConfigLoader {
     }
   }
 
+  getClinics() {
+    const clinicsDir = path.join(this.configDirectory, "clinics");
+    const files = fs.readdirSync(clinicsDir).filter((f) => f.endsWith(".json"));
+    const clinics = files.map((file) => {
+      const content = fs.readFileSync(path.join(clinicsDir, file), "utf8");
+      return JSON.parse(content);
+    });
+    return clinics.sort((a, b) => {
+      if (a.id === "otro") return 1;
+      if (b.id === "otro") return -1;
+      return a.id.localeCompare(b.id);
+    });
+  }
+
+  getClinicConfig(clinicId) {
+    const cacheKey = `clinic_${clinicId}`;
+    if (this.configs[cacheKey]) {
+      return this.configs[cacheKey];
+    }
+    const clinicPath = path.join(this.configDirectory, "clinics", `${clinicId}.json`);
+    try {
+      const content = fs.readFileSync(clinicPath, "utf8");
+      this.configs[cacheKey] = JSON.parse(content);
+      return this.configs[cacheKey];
+    } catch (error) {
+      throw new Error(`Clinic config not found for id: ${clinicId}`);
+    }
+  }
+
   getConfigForTestProviderAndSpecies(testType, provider, species) {
     const cacheKey = `${testType}_${provider}_${species}`;
     if (this.configs[cacheKey]) {

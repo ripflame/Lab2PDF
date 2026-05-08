@@ -14,7 +14,7 @@ describe("PDF Generation", function () {
 
   it("should generate a PDF file for hemogram", async function () {
     const formData = {
-      requerido: "Veterinaria CaNinna",
+      clinicId: "caninna",
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Fido",
@@ -59,7 +59,7 @@ describe("PDF Generation", function () {
     const base64Img = `data:image/jpeg;base64,${imgBuffer.toString("base64")}`;
 
     const formData = {
-      requerido: "Veterinaria CaNinna",
+      clinicId: "caninna",
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Fido",
@@ -89,7 +89,7 @@ describe("PDF Generation", function () {
     const base64Img = `data:image/jpeg;base64,${imgBuffer.toString("base64")}`;
 
     const formData = {
-      requerido: "Veterinaria CaNinna",
+      clinicId: "caninna",
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Bolita",
@@ -116,7 +116,7 @@ describe("PDF Generation", function () {
 
   it("should generate a PDF file for hemogram palenque", async function () {
     const formData = {
-      requerido: "Veterinaria CaNinna",
+      clinicId: "caninna",
       nombrePropietario: "Juan Pérez",
       telefono: "1234567890",
       nombreMascota: "Fido",

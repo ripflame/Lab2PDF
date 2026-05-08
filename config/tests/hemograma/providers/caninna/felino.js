@@ -10,6 +10,7 @@ module.exports = {
     formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
     method:
       "Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera.",
+    maquilado: "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050."
   },
 
   sections: [

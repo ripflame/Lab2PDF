@@ -16,6 +16,7 @@ module.exports = {
       org: "COMVEPET",
       memberId: "2020-016"
     },
+    maquilado: "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050.",
     additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje. Para confirmar el diagnostico se recomienda realizar estudios complementarios como: hemograma completo y perfil bioquimico."
   },
 

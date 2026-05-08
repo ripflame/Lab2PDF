@@ -8,7 +8,8 @@ module.exports = {
     title: "Perfil Bioquímico Completo",
     headerTitle: ["Resultados de laboratorio", "Perfil Bioquímico Completo"],
     formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUÍMICO COMPLETO",
-    method: "Analizador bioquímico SKYLA VB1 de química seca en sangre, plasma o suero, semiautomático con discos reactivos de biomarcadores"
+    method: "Analizador bioquímico SKYLA VB1 de química seca en sangre, plasma o suero, semiautomático con discos reactivos de biomarcadores",
+    maquilado: "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050."
   },
 
   sections: [

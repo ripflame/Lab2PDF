@@ -263,21 +263,22 @@ function generateTableTemplate(config) {
   }
 
   // Build method/maquilado section
+  // method takes priority: it's the own-clinic default; maquilado is injected at runtime
   let methodSection = '';
-  if (meta.maquilado) {
-    methodSection = `
-    <section class="maquilado-section">
-      <div class="maquilado-info">
-        <span class="maquilado-label">Maquilado por: </span>
-        <span class="maquilado-details">${meta.maquilado}</span>
-      </div>
-    </section>`;
-  } else if (meta.method) {
+  if (meta.method) {
     methodSection = `
     <section class="maquilado-section">
       <div class="maquilado-info">
         <span class="maquilado-label">Método: </span>
         <span class="maquilado-details">${meta.method}</span>
+      </div>
+    </section>`;
+  } else if (meta.maquilado) {
+    methodSection = `
+    <section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="maquilado-label">Maquilado por: </span>
+        <span class="maquilado-details">${meta.maquilado}</span>
       </div>
     </section>`;
   }

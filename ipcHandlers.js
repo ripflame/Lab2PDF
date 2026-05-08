@@ -71,6 +71,14 @@ function setupIpcHandlers(mainWindow) {
       throw error;
     }
   });
+  ipcMain.handle("getClinics", async (_event) => {
+    try {
+      return configLoader.getClinics();
+    } catch (error) {
+      console.error("Error loading clinics");
+      throw error;
+    }
+  });
   ipcMain.handle("getProvidersByTest", async (_event, testType) => {
     try {
       return configLoader.getProvidersByTest(testType);

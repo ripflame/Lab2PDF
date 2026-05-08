@@ -5,11 +5,14 @@ let availableProviders = [];
 let activeProvider = {};
 let availableSpecies = [];
 let activeSpecies = "";
+let availableClinics = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     availableTestTypes = await window.electron.getAllTests();
+    availableClinics = await window.electron.getClinics();
     buildSidebarMenu();
+    populateClinicsSelect();
     attachSelectorListeners();
     attachFormHandlers();
     await initDefaults();
@@ -27,6 +30,21 @@ async function initDefaults() {
   activeTestType = availableTestTypes[0];
   await updateProvidersSelect();
   await updateSpeciesSelect();
+}
+
+function populateClinicsSelect() {
+  const select = document.getElementById("requerido");
+  select.innerHTML = "";
+  for (const clinic of availableClinics) {
+    const label = clinic.id === "otro" ? "Otro..." : clinic.displayName;
+    const option = new Option(label, clinic.id);
+    select.options.add(option);
+  }
+  select.selectedIndex = 0;
+  const wrapper = document.getElementById("requeridoCustomWrapper");
+  const customInput = document.getElementById("requeridoCustom");
+  wrapper.style.display = "none";
+  customInput.required = false;
 }
 
 function buildSidebarMenu() {
@@ -81,7 +99,7 @@ function attachSelectorListeners() {
   requeridoSelect.addEventListener("change", () => {
     const wrapper = document.getElementById("requeridoCustomWrapper");
     const customInput = document.getElementById("requeridoCustom");
-    const isOtro = requeridoSelect.value === "Otro...";
+    const isOtro = requeridoSelect.value === "otro";
     wrapper.style.display = isOtro ? "block" : "none";
     customInput.required = isOtro;
   });
@@ -185,10 +203,10 @@ async function loadForm() {
 }
 
 function getGenericFormFields() {
+  const clinicId = document.getElementById("requerido").value;
   const datos = {
-    requerido: document.getElementById("requerido").value === "Otro..."
-      ? document.getElementById("requeridoCustom").value
-      : document.getElementById("requerido").value,
+    clinicId,
+    clinicName: clinicId === "otro" ? document.getElementById("requeridoCustom").value : undefined,
     nombrePropietario: document.getElementById("nombrePropietario").value,
     telefono: document.getElementById("telefono").value,
     nombreMascota: document.getElementById("nombreMascota").value,

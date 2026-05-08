@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld("electron", {
   getConfig: (testType, provider, species) =>
     ipcRenderer.invoke("getConfig", testType, provider, species),
   getAllTests: () => ipcRenderer.invoke("getAllTests"),
+  getClinics: () => ipcRenderer.invoke("getClinics"),
   getProvidersByTest: (testType) => ipcRenderer.invoke("getProvidersByTest", testType),
   getSpeciesByTestAndProvider: (testType, provider) =>
     ipcRenderer.invoke("getSpeciesByTestAndProvider", testType, provider),
