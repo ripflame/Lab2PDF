@@ -22,7 +22,7 @@ module.exports = {
           title: "Valores Absolutos",
           fields: ["neu_abs", "nst_abs", "nsg_abs", "lym_abs", "mon_abs", "eos_abs", "bas_abs"],
         },
-        { title: "Valores Relativos", fields: ["neu_rel", "nsg_rel", "lym_rel", "mon_rel", "eos_rel", "bas_rel"] },
+        { title: "Valores Relativos", fields: ["neu_rel", "nst_wbc_rel", "lym_rel", "mon_rel", "eos_rel", "bas_rel"] },
       ],
     },
     {
@@ -109,11 +109,11 @@ module.exports = {
       unit: "%",
     },
     {
-      id: "nsg_rel",
-      templateField: "nsg_rel",
-      label: "NSG%: Neutrófilos segmentados %",
-      min: "35.00",
-      max: "75.00",
+      id: "nst_wbc_rel",
+      templateField: "nst_wbc_rel",
+      label: "NST/WBC%:  Neutrófilos en banda %",
+      min: "0.00",
+      max: "10.00",
       unit: "%",
     },
     {
