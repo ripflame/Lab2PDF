@@ -22,7 +22,7 @@ module.exports = {
           title: "Valores Absolutos",
           fields: ["neu_abs", "nst_abs", "nsg_abs", "lym_abs", "mon_abs", "eos_abs", "bas_abs"],
         },
-        { title: "Valores Relativos", fields: ["neu_rel", "nsg_rel", "lym_rel", "mon_rel", "eos_rel", "bas_rel"] },
+        { title: "Valores Relativos", fields: ["neu_rel", "nst_wbc_rel", "lym_rel", "mon_rel", "eos_rel", "bas_rel"] },
       ],
     },
     {
