@@ -109,11 +109,11 @@ module.exports = {
       unit: "%",
     },
     {
-      id: "nsg_rel",
-      templateField: "nsg_rel",
-      label: "NSG%: Neutrófilos segmentados %",
-      min: "35.00",
-      max: "75.00",
+      id: "nst_wbc_rel",
+      templateField: "nst_wbc_rel",
+      label: "NST/WBC%:  Neutrófilos en banda %",
+      min: "0.00",
+      max: "10.00",
       unit: "%",
     },
     {
