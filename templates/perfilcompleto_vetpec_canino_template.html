@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil Bioquímico Completo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <style>
+/* Page setup */
+@page {
+  size: 8.5in 11in;
+  margin: 0;
+}
+body {
+  width: 816px;
+  height: 1056px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #222;
+}
+
+/* Graphics */
+.graphic {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.graphic-top {
+  top: 0;
+}
+.graphic-bottom {
+  bottom: 0;
+}
+
+/* Header */
+.header-title {
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 0px #ffd94b;
+  font-family: "Poller One";
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 0px;
+  margin-left: 190px;
+  padding-top: 20px;
+  text-transform: uppercase;
+}
+
+/* Details section */
+.details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  padding-left: 210px;
+}
+.details-heading {
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+.details-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 60px;
+  padding: 10px;
+  border: 1px solid #222;
+  z-index: -2;
+}
+.details-box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.details-label {
+  font-weight: 500;
+  min-width: 95px;
+}
+.details-item {
+  display: flex;
+  margin-bottom: 0;
+}
+
+/* Footer */
+.address-container {
+  min-width: 750px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 100px;
+  left: 30px;
+  z-index: -2;
+}
+.address-box {
+  border-style: solid;
+  border-width: 1px;
+  padding: 12px;
+  flex: 1;
+  text-align: center;
+}
+.address-box:last-child {
+  border-left: none;
+}
+.address-box p {
+  margin: 5px 0px;
+}
+
+/* Text styles */
+.bold {
+  font-weight: bold;
+}
+.semi-bold {
+  font-weight: 500;
+}
+.center {
+  text-align: center !important;
+}
+
+/* Table */
+.results-table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 10px auto;
+}
+.results-table th,
+.results-table td {
+  border: 1px solid #000;
+  padding: 0 5px;
+  text-align: center;
+}
+.results-table td:first-child {
+  text-align: left;
+}
+.results-table th {
+  background-color: #00b0f0;
+  color: white;
+}
+tr.highlight_high {
+  background-color: lightsalmon;
+}
+tr.highlight_low {
+  background-color: lightblue;
+}
+
+/* Maquilado section */
+.maquilado-section {
+  padding: 0 58px;
+}
+.maquilado-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.maquilado-details {
+  flex: 1;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top" />
+      <h1 class="header-title">Resultados de laboratorio<br />Perfil Bioquímico Completo</h1>
+    </header>
+    <section class="details">
+  <p class="details-heading">{{requerido}}</p>
+  <div class="details-wrapper">
+    <div class="details-box">
+      <div class="details-item">
+        <span class="details-label">Fecha:</span>
+        <span class="details-value">{{fecha}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Nombre:</span>
+        <span class="details-value">{{nombreMascota}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Especie:</span>
+        <span class="details-value">{{especie}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Propietario:</span>
+        <span class="details-value">{{nombrePropietario}}</span>
+      </div>
+    </div>
+    <div class="details-box">
+      <div class="details-item">
+        <div class="details-label">Edad:</div>
+        <div class="details-value">{{edad}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Raza:</div>
+        <div class="details-value">{{raza}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Sexo:</div>
+        <div class="details-value">{{sexo}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Telefono:</div>
+        <div class="details-value">{{telefono}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Prueba</th>
+          <th>Resultado</th>
+          <th>Valor de Referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>PERFIL BIOQUÍMICO</i></td>
+        </tr>
+        <tr {{row_tp}}>
+          <td>Proteína TP</td>
+          <td class="semi-bold">{{tp}}</td>
+          <td>{{minValue_tp}} a {{maxValue_tp}} {{unit_tp}}</td>
+        </tr>
+        <tr {{row_alb}}>
+          <td>Proteína ALB</td>
+          <td class="semi-bold">{{alb}}</td>
+          <td>{{minValue_alb}} a {{maxValue_alb}} {{unit_alb}}</td>
+        </tr>
+        <tr {{row_glob}}>
+          <td>Proteína GLOB</td>
+          <td class="semi-bold">{{glob}}</td>
+          <td>{{minValue_glob}} a {{maxValue_glob}} {{unit_glob}}</td>
+        </tr>
+        <tr {{row_a_g}}>
+          <td>Proteína A/G</td>
+          <td class="semi-bold">{{a_g}}</td>
+          <td></td>
+        </tr>
+        <tr {{row_alt}}>
+          <td>Hígado y vesícula biliar ALT</td>
+          <td class="semi-bold">{{alt}}</td>
+          <td>{{minValue_alt}} a {{maxValue_alt}} {{unit_alt}}</td>
+        </tr>
+        <tr {{row_ast}}>
+          <td>Hígado y vesícula biliar AST</td>
+          <td class="semi-bold">{{ast}}</td>
+          <td>{{minValue_ast}} a {{maxValue_ast}} {{unit_ast}}</td>
+        </tr>
+        <tr {{row_ast_alt}}>
+          <td>Hígado y vesícula biliar AST/ALT</td>
+          <td class="semi-bold">{{ast_alt}}</td>
+          <td></td>
+        </tr>
+        <tr {{row_alp}}>
+          <td>Hígado y vesícula biliar ALP</td>
+          <td class="semi-bold">{{alp}}</td>
+          <td>{{minValue_alp}} a {{maxValue_alp}} {{unit_alp}}</td>
+        </tr>
+        <tr {{row_ggt}}>
+          <td>Hígado y vesícula biliar GGT</td>
+          <td class="semi-bold">{{ggt}}</td>
+          <td>{{minValue_ggt}} a {{maxValue_ggt}} {{unit_ggt}}</td>
+        </tr>
+        <tr {{row_tbil}}>
+          <td>Hígado y vesícula biliar TBIL</td>
+          <td class="semi-bold">{{tbil}}</td>
+          <td>{{minValue_tbil}} a {{maxValue_tbil}} {{unit_tbil}}</td>
+        </tr>
+        <tr {{row_tba}}>
+          <td>Hígado y vesícula biliar TBA</td>
+          <td class="semi-bold">{{tba}}</td>
+          <td>{{minValue_tba}} a {{maxValue_tba}} {{unit_tba}}</td>
+        </tr>
+        <tr {{row_amy}}>
+          <td>Páncreas AMY</td>
+          <td class="semi-bold">{{amy}}</td>
+          <td>{{minValue_amy}} a {{maxValue_amy}} {{unit_amy}}</td>
+        </tr>
+        <tr {{row_lipa-d}}>
+          <td>Páncreas LIPA-D</td>
+          <td class="semi-bold">{{lipa-d}}</td>
+          <td>{{minValue_lipa-d}} a {{maxValue_lipa-d}} {{unit_lipa-d}}</td>
+        </tr>
+        <tr {{row_bun}}>
+          <td>Riñones BUN</td>
+          <td class="semi-bold">{{bun}}</td>
+          <td>{{minValue_bun}} a {{maxValue_bun}} {{unit_bun}}</td>
+        </tr>
+        <tr {{row_crea}}>
+          <td>Riñones CREA</td>
+          <td class="semi-bold">{{crea}}</td>
+          <td>{{minValue_crea}} a {{maxValue_crea}} {{unit_crea}}</td>
+        </tr>
+        <tr {{row_bun_crea}}>
+          <td>Riñones BUN/CREA</td>
+          <td class="semi-bold">{{bun_crea}}</td>
+          <td></td>
+        </tr>
+        <tr {{row_ck}}>
+          <td>Cardiovasc./Músculo CK</td>
+          <td class="semi-bold">{{ck}}</td>
+          <td>{{minValue_ck}} a {{maxValue_ck}} {{unit_ck}}</td>
+        </tr>
+        <tr {{row_ldh}}>
+          <td>Cardiovasc./Músculo LDH</td>
+          <td class="semi-bold">{{ldh}}</td>
+          <td>{{minValue_ldh}} a {{maxValue_ldh}} {{unit_ldh}}</td>
+        </tr>
+        <tr {{row_glu}}>
+          <td>Metabolismo energético GLU</td>
+          <td class="semi-bold">{{glu}}</td>
+          <td>{{minValue_glu}} a {{maxValue_glu}} {{unit_glu}}</td>
+        </tr>
+        <tr {{row_tc}}>
+          <td>Metabolismo energético TC</td>
+          <td class="semi-bold">{{tc}}</td>
+          <td>{{minValue_tc}} a {{maxValue_tc}} {{unit_tc}}</td>
+        </tr>
+        <tr {{row_tg}}>
+          <td>Metabolismo energético TG</td>
+          <td class="semi-bold">{{tg}}</td>
+          <td>{{minValue_tg}} a {{maxValue_tg}} {{unit_tg}}</td>
+        </tr>
+        <tr {{row_ca}}>
+          <td>Minerales Ca</td>
+          <td class="semi-bold">{{ca}}</td>
+          <td>{{minValue_ca}} a {{maxValue_ca}} {{unit_ca}}</td>
+        </tr>
+        <tr {{row_phos}}>
+          <td>Minerales PHOS</td>
+          <td class="semi-bold">{{phos}}</td>
+          <td>{{minValue_phos}} a {{maxValue_phos}} {{unit_phos}}</td>
+        </tr>
+        <tr {{row_caxp}}>
+          <td>Minerales CaxP</td>
+          <td class="semi-bold">{{caxp}}</td>
+          <td></td>
+        </tr>
+        <tr {{row_mg}}>
+          <td>Minerales Mg</td>
+          <td class="semi-bold">{{mg}}</td>
+          <td>{{minValue_mg}} a {{maxValue_mg}} {{unit_mg}}</td>
+        </tr>
+        <tr {{row_na}}>
+          <td>Electrolitos Na+</td>
+          <td class="semi-bold">{{na}}</td>
+          <td>{{minValue_na}} a {{maxValue_na}} {{unit_na}}</td>
+        </tr>
+        <tr {{row_k}}>
+          <td>Electrolitos K+</td>
+          <td class="semi-bold">{{k}}</td>
+          <td>{{minValue_k}} a {{maxValue_k}} {{unit_k}}</td>
+        </tr>
+        <tr {{row_na_k}}>
+          <td>Electrolitos Na/K</td>
+          <td class="semi-bold">{{na_k}}</td>
+          <td></td>
+        </tr>
+        <tr {{row_cl}}>
+          <td>Electrolitos CL-</td>
+          <td class="semi-bold">{{cl}}</td>
+          <td>{{minValue_cl}} a {{maxValue_cl}} {{unit_cl}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="maquilado-label">Maquilado por: </span>
+        <span class="maquilado-details">Clinica Veterinaria PEC. Prol. Aladama esquina Revolución, Col. Centro CP. 29960, Palenque, Chiapas</span>
+      </div>
+    </section>
+    <footer>
+  <div class="address-container">
+    {{footer_address}}
+  </div>
+  <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom" />
+</footer>
+
+  </body>
+</html>
