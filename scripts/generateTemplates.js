@@ -299,7 +299,7 @@ function generateTableTemplate(config) {
     />
     <style>
 ${COMMON_STYLES}
-${TABLE_STYLES}
+${TABLE_STYLES}${meta.extraStyles ? `\n${meta.extraStyles}` : ''}
     </style>
   </head>
   <body>
