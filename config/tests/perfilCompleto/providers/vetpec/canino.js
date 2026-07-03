@@ -10,6 +10,9 @@ module.exports = {
     formTitle: "RESULTADOS DE LABORATORIO<br />PERFIL BIOQUÍMICO COMPLETO",
     maquilado:
       "Clinica Veterinaria PEC. Prol. Aladama esquina Revolución, Col. Centro CP. 29960, Palenque, Chiapas",
+    extraStyles: `
+    .results-table { font-size: 14px; margin: 4px auto; }
+    `,
   },
 
   sections: [
