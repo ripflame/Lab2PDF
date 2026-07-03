@@ -17,9 +17,9 @@
     "predev": "npm run ensure-platform",
     "pretest": "npm run ensure-platform",
     "ensure-platform": "node scripts/ensure-platform.js",
-    "prerelease:mac": "npm uninstall sharp && npm install sharp --os=darwin --cpu=x64",
+    "prerelease:mac": "node scripts/reinstall-native-sharp.js darwin x64",
     "release:mac": "node macos-release.js",
-    "prerelease:win": "npm uninstall sharp && npm install sharp --os=win32 --cpu=x64",
+    "prerelease:win": "node scripts/reinstall-native-sharp.js win32 x64",
     "release:win": "GH_TOKEN=$(gh auth token) electron-builder --win --publish always",
     "clean": "rm -rf dist/*"
   },
