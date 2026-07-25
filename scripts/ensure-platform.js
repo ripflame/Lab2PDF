@@ -46,9 +46,9 @@ try {
 
 if (needsReinstall) {
   console.log(`Reinstalling Sharp for ${platformFlag}...`);
-  execSync("npm uninstall sharp", { stdio: "inherit" });
-  execSync(`npm install sharp --platform=${platformFlag}`, { stdio: "inherit" });
-  console.log("Sharp reinstalled successfully.");
+  execSync(`node ${path.join(__dirname, "reinstall-native-sharp.js")} ${platformFlag} ${os.arch()}`, {
+    stdio: "inherit",
+  });
 } else {
   console.log(`Sharp is already installed correctly for ${platformFlag}.`);
 }
