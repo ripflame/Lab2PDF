@@ -1,7 +1,7 @@
 module.exports = {
   id: "perfilCompleto_vetpec",
-  formFile: "perfilcompleto_vetpec_canino.html",
-  templateFile: "perfilcompleto_vetpec_canino_template.html",
+  formFile: "perfilcompleto_vetpec_felino.html",
+  templateFile: "perfilcompleto_vetpec_felino_template.html",
   type: "table",
 
   meta: {
