@@ -6,15 +6,11 @@ const { version } = require("./package.json");
 
 async function main() {
   try {
-    // 1. Uninstall and reinstall Sharp
-    console.log("Setting up Sharp for macOS...");
-    execSync("npm uninstall sharp && npm install sharp", { stdio: "inherit" });
-
-    // 2. Build the macOS app
+    // 1. Build the macOS app
     console.log("Building macOS app...");
     execSync("electron-builder --mac", { stdio: "inherit" });
 
-    // 3. Get the file paths from the dist directory
+    // 2. Get the file paths from the dist directory
     const distDir = path.join(__dirname, "dist");
     const dmgFile = path.join(distDir, `Lab2PDF-${version}.dmg`);
     const dmgBlockmapFile = path.join(distDir, `Lab2PDF-${version}.dmg.blockmap`);
@@ -41,10 +37,10 @@ async function main() {
       throw new Error("No build files found to upload. Check the build process.");
     }
 
-    // 4. Get the tag name for the current version
+    // 3. Get the tag name for the current version
     const tagName = `v${version}`;
 
-    // 5. Upload to GitHub release using gh CLI
+    // 4. Upload to GitHub release using gh CLI
     console.log(`Uploading to GitHub release ${tagName}...`);
     const filesArg = filesToUpload.map((file) => `"${file}"`).join(" ");
     execSync(`gh release upload ${tagName} ${filesArg} --clobber`, {
