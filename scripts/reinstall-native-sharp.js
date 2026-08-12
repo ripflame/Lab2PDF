@@ -1,11 +1,13 @@
 const { execSync } = require("child_process");
+const os = require("os");
 const { dependencies } = require("../package.json");
 
-const [platform, arch] = process.argv.slice(2);
+const [argPlatform, argArch] = process.argv.slice(2);
+const platform = argPlatform || os.platform();
+const arch = argArch || os.arch();
 
-if (!platform || !arch) {
-  console.error("Usage: node reinstall-native-sharp.js <platform> <arch>");
-  process.exit(1);
+if (!argPlatform || !argArch) {
+  console.log(`No platform/arch given, defaulting to host: ${platform}/${arch}`);
 }
 
 const version = dependencies.sharp.replace(/^[\^~]/, "");
