@@ -94,6 +94,7 @@ module.exports = {
       memberId: "0000-000",
     },
     additionalStudiesNote: "Nota: Esta es una prueba rapida de tamizaje.",
+    maquilado: "Lab or clinic name and address shown when the report is outsourced.",
   },
 
   fields: [
@@ -117,6 +118,7 @@ module.exports = {
     headerTitle: ["Resultados de laboratorio", "My table test"],
     formTitle: "RESULTADOS DE LABORATORIO<br />MY TABLE TEST",
     method: "Description of the analysis method used.",
+    maquilado: "Lab or clinic name and address shown when the report is outsourced.",
   },
 
   sections: [
@@ -152,6 +154,41 @@ module.exports = {
 must match exactly — the generator uses them as output filenames. **`templateField`** — For `table`
 type, matches the `id` unless you need a different binding key.
 
+**`meta.maquilado`** — Every existing config sets this, and `utils/pdfGenerator.js` reads it
+unguarded whenever the selected clinic's `linkedProvider` (see `config/clinics/*.json`) does not
+match the provider chosen on the form. In that case the report's validation section is replaced with
+a "Maquilado por: [this text]" attribution, so treat it as required rather than optional. Example
+from `config/tests/hemograma/providers/caninna/canino.js`:
+
+```js
+maquilado:
+  "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, " +
+  "Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e " +
+  "Independencia, Centro. Tel:(916) 124-6050.",
+```
+
+**`meta.extraStyles`** — Optional. A raw CSS string appended after the base table/testWithPhoto
+styles when the template is generated (or previewed). Used to tweak layout for a specific
+provider/species without touching the shared stylesheets. Example from
+`config/tests/perfilCompleto/providers/vetpec/canino.js`:
+
+```js
+extraStyles: `
+.results-table { font-size: 14px; margin: 4px auto; }
+`,
+```
+
+**`meta.footer`** — Optional. An array of address boxes to render in the PDF footer instead of the
+default one:
+
+```js
+footer: [
+  { name: "Clinic Name", address: ["Street line 1", "Street line 2"], tel: "123-456-7890" },
+],
+```
+
+Omit it to use the default footer partial (`scripts/partials/footerDefault.html`).
+
 ---
 
 ### Step 4: Generate templates
@@ -161,7 +198,9 @@ npm run generate:templates
 ```
 
 This reads all config JS files and outputs the HTML form and PDF template files into `templates/`.
-Do not edit these files manually — they are overwritten on every run.
+Do not edit these files manually — they are overwritten on every run. Pass a single config's path
+to regenerate just that one while iterating, e.g.
+`node scripts/generateTemplates.js config/tests/myTest/providers/caninna/canino.js`.
 
 ---
 
@@ -188,3 +227,18 @@ Verify:
 - Selecting it populates the provider dropdown with the entries from `providers_display_names.json`
 - Selecting a provider and species loads the form
 - Filling out the form and generating produces a valid PDF
+
+---
+
+### Species and clinics
+
+**Species come from the filesystem, not a registry.** `configLoader.getSpeciesByTestAndProvider`
+lists the `.js` files present in `config/tests/[TEST_ID]/providers/[PROVIDER]/` — adding
+`felino.js` next to `canino.js` is enough to make felino selectable, no other file to edit.
+
+**Clinics are a separate config from tests/providers.** `config/clinics/*.json` defines the
+requesting clinics offered in the form ("Requerido por"). Each entry controls `headerImage`,
+`footerImage`, `address`, and `linkedProvider` (the provider that clinic's own lab work belongs to
+— see `meta.maquilado` above). Adding a new test type does not require touching this directory,
+but if you add a new provider, make sure at least one clinic's `linkedProvider` matches it or every
+report from that provider will show the maquilado attribution.
