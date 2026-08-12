@@ -5,15 +5,28 @@ support for multiple test types and laboratory providers.
 
 ## Features
 
-- **Hemogram Reports**: Generate comprehensive blood count reports for dogs and cats
-- **Hemoparasites Reports**: Create parasitology examination reports
-- **Distemper/Adenovirus Reports**: Generate immunological test reports
-- **Gastroenteritis Reports**: Create digestive health examination reports
-- **Perfil Completo Reports**: Generate complete health profile reports
-- **SIDA Reports**: Create FIV/FeLV test reports for cats
-- **Multiple Laboratory Providers**: Support for CaNinna, Labrios, Zoovet, and Bioceli
+- **Hemogram Reports**: Blood count reports for dogs and cats — CaNinna, Labrios (dogs only),
+  Zoovet, Bioceli, VetPEC
+- **Perfil Completo Reports**: Complete health profile reports for dogs and cats — CaNinna,
+  Bioceli, VetPEC
+- **Hemoparasites Reports**: Parasitology examination reports (CaNinna, dogs)
+- **Distemper/Adenovirus Reports**: Immunological test reports (CaNinna, dogs)
+- **Gastroenteritis Reports**: Digestive health examination reports (CaNinna, dogs)
+- **SIDA Reports**: FIV/FeLV/heartworm test reports (CaNinna, cats)
+- **Clinic-aware branding**: Header/footer artwork and address block switch per requesting clinic,
+  with automatic "Maquilado por" attribution when the report is outsourced to a different provider
 - **Auto-update**: Automatic background updates via GitHub releases
-- **Multi-platform**: Available for macOS, Windows, and Linux
+- **Multi-platform**: Available for macOS and Windows
+
+## Prerequisites
+
+- **Google Chrome or Microsoft Edge must be installed.** PDF rendering uses `puppeteer-core`, which
+  does not bundle a browser — it drives your existing Chrome/Edge install instead. This applies to
+  the packaged app as well as running from source. Checked paths:
+  - **Windows**: Chrome or Edge under `Program Files` / `Program Files (x86)`
+  - **macOS**: `/Applications/Google Chrome.app` or `/Applications/Microsoft Edge.app`
+  - Linux is not currently supported (no browser path lookup, no build target).
+- **Node 24 (arm64)** if building from source — required for the native `sharp` dependency.
 
 ## Installation
 
@@ -23,7 +36,6 @@ support for multiple test types and laboratory providers.
 2. Download the latest release for your operating system:
    - **macOS**: `.dmg` file
    - **Windows**: `.exe` installer or portable `.exe`
-   - **Linux**: `.AppImage`, `.deb`, or `.rpm`
 3. Install or run the application
 
 ### From Source
@@ -46,9 +58,10 @@ support for multiple test types and laboratory providers.
 
 1. Launch the application
 2. Use the sidebar to navigate between different report types
-3. Fill out the form with laboratory results
+3. Select the requesting clinic, laboratory provider, and species, then fill out the form with
+   laboratory results
 4. Click "Generar PDF" to generate the report
-5. The generated PDF will be saved to your documents folder
+5. A save dialog opens, defaulting to your Documents folder — pick where to save the PDF
 
 ## Development
 
@@ -57,6 +70,18 @@ support for multiple test types and laboratory providers.
 ```bash
 npm run dev
 ```
+
+### Adding or editing a report config
+
+Report forms and PDF templates are generated from config files under `config/tests/` — do not edit
+files in `templates/` directly, they get overwritten. After changing a config:
+
+```bash
+npm run generate:templates
+npm run generate:preview
+```
+
+See [ADD_TEST_TYPE.md](ADD_TEST_TYPE.md) for the full guide to adding a new test type or provider.
 
 ### Testing
 
@@ -74,6 +99,22 @@ npm run build:mac
 npm run build:win
 ```
 
+### Releasing
+
+```bash
+# macOS (builds and publishes to GitHub releases)
+npm run release:mac
+
+# Windows (builds and publishes to GitHub releases)
+npm run release:win
+
+# Remove build output
+npm run clean
+```
+
+`prebuild:*`/`prerelease:*` hooks reinstall the native `sharp` dependency for the target platform
+before building.
+
 ### Platform Setup
 
 The application automatically ensures platform-specific dependencies are installed:
@@ -82,17 +123,29 @@ The application automatically ensures platform-specific dependencies are install
 npm run ensure-platform
 ```
 
+## Architecture
+
+Lab2PDF is config-driven: each test type / provider / species combination is a single JS file under
+`config/tests/<test>/providers/<provider>/<species>.js`, loaded through
+[`config/configLoader.js`](config/configLoader.js). [`scripts/generateTemplates.js`](scripts/generateTemplates.js)
+renders those configs into the form and PDF template HTML under `templates/`, which
+[`utils/pdfGenerator.js`](utils/pdfGenerator.js) fills with form data and prints to PDF via
+`puppeteer-core`. Requesting clinics (header/footer branding, address, "Maquilado por" attribution)
+are a separate registry under `config/clinics/`.
+
 ## Technical Stack
 
 - **Electron**: Cross-platform desktop application framework
-- **Puppeteer**: PDF generation engine
-- **Sharp**: Image processing
+- **puppeteer-core**: PDF generation engine (drives a system-installed Chrome/Edge, see
+  [Prerequisites](#prerequisites))
+- **Sharp**: Image processing for uploaded test photos
+- **electron-updater** / **electron-log**: Auto-update and logging
 - **HTML/CSS/JavaScript**: Frontend technologies
 
 ## Version
 
-Current version: 1.3.1
+See the [releases page](https://github.com/ripflame/Lab2PDF/releases) for the current version.
 
 ## License
 
-ISC License
+[ISC License](LICENSE)
