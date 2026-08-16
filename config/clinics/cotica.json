@@ -1,0 +1,13 @@
+{
+  "id": "cotica",
+  "displayName": "Servicios Veterinarios COTICA",
+  "headerImage": "top_cotica.png",
+  "footerImage": "bottom_cotica.svg",
+  "address": "<div class=\"address-box\" style=\"border-left: 1px solid; flex: 0 0 auto; margin: 0 auto;\"><p>Servicios Veterinarios COTICA</p><p>MVZ Alejandro Gomez</p><p>(934) 102 3920</p></div>",
+  "titleStyle": {
+    "color": "#F99B9B",
+    "shadow": "1px 1px 0px #fff",
+    "stroke": "0.5px #fff"
+  },
+  "linkedProvider": null
+}
