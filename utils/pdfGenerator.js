@@ -272,6 +272,20 @@ class TemplateProcessor {
         )
         .replace("{{footer_address}}", addressHtml);
 
+      const titleStyle = clinicConfig.titleStyle;
+      if (titleStyle) {
+        const vars = [
+          titleStyle.color && `--header-title-color: ${titleStyle.color};`,
+          titleStyle.shadow && `--header-title-shadow: ${titleStyle.shadow};`,
+          titleStyle.stroke && `--header-title-stroke: ${titleStyle.stroke};`,
+        ]
+          .filter(Boolean)
+          .join(" ");
+        if (vars) {
+          htmlContent = htmlContent.replace("</style>", `:root { ${vars} }\n    </style>`);
+        }
+      }
+
       if (clinicConfig.linkedProvider !== formData.provider) {
         const maquiladoText = this.config.meta.maquilado;
         const maquiladoSectionTable = `<section class="maquilado-section">
