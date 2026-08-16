@@ -29,10 +29,16 @@ body {
 }
 
 /* Header */
+:root {
+  --header-title-color: #fff;
+  --header-title-shadow: 1px 1px 0px #ffd94b;
+  --header-title-stroke: 0px transparent;
+}
 .header-title {
-  color: #fff;
+  color: var(--header-title-color);
   text-align: center;
-  text-shadow: 1px 1px 0px #ffd94b;
+  text-shadow: var(--header-title-shadow);
+  -webkit-text-stroke: var(--header-title-stroke);
   font-family: "Poller One";
   font-size: 1.75rem;
   font-style: normal;
