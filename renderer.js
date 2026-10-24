@@ -118,8 +118,9 @@ function attachSelectorListeners() {
 
   const speciesSelect = document.getElementById("especieSelect");
   speciesSelect.addEventListener("change", async (event) => {
-    if (activeSpecies !== event.target.value) {
-      activeSpecies = event.target.value;
+    const species = event.target.value.toLowerCase();
+    if (activeSpecies !== species) {
+      activeSpecies = species;
       await loadForm();
     }
   });
