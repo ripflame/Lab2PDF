@@ -30,6 +30,9 @@
   "build": {
     "appId": "com.ripflame.lab2pdf",
     "productName": "Lab2PDF",
+    "toolsets": {
+      "nsis": "1.2.1"
+    },
     "publish": {
       "provider": "github",
       "owner": "ripflame",
@@ -114,7 +117,7 @@
     "@babel/register": "^7.21.0",
     "cross-env": "^7.0.3",
     "electron": "^34.1.1",
-    "electron-builder": "^23.6.0",
+    "electron-builder": "^26.18.0",
     "electron-reload": "^2.0.0-alpha.1",
     "mocha": "^10.2.0"
   },
