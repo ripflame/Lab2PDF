@@ -10,7 +10,15 @@ module.exports = {
     formTitle: "RESULTADOS DE LABORATORIO<br />HEMOGRAMA COMPLETO",
     method:
       "Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera.",
-    maquilado: "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050."
+    maquilado: "Veterinaria CaNinna. Emiliano Zapata, Tab.: Calle Moctezuma entre Libertad y Vicente Guerrero, Centro. Tel:(934) 113-5079. Palenque, Chis.: Avenida Nicolas Bravo entre Abasolo e Independencia, Centro. Tel:(916) 124-6050.",
+    extraStyles: `
+    .results-table { font-size: 13px; margin: 2px auto; }
+    .results-table th, .results-table td { padding: 0 4px; line-height: 1.15; }
+    .maquilado-info { font-size: 11px; }
+    .address-container { bottom: 100px; }
+    .address-box { padding: 6px 12px; }
+    .address-box p { margin: 3px 0px; }
+    `,
   },
 
   sections: [
@@ -27,11 +35,11 @@ module.exports = {
     },
     {
       title: "Fórmula Roja",
-      fields: ["rbc", "hgb", "mcv", "mch", "mchc"],
+      fields: ["rbc", "hgb", "hct", "mcv", "mch", "mchc", "rdw_sd", "ret_abs", "ret_rel"],
     },
     {
       title: "Plaquetas",
-      fields: ["plt", "mpv"],
+      fields: ["plt", "aplt_abs", "mpv", "pdw_sd", "pdw_cv"],
     },
   ],
 
@@ -165,6 +173,14 @@ module.exports = {
       unit: "g/L",
     },
     {
+      id: "hct",
+      templateField: "hct",
+      label: "HCT: Hematocrito",
+      min: "30.00",
+      max: "56.00",
+      unit: "%",
+    },
+    {
       id: "mcv",
       templateField: "mcv",
       label: "MCV",
@@ -189,6 +205,30 @@ module.exports = {
       unit: "g/L",
     },
     {
+      id: "rdw_sd",
+      templateField: "rdw_sd",
+      label: "RDW-SD: Distribución eritrocitaria",
+      min: "18.00",
+      max: "37.00",
+      unit: "fL",
+    },
+    {
+      id: "ret_abs",
+      templateField: "ret_abs",
+      label: "RET: Reticulocitos",
+      min: "1.00",
+      max: "40.00",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
+      id: "ret_rel",
+      templateField: "ret_rel",
+      label: "RET%: Reticulocitos %",
+      min: "0.00",
+      max: "0.80",
+      unit: "%",
+    },
+    {
       id: "plt",
       templateField: "plt",
       label: "PLT: Plaquetas",
@@ -197,12 +237,36 @@ module.exports = {
       unit: "10<sup>9</sup>/L",
     },
     {
+      id: "aplt_abs",
+      templateField: "aplt_abs",
+      label: "APLT: Agregados de plaquetas",
+      min: "0.00",
+      max: "0.15",
+      unit: "x 10<sup>9</sup>/L",
+    },
+    {
       id: "mpv",
       templateField: "mpv",
       label: "MPV",
       min: "5.60",
       max: "14.10",
       unit: "fL",
+    },
+    {
+      id: "pdw_sd",
+      templateField: "pdw_sd",
+      label: "PDW-SD: Distribución plaquetaria",
+      min: "5.30",
+      max: "18.30",
+      unit: "fL",
+    },
+    {
+      id: "pdw_cv",
+      templateField: "pdw_cv",
+      label: "PDW-CV: Distribución plaquetaria",
+      min: "39.40",
+      max: "83.60",
+      unit: "%",
     },
   ],
 };
