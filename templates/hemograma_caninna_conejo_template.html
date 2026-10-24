@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hemograma completo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poller+One&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <style>
+/* Page setup */
+@page {
+  size: 8.5in 11in;
+  margin: 0;
+}
+body {
+  width: 816px;
+  height: 1056px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #222;
+}
+
+/* Graphics */
+.graphic {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.graphic-top {
+  top: 0;
+}
+.graphic-bottom {
+  bottom: 0;
+}
+
+/* Header */
+:root {
+  --header-title-color: #fff;
+  --header-title-shadow: 1px 1px 0px #ffd94b;
+  --header-title-stroke: 0px transparent;
+}
+.header-title {
+  color: var(--header-title-color);
+  text-align: center;
+  text-shadow: var(--header-title-shadow);
+  -webkit-text-stroke: var(--header-title-stroke);
+  font-family: "Poller One";
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 0px;
+  margin-left: 190px;
+  padding-top: 20px;
+  text-transform: uppercase;
+}
+
+/* Details section */
+.details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  padding-left: 210px;
+}
+.details-heading {
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+.details-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 60px;
+  padding: 10px;
+  border: 1px solid #222;
+  z-index: -2;
+}
+.details-box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.details-label {
+  font-weight: 500;
+  min-width: 95px;
+}
+.details-item {
+  display: flex;
+  margin-bottom: 0;
+}
+
+/* Footer */
+.address-container {
+  min-width: 750px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 100px;
+  left: 30px;
+  z-index: -2;
+}
+.address-box {
+  border-style: solid;
+  border-width: 1px;
+  padding: 12px;
+  flex: 1;
+  text-align: center;
+}
+.address-box:last-child {
+  border-left: none;
+}
+.address-box p {
+  margin: 5px 0px;
+}
+
+/* Text styles */
+.bold {
+  font-weight: bold;
+}
+.semi-bold {
+  font-weight: 500;
+}
+.center {
+  text-align: center !important;
+}
+
+/* Table */
+.results-table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 10px auto;
+}
+.results-table th,
+.results-table td {
+  border: 1px solid #000;
+  padding: 0 5px;
+  text-align: center;
+}
+.results-table td:first-child {
+  text-align: left;
+}
+.results-table th {
+  background-color: #00b0f0;
+  color: white;
+}
+tr.highlight_high {
+  background-color: lightsalmon;
+}
+tr.highlight_low {
+  background-color: lightblue;
+}
+
+/* Maquilado section */
+.maquilado-section {
+  padding: 0 58px;
+}
+.maquilado-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.maquilado-details {
+  flex: 1;
+}
+
+
+    .results-table { font-size: 10px; margin: 2px auto; }
+    .results-table th, .results-table td { padding: 0 4px; line-height: 1.15; }
+    .maquilado-info { font-size: 11px; }
+    .address-container { bottom: 100px; }
+    .address-box { padding: 6px 12px; }
+    .address-box p { margin: 3px 0px; }
+    
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="./img/top.svg" alt="Top Graphic" class="graphic graphic-top" />
+      <h1 class="header-title">Resultados de laboratorio<br />Hemograma completo</h1>
+    </header>
+    <section class="details">
+  <p class="details-heading">{{requerido}}</p>
+  <div class="details-wrapper">
+    <div class="details-box">
+      <div class="details-item">
+        <span class="details-label">Fecha:</span>
+        <span class="details-value">{{fecha}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Nombre:</span>
+        <span class="details-value">{{nombreMascota}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Especie:</span>
+        <span class="details-value">{{especie}}</span>
+      </div>
+      <div class="details-item">
+        <span class="details-label">Propietario:</span>
+        <span class="details-value">{{nombrePropietario}}</span>
+      </div>
+    </div>
+    <div class="details-box">
+      <div class="details-item">
+        <div class="details-label">Edad:</div>
+        <div class="details-value">{{edad}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Raza:</div>
+        <div class="details-value">{{raza}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Sexo:</div>
+        <div class="details-value">{{sexo}}</div>
+      </div>
+      <div class="details-item">
+        <div class="details-label">Telefono:</div>
+        <div class="details-value">{{telefono}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Prueba</th>
+          <th>Resultado</th>
+          <th>Valor de Referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>FÓRMULA BLANCA</i></td>
+        </tr>
+        <tr {{row_wbc}}>
+          <td>WBC: Leucocitos</td>
+          <td class="semi-bold">{{wbc}}</td>
+          <td>{{minValue_wbc}} a {{maxValue_wbc}} {{unit_wbc}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>Valores Absolutos</i></td>
+        </tr>
+        <tr {{row_het_abs}}>
+          <td>HET: Heterófilos</td>
+          <td class="semi-bold">{{het_abs}}</td>
+          <td>{{minValue_het_abs}} a {{maxValue_het_abs}} {{unit_het_abs}}</td>
+        </tr>
+        <tr {{row_lym_abs}}>
+          <td>LYM: Linfocitos</td>
+          <td class="semi-bold">{{lym_abs}}</td>
+          <td>{{minValue_lym_abs}} a {{maxValue_lym_abs}} {{unit_lym_abs}}</td>
+        </tr>
+        <tr {{row_mon_abs}}>
+          <td>MON: Monocitos</td>
+          <td class="semi-bold">{{mon_abs}}</td>
+          <td>{{minValue_mon_abs}} a {{maxValue_mon_abs}} {{unit_mon_abs}}</td>
+        </tr>
+        <tr {{row_bas_abs}}>
+          <td>BAS: Basófilos</td>
+          <td class="semi-bold">{{bas_abs}}</td>
+          <td>{{minValue_bas_abs}} a {{maxValue_bas_abs}} {{unit_bas_abs}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>Valores Relativos</i></td>
+        </tr>
+        <tr {{row_het_rel}}>
+          <td>HET%: Heterófilos %</td>
+          <td class="semi-bold">{{het_rel}}</td>
+          <td>{{minValue_het_rel}} a {{maxValue_het_rel}} {{unit_het_rel}}</td>
+        </tr>
+        <tr {{row_lym_rel}}>
+          <td>LYM%: Linfocitos %</td>
+          <td class="semi-bold">{{lym_rel}}</td>
+          <td>{{minValue_lym_rel}} a {{maxValue_lym_rel}} {{unit_lym_rel}}</td>
+        </tr>
+        <tr {{row_mon_rel}}>
+          <td>MON%: Monocitos %</td>
+          <td class="semi-bold">{{mon_rel}}</td>
+          <td>{{minValue_mon_rel}} a {{maxValue_mon_rel}} {{unit_mon_rel}}</td>
+        </tr>
+        <tr {{row_bas_rel}}>
+          <td>BAS%: Basófilos %</td>
+          <td class="semi-bold">{{bas_rel}}</td>
+          <td>{{minValue_bas_rel}} a {{maxValue_bas_rel}} {{unit_bas_rel}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>FÓRMULA ROJA</i></td>
+        </tr>
+        <tr {{row_rbc}}>
+          <td>RBC: Hematíes</td>
+          <td class="semi-bold">{{rbc}}</td>
+          <td>{{minValue_rbc}} a {{maxValue_rbc}} {{unit_rbc}}</td>
+        </tr>
+        <tr {{row_hgb}}>
+          <td>HGB: Hemoglobina</td>
+          <td class="semi-bold">{{hgb}}</td>
+          <td>{{minValue_hgb}} a {{maxValue_hgb}} {{unit_hgb}}</td>
+        </tr>
+        <tr {{row_hct}}>
+          <td>HCT: Hematocrito</td>
+          <td class="semi-bold">{{hct}}</td>
+          <td>{{minValue_hct}} a {{maxValue_hct}} {{unit_hct}}</td>
+        </tr>
+        <tr {{row_mcv}}>
+          <td>MCV</td>
+          <td class="semi-bold">{{mcv}}</td>
+          <td>{{minValue_mcv}} a {{maxValue_mcv}} {{unit_mcv}}</td>
+        </tr>
+        <tr {{row_mch}}>
+          <td>MCH</td>
+          <td class="semi-bold">{{mch}}</td>
+          <td>{{minValue_mch}} a {{maxValue_mch}} {{unit_mch}}</td>
+        </tr>
+        <tr {{row_mchc}}>
+          <td>MCHC</td>
+          <td class="semi-bold">{{mchc}}</td>
+          <td>{{minValue_mchc}} a {{maxValue_mchc}} {{unit_mchc}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>Índices de Distribución</i></td>
+        </tr>
+        <tr {{row_rdw_sd}}>
+          <td>RDW-SD: Distribución eritrocitaria</td>
+          <td class="semi-bold">{{rdw_sd}}</td>
+          <td>{{minValue_rdw_sd}} a {{maxValue_rdw_sd}} {{unit_rdw_sd}}</td>
+        </tr>
+        <tr {{row_rdw_cv}}>
+          <td>RDW-CV: Distribución eritrocitaria</td>
+          <td class="semi-bold">{{rdw_cv}}</td>
+          <td>{{minValue_rdw_cv}} a {{maxValue_rdw_cv}} {{unit_rdw_cv}}</td>
+        </tr>
+        <tr {{row_hdw_sd}}>
+          <td>HDW-SD: Distribución Hb eritrocitaria</td>
+          <td class="semi-bold">{{hdw_sd}}</td>
+          <td>{{minValue_hdw_sd}} a {{maxValue_hdw_sd}} {{unit_hdw_sd}}</td>
+        </tr>
+        <tr {{row_hdw_cv}}>
+          <td>HDW-CV: Distribución Hb eritrocitaria</td>
+          <td class="semi-bold">{{hdw_cv}}</td>
+          <td>{{minValue_hdw_cv}} a {{maxValue_hdw_cv}} {{unit_hdw_cv}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>Morfología Eritrocitaria</i></td>
+        </tr>
+        <tr {{row_ret_abs}}>
+          <td>RET: Reticulocitos</td>
+          <td class="semi-bold">{{ret_abs}}</td>
+          <td>{{minValue_ret_abs}} a {{maxValue_ret_abs}} {{unit_ret_abs}}</td>
+        </tr>
+        <tr {{row_ret_rel}}>
+          <td>RET%: Reticulocitos %</td>
+          <td class="semi-bold">{{ret_rel}}</td>
+          <td>{{minValue_ret_rel}} a {{maxValue_ret_rel}} {{unit_ret_rel}}</td>
+        </tr>
+        <tr {{row_nrbc_abs}}>
+          <td>NRBC: Hematíes nucleados</td>
+          <td class="semi-bold">{{nrbc_abs}}</td>
+          <td>{{minValue_nrbc_abs}} a {{maxValue_nrbc_abs}} {{unit_nrbc_abs}}</td>
+        </tr>
+        <tr {{row_nrbc_wbc_rel}}>
+          <td>NRBC/WBC%: Hematíes nucleados %</td>
+          <td class="semi-bold">{{nrbc_wbc_rel}}</td>
+          <td>{{minValue_nrbc_wbc_rel}} a {{maxValue_nrbc_wbc_rel}} {{unit_nrbc_wbc_rel}}</td>
+        </tr>
+        <tr {{row_etg_abs}}>
+          <td>ETG: Hematíes fantasma</td>
+          <td class="semi-bold">{{etg_abs}}</td>
+          <td>{{minValue_etg_abs}} a {{maxValue_etg_abs}} {{unit_etg_abs}}</td>
+        </tr>
+        <tr {{row_etg_rel}}>
+          <td>ETG%: Hematíes fantasma %</td>
+          <td class="semi-bold">{{etg_rel}}</td>
+          <td>{{minValue_etg_rel}} a {{maxValue_etg_rel}} {{unit_etg_rel}}</td>
+        </tr>
+        <tr {{row_sph_abs}}>
+          <td>SPH: Esferocitos</td>
+          <td class="semi-bold">{{sph_abs}}</td>
+          <td>{{minValue_sph_abs}} a {{maxValue_sph_abs}} {{unit_sph_abs}}</td>
+        </tr>
+        <tr {{row_sph_rel}}>
+          <td>SPH%: Esferocitos %</td>
+          <td class="semi-bold">{{sph_rel}}</td>
+          <td>{{minValue_sph_rel}} a {{maxValue_sph_rel}} {{unit_sph_rel}}</td>
+        </tr>
+        <tr {{row_agg_abs}}>
+          <td>AGG: Agregados de hematíes</td>
+          <td class="semi-bold">{{agg_abs}}</td>
+          <td>{{minValue_agg_abs}} a {{maxValue_agg_abs}} {{unit_agg_abs}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>PLAQUETAS</i></td>
+        </tr>
+        <tr {{row_eplt}}>
+          <td>EPLT: Recuento total de plaquetas</td>
+          <td class="semi-bold">{{eplt}}</td>
+          <td>{{minValue_eplt}} a {{maxValue_eplt}} {{unit_eplt}}</td>
+        </tr>
+        <tr {{row_plt_abs}}>
+          <td>PLT: Recuento absoluto de plaquetas</td>
+          <td class="semi-bold">{{plt_abs}}</td>
+          <td>{{minValue_plt_abs}} a {{maxValue_plt_abs}} {{unit_plt_abs}}</td>
+        </tr>
+        <tr {{row_aplt_abs}}>
+          <td>APLT: Agregados de plaquetas</td>
+          <td class="semi-bold">{{aplt_abs}}</td>
+          <td>{{minValue_aplt_abs}} a {{maxValue_aplt_abs}} {{unit_aplt_abs}}</td>
+        </tr>
+        <tr {{row_pct}}>
+          <td>PCT: Plaquetocrito</td>
+          <td class="semi-bold">{{pct}}</td>
+          <td>{{minValue_pct}} a {{maxValue_pct}} {{unit_pct}}</td>
+        </tr>
+        <tr {{row_mpv}}>
+          <td>MPV</td>
+          <td class="semi-bold">{{mpv}}</td>
+          <td>{{minValue_mpv}} a {{maxValue_mpv}} {{unit_mpv}}</td>
+        </tr>
+        <tr class="bold">
+          <td class="center" colspan="3"><i>Índices Plaquetarios</i></td>
+        </tr>
+        <tr {{row_lplt_abs}}>
+          <td>LPLT: Plaquetas grandes</td>
+          <td class="semi-bold">{{lplt_abs}}</td>
+          <td>{{minValue_lplt_abs}} a {{maxValue_lplt_abs}} {{unit_lplt_abs}}</td>
+        </tr>
+        <tr {{row_lplt_eplt}}>
+          <td>LPLT/EPLT: Ratio plaquetas grandes</td>
+          <td class="semi-bold">{{lplt_eplt}}</td>
+          <td>{{minValue_lplt_eplt}} a {{maxValue_lplt_eplt}} {{unit_lplt_eplt}}</td>
+        </tr>
+        <tr {{row_pdw_sd}}>
+          <td>PDW-SD: Distribución plaquetaria</td>
+          <td class="semi-bold">{{pdw_sd}}</td>
+          <td>{{minValue_pdw_sd}} a {{maxValue_pdw_sd}} {{unit_pdw_sd}}</td>
+        </tr>
+        <tr {{row_pdw_cv}}>
+          <td>PDW-CV: Distribución plaquetaria</td>
+          <td class="semi-bold">{{pdw_cv}}</td>
+          <td>{{minValue_pdw_cv}} a {{maxValue_pdw_cv}} {{unit_pdw_cv}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="maquilado-section">
+      <div class="maquilado-info">
+        <span class="maquilado-label">Método: </span>
+        <span class="maquilado-details">Analizador morfológico multifuncional veterinario AIvet1 por estandarización de microscopía y cuantificación de parametros en sangre entera.</span>
+      </div>
+    </section>
+    <footer>
+  <div class="address-container">
+    {{footer_address}}
+  </div>
+  <img src="./img/bottom.svg" alt="Bottom Graphic" class="graphic graphic-bottom" />
+</footer>
+
+  </body>
+</html>
