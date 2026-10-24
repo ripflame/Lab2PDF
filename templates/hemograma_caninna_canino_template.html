@@ -175,6 +175,14 @@ tr.highlight_low {
   flex: 1;
 }
 
+
+    .results-table { font-size: 13px; margin: 2px auto; }
+    .results-table th, .results-table td { padding: 0 4px; line-height: 1.15; }
+    .maquilado-info { font-size: 11px; }
+    .address-container { bottom: 100px; }
+    .address-box { padding: 6px 12px; }
+    .address-box p { margin: 3px 0px; }
+    
     </style>
   </head>
   <body>
@@ -325,6 +333,11 @@ tr.highlight_low {
           <td class="semi-bold">{{hgb}}</td>
           <td>{{minValue_hgb}} a {{maxValue_hgb}} {{unit_hgb}}</td>
         </tr>
+        <tr {{row_hct}}>
+          <td>HCT: Hematocrito</td>
+          <td class="semi-bold">{{hct}}</td>
+          <td>{{minValue_hct}} a {{maxValue_hct}} {{unit_hct}}</td>
+        </tr>
         <tr {{row_mcv}}>
           <td>MCV</td>
           <td class="semi-bold">{{mcv}}</td>
@@ -340,6 +353,21 @@ tr.highlight_low {
           <td class="semi-bold">{{mchc}}</td>
           <td>{{minValue_mchc}} a {{maxValue_mchc}} {{unit_mchc}}</td>
         </tr>
+        <tr {{row_rdw_sd}}>
+          <td>RDW-SD: Distribución eritrocitaria</td>
+          <td class="semi-bold">{{rdw_sd}}</td>
+          <td>{{minValue_rdw_sd}} a {{maxValue_rdw_sd}} {{unit_rdw_sd}}</td>
+        </tr>
+        <tr {{row_ret_abs}}>
+          <td>RET: Reticulocitos</td>
+          <td class="semi-bold">{{ret_abs}}</td>
+          <td>{{minValue_ret_abs}} a {{maxValue_ret_abs}} {{unit_ret_abs}}</td>
+        </tr>
+        <tr {{row_ret_rel}}>
+          <td>RET%: Reticulocitos %</td>
+          <td class="semi-bold">{{ret_rel}}</td>
+          <td>{{minValue_ret_rel}} a {{maxValue_ret_rel}} {{unit_ret_rel}}</td>
+        </tr>
         <tr class="bold">
           <td class="center" colspan="3"><i>PLAQUETAS</i></td>
         </tr>
@@ -348,10 +376,25 @@ tr.highlight_low {
           <td class="semi-bold">{{plt}}</td>
           <td>{{minValue_plt}} a {{maxValue_plt}} {{unit_plt}}</td>
         </tr>
+        <tr {{row_aplt_abs}}>
+          <td>APLT: Agregados de plaquetas</td>
+          <td class="semi-bold">{{aplt_abs}}</td>
+          <td>{{minValue_aplt_abs}} a {{maxValue_aplt_abs}} {{unit_aplt_abs}}</td>
+        </tr>
         <tr {{row_mpv}}>
           <td>MPV</td>
           <td class="semi-bold">{{mpv}}</td>
           <td>{{minValue_mpv}} a {{maxValue_mpv}} {{unit_mpv}}</td>
+        </tr>
+        <tr {{row_pdw_sd}}>
+          <td>PDW-SD: Distribución plaquetaria</td>
+          <td class="semi-bold">{{pdw_sd}}</td>
+          <td>{{minValue_pdw_sd}} a {{maxValue_pdw_sd}} {{unit_pdw_sd}}</td>
+        </tr>
+        <tr {{row_pdw_cv}}>
+          <td>PDW-CV: Distribución plaquetaria</td>
+          <td class="semi-bold">{{pdw_cv}}</td>
+          <td>{{minValue_pdw_cv}} a {{maxValue_pdw_cv}} {{unit_pdw_cv}}</td>
         </tr>
       </tbody>
     </table>
