@@ -3,6 +3,7 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const { version } = require("./package.json");
+const ensureRelease = require("./scripts/ensure-release");
 
 async function main() {
   try {
@@ -37,8 +38,8 @@ async function main() {
       throw new Error("No build files found to upload. Check the build process.");
     }
 
-    // 3. Get the tag name for the current version
-    const tagName = `v${version}`;
+    // 3. Get or create the release for the current version
+    const tagName = ensureRelease();
 
     // 4. Upload to GitHub release using gh CLI
     console.log(`Uploading to GitHub release ${tagName}...`);
