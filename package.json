@@ -1,6 +1,6 @@
 {
   "name": "lab2pdf",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -23,7 +23,7 @@
     "release:mac": "node macos-release.js",
     "postrelease:mac": "node scripts/reinstall-native-sharp.js",
     "prerelease:win": "node scripts/reinstall-native-sharp.js win32 x64",
-    "release:win": "GH_TOKEN=$(gh auth token) electron-builder --win --publish always",
+    "release:win": "node scripts/ensure-release.js && GH_TOKEN=$(gh auth token) electron-builder --win --publish always",
     "postrelease:win": "node scripts/reinstall-native-sharp.js",
     "clean": "rm -rf dist/*"
   },
